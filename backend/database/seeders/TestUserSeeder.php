@@ -14,7 +14,7 @@ class TestUserSeeder extends Seeder {
     public function run(): void {
         $user = User::create([
             "name" => "Jonh",
-            "lastName" => "Doe",
+            "last_name" => "Doe",
             "email" => "john.doe@gmail.com",
             "password" => '$2y$04$kIh5dqu6ma07bcm.ku9lyeeHjvNlNhzishw9kRMaQMicmkA3HKZZm'
         ]);
