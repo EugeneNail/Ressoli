@@ -16,8 +16,11 @@ class LogoutTest extends TestCase {
 
     private string $token = '1|3t0ix4PEXkDOgssDYkqZDo9i7ynEhcxgWI159aBHc3e24611';
 
+    protected $seed = true;
+
+    protected $seeder = TestUserSeeder::class;
+
     public function test_valid_header_200() {
-        $this->seed(TestUserSeeder::class);
         $response = $this->withHeader("Authorization", "Bearer " . $this->token)
             ->postJson($this->route);
 
@@ -25,14 +28,12 @@ class LogoutTest extends TestCase {
     }
 
     public function test_no_header_401() {
-        $this->seed(TestUserSeeder::class);
         $response = $this->postJson($this->route);
 
         $response->assertStatus(401);
     }
 
     public function test_empty_header_401() {
-        $this->seed(TestUserSeeder::class);
         $response = $this->withHeader("Authorization", "")
             ->postJson($this->route);
 
@@ -40,7 +41,6 @@ class LogoutTest extends TestCase {
     }
 
     public function test_no_bearer_401() {
-        $this->seed(TestUserSeeder::class);
         $response = $this->withHeader("Authorization", $this->token)
             ->postJson($this->route);
 
@@ -48,7 +48,6 @@ class LogoutTest extends TestCase {
     }
 
     public function test_no_token_401() {
-        $this->seed(TestUserSeeder::class);
         $response = $this->withHeader("Authorization", "Bearer ")
             ->postJson($this->route);
 

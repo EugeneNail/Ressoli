@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Database\Seeders\TestUserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -17,26 +18,16 @@ class LoginTest extends TestCase {
         "password" => "StrongPassword123"
     ];
 
-    private function createUser() {
-        $data = [
-            "name" => "John",
-            "lastName" => "Doe",
-            "email" => "john.doe@gmail.com",
-            "password" => "StrongPassword123",
-            "password_confirmation" => "StrongPassword123"
-        ];
+    protected $seed = true;
 
-        $this->postJson("/api/signup", $data);
-    }
+    protected $seeder = TestUserSeeder::class;
 
     public function test_attempt_success_200(): void {
-        $this->createUser();
         $response = $this->postJson($this->route, $this->valid);
         $response->assertStatus(200);
     }
 
     public function test_attempt_failed_password_401(): void {
-        $this->createUser();
         $data = $this->valid;
         $data["password"] = "AnotherStrongPassword123";
         $response = $this->postJson($this->route, $data);
@@ -44,7 +35,6 @@ class LoginTest extends TestCase {
     }
 
     public function test_attempt_failed_email_401(): void {
-        $this->createUser();
         $data = $this->valid;
         $data["email"] = "anthony@list.com";
         $response = $this->postJson($this->route, $data);
