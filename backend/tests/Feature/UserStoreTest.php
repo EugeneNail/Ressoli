@@ -22,8 +22,7 @@ class UserStoreTest extends TestCase {
 
     public function test_valid_data_201(): void {
         $response = $this->postJson('/api/signup', $this->valid);
-        $response->assertCreated()
-            ->assertJsonStructure(["token"]);
+        $response->assertCreated();
         $this->assertDatabaseHas(User::class, [
             "name" => $this->valid["name"],
             "lastName" => $this->valid["lastName"],

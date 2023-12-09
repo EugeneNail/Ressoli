@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 
 class AuthController extends Controller {
+
     public function store(StoreUserRequest $request) {
         $data = $request->validated();
         $user = User::create($data);
@@ -33,5 +34,11 @@ class AuthController extends Controller {
         $token = $user->createToken($request->ip())->plainTextToken;
 
         return new JsonResponse($token, Response::HTTP_OK);
+    }
+
+    public function logout(Request $request) {
+        $request->user()->tokens()->where(["name" => $request->ip()])->delete();
+
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 }
