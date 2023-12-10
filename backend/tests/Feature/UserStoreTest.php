@@ -17,7 +17,7 @@ class UserStoreTest extends TestCase {
         "lastName" => "Doe",
         "email" => "joh.doe@gmail.com",
         "password" => "StrongPassword123",
-        "password_confirmation" => "StrongPassword123"
+        "passwordConfirmation" => "StrongPassword123"
     ];
 
     public function test_valid_data_201(): void {
@@ -25,7 +25,7 @@ class UserStoreTest extends TestCase {
         $response->assertCreated();
         $this->assertDatabaseHas(User::class, [
             "name" => $this->valid["name"],
-            "lastName" => $this->valid["lastName"],
+            "last_name" => $this->valid["lastName"],
             "email" => $this->valid["email"],
         ]);
     }
@@ -120,7 +120,7 @@ class UserStoreTest extends TestCase {
     public function test_password_invalid_min_422(): void {
         $data = $this->valid;
         $data["password"] = "Sp1";
-        $data["password_confirmation"] = "Sp1";
+        $data["passwordConfirmation"] = "Sp1";
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
             ->assertJsonValidationErrors("password");
@@ -129,7 +129,7 @@ class UserStoreTest extends TestCase {
     public function test_password_invalid_mixed_case_upper_422(): void {
         $data = $this->valid;
         $data["password"] = "STRONGPASSWORD123";
-        $data["password_confirmation"] = "STRONGPASSWORD123";
+        $data["passwordConfirmation"] = "STRONGPASSWORD123";
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
             ->assertJsonValidationErrors("password");
@@ -138,7 +138,7 @@ class UserStoreTest extends TestCase {
     public function test_password_invalid_mixed_case_lower_422(): void {
         $data = $this->valid;
         $data["password"] = "strongpassword123";
-        $data["password_confirmation"] = "strongpassword123";
+        $data["passwordConfirmation"] = "strongpassword123";
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
             ->assertJsonValidationErrors("password");
@@ -147,7 +147,7 @@ class UserStoreTest extends TestCase {
     public function test_password_invalid_numbers_422(): void {
         $data = $this->valid;
         $data["password"] = "StrongPassword";
-        $data["password_confirmation"] = "StrongPassword";
+        $data["passwordConfirmation"] = "StrongPassword";
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
             ->assertJsonValidationErrors("password");
@@ -156,7 +156,7 @@ class UserStoreTest extends TestCase {
     public function test_password_invalid_letters_422(): void {
         $data = $this->valid;
         $data["password"] = "123";
-        $data["password_confirmation"] = "123";
+        $data["passwordConfirmation"] = "123";
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
             ->assertJsonValidationErrors("password");
@@ -165,7 +165,7 @@ class UserStoreTest extends TestCase {
     public function test_password_invalid_string_422(): void {
         $data = $this->valid;
         $data["password"] = 123;
-        $data["password_confirmation"] = 123;
+        $data["passwordConfirmation"] = 123;
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
             ->assertJsonValidationErrors("password");
@@ -173,25 +173,25 @@ class UserStoreTest extends TestCase {
 
     public function test_password_confirmation_missing_422(): void {
         $data = $this->valid;
-        unset($data["password_confirmation"]);
+        unset($data["passwordConfirmation"]);
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors("password_confirmation");
+            ->assertJsonValidationErrors("passwordConfirmation");
     }
 
     public function test_password_confirmation_invalid_string_422(): void {
         $data = $this->valid;
-        $data["password_confirmation"] = 123;
+        $data["passwordConfirmation"] = 123;
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors("password_confirmation");
+            ->assertJsonValidationErrors("passwordConfirmation");
     }
 
     public function test_password_confirmation_invalid_same_422(): void {
         $data = $this->valid;
-        $data["password_confirmation"] = "StrongPassword124";
+        $data["passwordConfirmation"] = "StrongPassword124";
         $response = $this->postJson("/api/signup", $data);
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors("password_confirmation");
+            ->assertJsonValidationErrors("passwordConfirmation");
     }
 }
