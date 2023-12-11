@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
@@ -23,6 +24,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/logout", [AuthController::class, "logout"]);
 
     Route::post("/clients", [ClientController::class, "store"]);
+
+    Route::post("/addresses", [AddressController::class, "store"]);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
