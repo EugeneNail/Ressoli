@@ -3,9 +3,14 @@
 namespace Tests\Feature;
 
 use App\Models\Address;
+use App\Models\User;
+use Database\Seeders\AddressOptionsSeeder;
+use Database\Seeders\StaticDataSeeder;
 use Database\Seeders\TestAddressSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class StoreAddressTest extends AuthorizedTestCase {
@@ -24,6 +29,11 @@ class StoreAddressTest extends AuthorizedTestCase {
         "latitude" => 38.89768,
         "longitude" => -77.03655,
     ];
+
+    protected function setUp(): void {
+        parent::setUp();
+        $this->seed(AddressOptionsSeeder::class);
+    }
 
     public function test_invalid_method_405() {
         $response = $this->getJson($this->route, $this->data);

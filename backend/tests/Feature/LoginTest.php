@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Database\Seeders\TestUserSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class LoginTest extends TestCase {
@@ -18,9 +21,11 @@ class LoginTest extends TestCase {
         "password" => "StrongPassword123"
     ];
 
-    protected $seed = true;
+    public function setUp(): void {
+        parent::setUp();
+        $this->seed(TestUserSeeder::class);
+    }
 
-    protected $seeder = TestUserSeeder::class;
 
     public function test_attempt_success_200(): void {
         $response = $this->postJson($this->route, $this->valid);

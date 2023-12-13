@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Actions\GetOptions;
+use App\Models\Address;
 use App\Rules\Ssand;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -19,8 +21,8 @@ class StoreAddressRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array {
-        $types_of_street = ["St", "Ave", "Blvd", "Dr", "Ln", "Rd", "Way"];
+    public function rules(GetOptions $getOptions): array {
+        $types_of_street = $getOptions->run(Address::class)["type_of_street"];
 
         return [
             "number" => ["required", "string", "ssand", "max:8"],

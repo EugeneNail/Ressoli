@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Database\Seeders\TestUserSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,9 +17,10 @@ class LogoutTest extends TestCase {
 
     private string $token = '1|3t0ix4PEXkDOgssDYkqZDo9i7ynEhcxgWI159aBHc3e24611';
 
-    protected $seed = true;
-
-    protected $seeder = TestUserSeeder::class;
+    public function setUp(): void {
+        parent::setUp();
+        $this->seed(TestUserSeeder::class);
+    }
 
     public function test_valid_header_200() {
         $response = $this->withHeader("Authorization", "Bearer " . $this->token)
