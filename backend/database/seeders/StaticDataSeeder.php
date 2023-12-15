@@ -8,10 +8,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StaticDataSeeder extends Seeder {
 
+    use WithoutModelEvents;
     use RefreshDatabase;
 
     public function run(): void {
         $this->call(AddressOptionsSeeder::class);
+        $this->call(LandParcelOptionsSeeder::class);
         $this->call(TestUserSeeder::class);
     }
 }
