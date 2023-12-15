@@ -22,4 +22,16 @@ class LandParcelFactory extends Factory {
             "area" => fake()->randomNumber(3)
         ];
     }
+
+    public function test(): static {
+        $options = (new GetOptions())->run(LandParcel::class);
+
+        return $this->state(fn () => [
+            "water" => $options["water"][0],
+            "gas" => $options["gas"][0],
+            "electricity" => $options["electricity"][0],
+            "sewer" => $options["sewer"][0],
+            "area" => 335
+        ]);
+    }
 }

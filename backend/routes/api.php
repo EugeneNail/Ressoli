@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\LandParcelController;
 use App\Http\Controllers\OptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/clients", [ClientController::class, "store"]);
 
     Route::post("/addresses", [AddressController::class, "store"]);
+
+    Route::post("/land-parcels", [LandParcelController::class, "store"]);
 
     Route::group(["prefix" => "options"], function () {
         Route::get("/address", [OptionController::class, "forAddress"]);
