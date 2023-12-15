@@ -29,7 +29,10 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/addresses", [AddressController::class, "store"]);
 
-    Route::post("/land-parcels", [LandParcelController::class, "store"]);
+    Route::group(["prefix" => "land-parcels"], function () {
+        Route::post("/", [LandParcelController::class, "store"]);
+        Route::put("/{id}", [LandParcelController::class, "update"]);
+    });
 
     Route::group(["prefix" => "options"], function () {
         Route::get("/address", [OptionController::class, "forAddress"]);
