@@ -5,7 +5,6 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-// slash space alpha numeric dash
 class Ssand implements ValidationRule {
     /**
      * Run the validation rule.
@@ -19,6 +18,7 @@ class Ssand implements ValidationRule {
     }
 
     public function isValid(mixed $value): bool {
+        // slash space alpha numeric dash
         $pattern = '/[^a-zA-Z0-9 \/-]/';
         return !preg_match($pattern, $value);
     }

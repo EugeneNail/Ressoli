@@ -20,15 +20,16 @@ class StoreLandParcelTest extends AuthorizedTestCase {
         $this->data = LandParcel::factory()->test()->make()->toArray();
     }
 
-
     public function test_store_valid_data_201(): void {
         $response = $this->postJson($this->route, $this->data);
+
         $response->assertStatus(201);
         $this->assertDatabaseHas(LandParcel::class, $this->data);
     }
 
     public function test_store_invalid_data_422(): void {
         $response = $this->postJson($this->route, []);
+
         $response->assertStatus(422)
             ->assertJsonValidationErrors(["water", "electricity", "sewer", "gas"]);
         $this->assertDatabaseCount(LandParcel::class, 0);
@@ -37,6 +38,7 @@ class StoreLandParcelTest extends AuthorizedTestCase {
     public function test_store_existing_data_201(): void {
         $this->postJson($this->route, $this->data);
         $response = $this->postJson($this->route, $this->data);
+
         $response->assertStatus(201);
         $this->assertDatabaseCount(LandParcel::class, 2);
     }

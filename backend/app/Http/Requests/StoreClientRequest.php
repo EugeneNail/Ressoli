@@ -19,8 +19,8 @@ class StoreClientRequest extends FormRequest {
      */
     public function rules(): array {
         return [
-            "name" => ["required", "string", "alpha", "max:16"],
-            "last_name" => ["required", "string", "alpha", "max:16"],
+            "name" => ["required", "string", "alpha", "min:3", "max:16"],
+            "last_name" => ["required", "string", "alpha", "min:3", "max:16"],
             "phone_number" => ["required", "string", "regex:/^[+]?[0-9]-[0-9]{3}-[0-9]{3}-[0-9]{4}$/"],
         ];
     }

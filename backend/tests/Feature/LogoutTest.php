@@ -7,6 +7,7 @@ use Database\Seeders\TestUserSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;
 
 class LogoutTest extends TestCase {

@@ -27,10 +27,10 @@ class StoreAddressRequest extends FormRequest {
         return [
             "number" => ["required", "string", "ssand", "max:8"],
             "unit" => ["nullable", "string", "ssand", "max:8"],
-            "street" => ["required", "string", "ssand", "max:32"],
+            "street" => ["required", "string", "ssand", "min:3", "max:32"],
             "type_of_street" => ["required", "string", Rule::in($types_of_street)],
-            "city" => ["required", "string", "ssand", "max:32"],
-            "postal_code" => ["nullable", "string", "ssand", "max:16"],
+            "city" => ["required", "string", "ssand", "min:3", "max:32"],
+            "postal_code" => ["nullable", "string", "ssand", "max:8"],
         ];
     }
 

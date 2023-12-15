@@ -20,9 +20,9 @@ class StoreUserRequest extends FormRequest {
      */
     public function rules(): array {
         return [
-            "name" => ["required", "string", "alpha"],
-            "last_name" => ["required", "string", "alpha"],
-            "email" => ["required", "string", "email", "unique:users,email"],
+            "name" => ["required", "string", "alpha", "min:3", "max:16"],
+            "last_name" => ["required", "string", "alpha", "min:3", "max:16"],
+            "email" => ["required", "string", "email"],
             "password" => ["required", "string", Password::min(8)->mixedCase()->numbers()->letters()],
             "password_confirmation" => ["required", "string", "same:password"],
         ];

@@ -10,11 +10,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
-class StoreLandParcelValidationTest extends TestCase {
+class StoreLandParcelValidationTest extends RequestValidationTest {
 
     use RefreshDatabase;
-
-    private array $rules;
 
     public function setUp(): void {
         parent::setUp();
@@ -90,13 +88,5 @@ class StoreLandParcelValidationTest extends TestCase {
         $this->assertFalse($this->validateField("area", 0));
         $this->assertFalse($this->validateField("area", -1));
         $this->assertFalse($this->validateField("area", 10001));
-    }
-
-    private function validateField(string $field, mixed $value) {
-        return Validator::make([
-            $field => $value
-        ], [
-            $field => $this->rules[$field]
-        ])->passes();
     }
 }

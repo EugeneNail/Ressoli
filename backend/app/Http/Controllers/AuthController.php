@@ -15,6 +15,14 @@ class AuthController extends Controller {
 
     public function store(StoreUserRequest $request) {
         $data = $request->validated();
+        $user = User::where("email", $data["email"])->first();
+
+        if (!is_null($user)) {
+            $messages = new MessageBag();
+            $messages->add("email", "The email has already been taken by another user.");
+            return new JsonResponse(["errors" => $messages], Response::HTTP_CONFLICT);
+        }
+
         $user = User::create($data);
         $token = $user->createToken($request->ip())->plainTextToken;
         return new JsonResponse($token, Response::HTTP_CREATED);
@@ -22,6 +30,7 @@ class AuthController extends Controller {
 
     public function login(LoginRequest $request, MessageBag $messages) {
         $data = $request->validated();
+
         if (!Auth::attempt($data)) {
             $error = "You have entered an invalid email or password";
             $messages->add("email", $error);

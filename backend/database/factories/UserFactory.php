@@ -32,10 +32,16 @@ class UserFactory extends Factory {
     }
 
     public function test(): static {
-        return $this->state(fn ($state) => [
+        return $this->state(fn () => [
             "name" => "Jonh",
             "last_name" => "Doe",
             "email" => "john.doe@gmail.com",
+            "password" => "StrongPassword123"
+        ]);
+    }
+
+    public function hashed(): static {
+        return $this->state(fn () => [
             "password" => '$2y$04$kIh5dqu6ma07bcm.ku9lyeeHjvNlNhzishw9kRMaQMicmkA3HKZZm'
         ]);
     }
