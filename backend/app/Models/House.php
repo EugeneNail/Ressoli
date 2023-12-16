@@ -28,4 +28,8 @@ class House extends Model {
         "kitchen_area",
         "land_area",
     ];
+
+    protected $casts = [
+        "has_garage" => "boolean"
+    ];
 }

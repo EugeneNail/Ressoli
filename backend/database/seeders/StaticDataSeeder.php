@@ -14,6 +14,6 @@ class StaticDataSeeder extends Seeder {
     public function run(): void {
         $this->call(AddressOptionsSeeder::class);
         $this->call(LandParcelOptionsSeeder::class);
-        $this->call(TestUserSeeder::class);
+        $this->call(HouseOptionsSeeder::class);
     }
 }
