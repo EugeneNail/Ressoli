@@ -15,5 +15,6 @@ class StaticDataSeeder extends Seeder {
         $this->call(AddressOptionsSeeder::class);
         $this->call(LandParcelOptionsSeeder::class);
         $this->call(HouseOptionsSeeder::class);
+        $this->call(ApartmentOptionsSeeder::class);
     }
 }

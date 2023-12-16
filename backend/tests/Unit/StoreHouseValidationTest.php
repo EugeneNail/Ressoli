@@ -13,15 +13,12 @@ class StoreHouseValidationTest extends RequestValidationTest {
 
     use RefreshDatabase;
 
-    private array $data;
-
     private array $options;
 
     public function setUp(): void {
         parent::setUp();
         $this->seed(HouseOptionsSeeder::class);
         $this->rules = (new StoreHouseRequest())->rules();
-        $this->data = House::factory()->test()->make()->toArray();
         $this->options = app()->make(GetOptions::class)->run(House::class);
     }
 

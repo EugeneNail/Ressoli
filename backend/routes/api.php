@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\HouseController;
 use App\Http\Controllers\LandParcelController;
 use App\Http\Controllers\OptionController;
 use Illuminate\Http\Request;
@@ -32,6 +34,15 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::group(["prefix" => "land-parcels"], function () {
         Route::post("/", [LandParcelController::class, "store"]);
         Route::put("/{id}", [LandParcelController::class, "update"]);
+    });
+
+    Route::group(["prefix" => "houses"], function () {
+        Route::post("/", [HouseController::class, "store"]);
+        Route::put("/{id}", [HouseController::class, "update"]);
+    });
+
+    Route::group(["prefix" => "apartments"], function () {
+        Route::post("/", [ApartmentController::class, "store"]);
     });
 
     Route::group(["prefix" => "options"], function () {
