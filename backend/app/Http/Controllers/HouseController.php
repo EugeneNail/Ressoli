@@ -17,4 +17,17 @@ class HouseController extends Controller {
 
         return new JsonResponse($house->id, Response::HTTP_CREATED);
     }
+
+    public function update(UpdateHouseRequest $request, int $id) {
+        $house = House::find($id);
+
+        if (is_null($house)) {
+            return new JsonResponse(["message" => "The house not found"], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = $request->validated();
+        $house->update($data);
+
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+    }
 }
