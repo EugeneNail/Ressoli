@@ -40,7 +40,7 @@ class StoreHouseRequest extends FormRequest {
             "bathroom" => ["required", "string", Rule::in($options["bathroom"])],
             "room_count" => ["required", "numeric", "gt:0", "lte:100"],
             "area" => ["required", "numeric", "gt:0", "lte:10000"],
-            "kitchen_area" => ["required", "numeric", "gt:0", "lte:10000"],
+            "kitchen_area" => ["required", "numeric", "gt:0", "lte:10000", "lte:area"],
             "land_area" => ["required", "numeric", "gt:0", "lte:10000"],
         ];
     }

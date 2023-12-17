@@ -127,30 +127,27 @@ class UpdateHouseValidationTest extends RequestValidationTest {
         $this->assertFalse($this->validateField("level_count", 101));
     }
 
-    public function test_area_valid_data_success(): void {
-        $this->assertTrue($this->validateField("area", 1));
-        $this->assertTrue($this->validateField("area", 10000));
-    }
-
     public function test_area_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("area", null));
-        $this->assertFalse($this->validateField("area", ""));
-        $this->assertFalse($this->validateField("area", -1));
-        $this->assertFalse($this->validateField("area", 0));
-        $this->assertFalse($this->validateField("area", 10001));
+        $this->assertFalse($this->validateMultipleFields(["area", null],  ["kitchen_area", null]));
+        $this->assertFalse($this->validateMultipleFields(["area", ""],    ["kitchen_area", ""]));
+        $this->assertFalse($this->validateMultipleFields(["area", -1],    ["kitchen_area", -1]));
+        $this->assertFalse($this->validateMultipleFields(["area", 0],     ["kitchen_area", 0]));
+        $this->assertFalse($this->validateMultipleFields(["area", 10001], ["kitchen_area", 1]));
     }
 
     public function test_kitchen_area_valid_data_success(): void {
-        $this->assertTrue($this->validateField("kitchen_area", 1));
-        $this->assertTrue($this->validateField("kitchen_area", 10000));
+        $this->assertTrue($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 1]));
+        $this->assertTrue($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 10000]));
     }
 
     public function test_kitchen_area_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("kitchen_area", null));
-        $this->assertFalse($this->validateField("kitchen_area", ""));
-        $this->assertFalse($this->validateField("kitchen_area", -1));
-        $this->assertFalse($this->validateField("kitchen_area", 0));
-        $this->assertFalse($this->validateField("kitchen_area", 10001));
+        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", null]));
+        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", ""]));
+        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", -1]));
+        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 0]));
+        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 10001]));
+        $this->assertFalse($this->validateMultipleFields(["area", 1],         ["kitchen_area", 2]));
+        $this->assertFalse($this->validateMultipleFields(["area", 9999],      ["kitchen_area", 10000]));
     }
 
     public function test_hot_water_valid_data_success(): void {

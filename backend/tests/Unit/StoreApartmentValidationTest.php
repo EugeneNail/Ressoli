@@ -137,29 +137,31 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_level_valid_data_success(): void {
-        $this->assertTrue($this->validateField("level", 1));
-        $this->assertTrue($this->validateField("level", 100));
+        $this->assertTrue($this->validateMultipleFields(["level", 1],   ["level_count", 100]));
+        $this->assertTrue($this->validateMultipleFields(["level", 100], ["level_count", 100]));
     }
 
     public function test_level_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("level", null));
-        $this->assertFalse($this->validateField("level", ""));
-        $this->assertFalse($this->validateField("level", -1));
-        $this->assertFalse($this->validateField("level", 0));
-        $this->assertFalse($this->validateField("level", 101));
+        $this->assertFalse($this->validateMultipleFields(["level", null], ["level_count", 100]));
+        $this->assertFalse($this->validateMultipleFields(["level", ""],   ["level_count", 100]));
+        $this->assertFalse($this->validateMultipleFields(["level", -1],   ["level_count", 100]));
+        $this->assertFalse($this->validateMultipleFields(["level", 0],    ["level_count", 100]));
+        $this->assertFalse($this->validateMultipleFields(["level", 101],  ["level_count", 100]));
+        $this->assertFalse($this->validateMultipleFields(["level", 5],    ["level_count", 4]));
+        $this->assertFalse($this->validateMultipleFields(["level", 100],  ["level_count", 99]));
     }
 
     public function test_level_count_valid_data_success(): void {
-        $this->assertTrue($this->validateField("level_count", 1));
-        $this->assertTrue($this->validateField("level_count", 100));
+        $this->assertTrue($this->validateMultipleFields(["level", 1], ["level_count", 1]));
+        $this->assertTrue($this->validateMultipleFields(["level", 1], ["level_count", 100]));
     }
 
     public function test_level_count_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("level_count", null));
-        $this->assertFalse($this->validateField("level_count", ""));
-        $this->assertFalse($this->validateField("level_count", -1));
-        $this->assertFalse($this->validateField("level_count", 0));
-        $this->assertFalse($this->validateField("level_count", 101));
+        $this->assertFalse($this->validateMultipleFields(["level", null], ["level_count", null]));
+        $this->assertFalse($this->validateMultipleFields(["level", ""],   ["level_count", ""]));
+        $this->assertFalse($this->validateMultipleFields(["level", -1],   ["level_count", -1]));
+        $this->assertFalse($this->validateMultipleFields(["level", 0],    ["level_count", 0]));
+        $this->assertFalse($this->validateMultipleFields(["level", 1],    ["level_count", 101]));
     }
 
     public function test_has_heating_valid_data_success(): void {

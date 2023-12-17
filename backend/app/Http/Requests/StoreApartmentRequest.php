@@ -31,7 +31,7 @@ class StoreApartmentRequest extends FormRequest {
             "condition" => ["required", "string", Rule::in($options["condition"])],
             "walls" => ["required", "string", Rule::in($options["walls"])],
             "ceiling" => ["required", "numeric", "gt:1.5", "lte:5"],
-            "level" => ["required", "numeric", "gt:0", "integer", "lte:100"],
+            "level" => ["required", "numeric", "gt:0", "integer", "lte:100", "lte:level_count"],
             "level_count" => ["required", "numeric", "gt:0", "integer", "lte:100"],
             "has_heating" => ["nullable", "boolean"],
             "has_hot_water" => ["nullable", "boolean"],
