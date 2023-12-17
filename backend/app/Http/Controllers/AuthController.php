@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -17,15 +16,16 @@ class AuthController extends Controller {
         $data = $request->validated();
         $user = User::where("email", $data["email"])->first();
 
-        if (!is_null($user)) {
+        if ($user !== null) {
             $messages = new MessageBag();
             $messages->add("email", "The email has already been taken by another user.");
-            return new JsonResponse(["errors" => $messages], Response::HTTP_CONFLICT);
+            return response()->json(["errors" => $messages], Response::HTTP_CONFLICT);
         }
 
         $user = User::create($data);
         $token = $user->createToken($request->ip())->plainTextToken;
-        return new JsonResponse($token, Response::HTTP_CREATED);
+
+        return response()->json($token, Response::HTTP_CREATED);
     }
 
     public function login(LoginRequest $request, MessageBag $messages) {
@@ -36,18 +36,18 @@ class AuthController extends Controller {
             $messages->add("email", $error);
             $messages->add("password", $error);
 
-            return new JsonResponse(["errors" => $messages], Response::HTTP_UNAUTHORIZED);
+            return response()->json(["errors" => $messages], Response::HTTP_UNAUTHORIZED);
         }
 
         $user = User::where(["email" => $data["email"]])->first();
         $token = $user->createToken($request->ip())->plainTextToken;
 
-        return new JsonResponse($token, Response::HTTP_OK);
+        return response()->json($token, Response::HTTP_OK);
     }
 
     public function logout(Request $request) {
         $request->user()->tokens()->where(["name" => $request->ip()])->delete();
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

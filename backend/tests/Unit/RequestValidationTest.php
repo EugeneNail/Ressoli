@@ -30,9 +30,6 @@ class RequestValidationTest extends TestCase {
         $data = [];
         $rules = [];
 
-
-        dump($data);
-        dump($rules);
         foreach ($fields as $tuple) {
 
             if (!is_array($tuple) || count($tuple) !== 2) {

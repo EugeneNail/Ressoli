@@ -33,17 +33,17 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::group(["prefix" => "land-parcels"], function () {
         Route::post("/", [LandParcelController::class, "store"]);
-        Route::put("/{id}", [LandParcelController::class, "update"]);
+        Route::put("/{landParcel}", [LandParcelController::class, "update"]);
     });
 
     Route::group(["prefix" => "houses"], function () {
         Route::post("/", [HouseController::class, "store"]);
-        Route::put("/{id}", [HouseController::class, "update"]);
+        Route::put("/{house}", [HouseController::class, "update"]);
     });
 
     Route::group(["prefix" => "apartments"], function () {
         Route::post("/", [ApartmentController::class, "store"]);
-        Route::put("/{id}", [ApartmentController::class, "update"]);
+        Route::put("/{apartment}", [ApartmentController::class, "update"]);
     });
 
     Route::group(["prefix" => "options"], function () {

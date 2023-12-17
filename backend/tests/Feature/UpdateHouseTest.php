@@ -27,7 +27,7 @@ class UpdateHouseTest extends AuthorizedTestCase {
         $response->assertStatus(204);
         $this->assertDatabaseHas(House::class, ["id" => $id] + $this->data);
         $this->assertDatabaseCount(House::class, 1);
-        $this->assertTrue(is_null(json_decode($response->getContent())));
+        $this->assertNull(json_decode($response->getContent()));
     }
 
     public function test_update_invalid_data_422(): void {
