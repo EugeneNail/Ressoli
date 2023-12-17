@@ -43,6 +43,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::group(["prefix" => "apartments"], function () {
         Route::post("/", [ApartmentController::class, "store"]);
+        Route::put("/{id}", [ApartmentController::class, "update"]);
     });
 
     Route::group(["prefix" => "options"], function () {
