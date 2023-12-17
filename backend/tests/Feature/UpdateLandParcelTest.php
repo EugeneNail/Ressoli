@@ -10,13 +10,10 @@ use Tests\TestCase;
 
 class UpdateLandParcelTest extends AuthorizedTestCase {
 
-    private string $route = "/api/land-parcels";
-
-    private array $data;
-
     public function setUp(): void {
         parent::setUp();
         $this->seed(LandParcelOptionsSeeder::class);
+        $this->route = "/api/land-parcels";
         $this->data = LandParcel::factory()->test()->make()->toArray();
         LandParcel::factory()->create();
     }
@@ -27,6 +24,7 @@ class UpdateLandParcelTest extends AuthorizedTestCase {
         $response->assertStatus(204);
         $this->assertDatabaseCount(LandParcel::class, 1);
         $this->assertDatabaseHas(LandParcel::class, ["id" => 1] + $this->data);
+        $this->assertNull(json_decode($response->getContent()));
     }
 
     public function test_update_invalid_id_404(): void {

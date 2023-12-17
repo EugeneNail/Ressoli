@@ -14,6 +14,10 @@ class AuthorizedTestCase extends TestCase {
 
     use RefreshDatabase;
 
+    protected string $route;
+
+    protected array $data;
+
     protected function setUp(): void {
         parent::setUp();
         $this->actingAs(User::factory()->test()->create());

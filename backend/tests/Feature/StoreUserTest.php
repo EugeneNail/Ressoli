@@ -16,7 +16,6 @@ class StoreUserTest extends TestCase {
 
     private array $data;
 
-
     public function setUp(): void {
         parent::setUp();
         $this->data = [

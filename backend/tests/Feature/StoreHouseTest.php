@@ -10,13 +10,10 @@ use Tests\TestCase;
 
 class StoreHouseTest extends AuthorizedTestCase {
 
-    private string $route = "/api/houses";
-
-    private array $data;
-
     public function setUp(): void {
         parent::setUp();
         $this->seed(HouseOptionsSeeder::class);
+        $this->route = "/api/houses";
         $this->data = House::factory()->test()->make()->toArray();
     }
 

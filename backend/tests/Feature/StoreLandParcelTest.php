@@ -10,13 +10,10 @@ use Tests\TestCase;
 
 class StoreLandParcelTest extends AuthorizedTestCase {
 
-    private array $data;
-
-    private string $route = "/api/land-parcels";
-
     public function setUp(): void {
         parent::setUp();
         $this->seed(LandParcelOptionsSeeder::class);
+        $this->route = "/api/land-parcels";
         $this->data = LandParcel::factory()->test()->make()->toArray();
     }
 

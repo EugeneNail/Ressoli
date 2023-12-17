@@ -9,23 +9,20 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UpdateHouseTest extends AuthorizedTestCase {
-    private string $route = "/api/houses";
-
-    private array $data;
 
     public function setUp(): void {
         parent::setUp();
         $this->seed(HouseOptionsSeeder::class);
+        $this->route = "/api/houses";
         $this->data = House::factory()->test()->make()->toArray();
+        House::factory()->create();
     }
 
     public function test_update_valid_data_204(): void {
-        $house = House::factory()->create();
-        $id = $house->id;
-        $response = $this->putJson($this->route . "/" . $id, $this->data);
+        $response = $this->putJson($this->route . "/1", $this->data);
 
         $response->assertStatus(204);
-        $this->assertDatabaseHas(House::class, ["id" => $id] + $this->data);
+        $this->assertDatabaseHas(House::class, ["id" => 1] + $this->data);
         $this->assertDatabaseCount(House::class, 1);
         $this->assertNull(json_decode($response->getContent()));
     }
@@ -33,7 +30,7 @@ class UpdateHouseTest extends AuthorizedTestCase {
     public function test_update_invalid_data_422(): void {
         $response = $this->postJson($this->route, []);
         $response->assertStatus(422);
-        $this->assertDatabaseCount(House::class, 0);
+        $this->assertDatabaseCount(House::class, 1);
         $response->assertJsonValidationErrors([
             "water",
             "gas",
@@ -56,11 +53,10 @@ class UpdateHouseTest extends AuthorizedTestCase {
     }
 
     public function test_update_invalid_id_404(): void {
-        $house = House::factory()->create();
         $response = $this->putJson($this->route . "/999", $this->data);
 
         $response->assertStatus(404);
         $this->assertDatabaseCount(House::class, 1);
-        $this->assertDatabaseMissing(House::class, ["id" => $house->id] + $this->data);
+        $this->assertDatabaseMissing(House::class, ["id" => 1] + $this->data);
     }
 }

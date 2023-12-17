@@ -13,12 +13,9 @@ class StoreClientTest extends AuthorizedTestCase {
 
     use RefreshDatabase;
 
-    private string $route = "/api/clients";
-
-    private array $data;
-
     protected function setUp(): void {
         parent::setUp();
+        $this->route = "/api/clients";
         $this->data = Client::factory()->test()->make()->toArray();
     }
 

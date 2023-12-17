@@ -10,13 +10,10 @@ use Tests\TestCase;
 
 class UpdateApartmentTest extends AuthorizedTestCase {
 
-    private string $route = "/api/apartments";
-
-    private array $data;
-
     public function setUp(): void {
         parent::setUp();
         $this->seed(ApartmentOptionsSeeder::class);
+        $this->route = "/api/apartments";
         $this->data = Apartment::factory()->test()->make()->toArray();
         Apartment::factory()->create();
     }
@@ -27,6 +24,7 @@ class UpdateApartmentTest extends AuthorizedTestCase {
         $response->assertStatus(204);
         $this->assertDatabaseCount(Apartment::class, 1);
         $this->assertDatabaseHas(Apartment::class, ["id" => 1] + $this->data);
+        $this->assertNull(json_decode($response->getContent()));
     }
 
     public function test_update_invalid_data_422(): void {

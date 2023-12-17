@@ -17,13 +17,10 @@ class StoreAddressTest extends AuthorizedTestCase {
 
     use RefreshDatabase;
 
-    private string $route = "/api/addresses";
-
-    private array $data;
-
     protected function setUp(): void {
         parent::setUp();
         $this->seed(AddressOptionsSeeder::class);
+        $this->route = "/api/addresses";
         $this->data = Address::factory()->test()->make()->toArray();
     }
 
