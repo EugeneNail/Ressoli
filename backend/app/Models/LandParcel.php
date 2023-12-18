@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class LandParcel extends Model {
     use HasFactory;
@@ -15,4 +16,8 @@ class LandParcel extends Model {
         "sewer",
         "area",
     ];
+
+    public function application(): MorphOne {
+        return $this->morphOne(Application::class, "applicable");
+    }
 }

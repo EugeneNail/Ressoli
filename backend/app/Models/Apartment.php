@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Apartment extends Model {
     use HasFactory;
@@ -46,4 +47,8 @@ class Apartment extends Model {
         "has_elevator" => "boolean",
         "is_corner" => "boolean",
     ];
+
+    public function application(): MorphOne {
+        return $this->morphOne(Application::class, "applicable");
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class House extends Model {
     use HasFactory;
@@ -32,4 +33,8 @@ class House extends Model {
     protected $casts = [
         "has_garage" => "boolean"
     ];
+
+    public function application(): MorphOne {
+        return $this->morphOne(Application::class, "applicable");
+    }
 }
