@@ -32,16 +32,16 @@ class UpdateHouseRequest extends FormRequest {
             "condition" => ["required", "string", Rule::in($options["condition"])],
             "roof" => ["required", "string", Rule::in($options["roof"])],
             "floor" => ["required", "string", Rule::in($options["floor"])],
-            "level_count" => ["required", "numeric", "gt:0", "lte:100"],
+            "level_count" => ["required", "numeric", "integer", "gt:0", "lte:100"],
             "has_garage" => ["required", "boolean"],
             "hot_water" => ["required", "string", Rule::in($options["hot_water"])],
             "heating" => ["required", "string", Rule::in($options["heating"])],
             "bath" => ["required", "string", Rule::in($options["bath"])],
             "bathroom" => ["required", "string", Rule::in($options["bathroom"])],
-            "room_count" => ["required", "numeric", "gt:0", "lte:100"],
-            "area" => ["required", "numeric", "gt:0", "lte:10000"],
-            "kitchen_area" => ["required", "numeric", "gt:0", "lte:10000", "lte:area"],
-            "land_area" => ["required", "numeric", "gt:0", "lte:10000"],
+            "room_count" => ["required", "numeric", "integer", "gt:0", "lte:100"],
+            "area" => ["required", "numeric", "integer", "gt:0", "lte:10000"],
+            "kitchen_area" => ["required", "numeric", "integer", "gt:0", "lte:10000", "lte:area"],
+            "land_area" => ["required", "numeric", "integer", "gt:0", "lte:10000"],
         ];
     }
 }

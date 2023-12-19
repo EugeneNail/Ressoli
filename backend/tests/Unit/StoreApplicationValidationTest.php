@@ -50,6 +50,7 @@ class StoreApplicationValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["client_id", "1"]));
         $this->assertFalse($this->validate(["client_id", 0]));
         $this->assertFalse($this->validate(["client_id", -1]));
+        $this->assertFalse($this->validate(["client_id", 0.99]));
         $this->assertFalse($this->validate(["client_id", 999]));
     }
 
@@ -64,6 +65,7 @@ class StoreApplicationValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["address_id", "1"]));
         $this->assertFalse($this->validate(["address_id", 0]));
         $this->assertFalse($this->validate(["address_id", -1]));
+        $this->assertFalse($this->validate(["address_id", 0.99]));
         $this->assertFalse($this->validate(["address_id", 999]));
     }
 
@@ -77,6 +79,7 @@ class StoreApplicationValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["applicable_id", null]));
         $this->assertFalse($this->validate(["applicable_id", 0]));
         $this->assertFalse($this->validate(["applicable_id", -1]));
+        $this->assertFalse($this->validate(["applicable_id", 0.99]));
         $this->assertFalse($this->validate(["applicable_id", "test"]));
     }
 
@@ -90,6 +93,7 @@ class StoreApplicationValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["applicable_id", null]));
         $this->assertFalse($this->validate(["applicable_id", 0]));
         $this->assertFalse($this->validate(["applicable_id", -1]));
+        $this->assertFalse($this->validate(["applicable_id", 0.99]));
         $this->assertFalse($this->validate(["applicable_id", "test"]));
     }
 
@@ -103,6 +107,7 @@ class StoreApplicationValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["applicable_id", null]));
         $this->assertFalse($this->validate(["applicable_id", 0]));
         $this->assertFalse($this->validate(["applicable_id", -1]));
+        $this->assertFalse($this->validate(["applicable_id", 0.99]));
         $this->assertFalse($this->validate(["applicable_id", "test"]));
     }
 
@@ -130,6 +135,7 @@ class StoreApplicationValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["price", "test"]));
         $this->assertFalse($this->validate(["price", 0]));
         $this->assertFalse($this->validate(["price", -1]));
+        $this->assertFalse($this->validate(["price", 1.01]));
         $this->assertFalse($this->validate(["price", 10000001]));
     }
 

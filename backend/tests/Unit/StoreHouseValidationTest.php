@@ -119,6 +119,7 @@ class StoreHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["level_count", ""]));
         $this->assertFalse($this->validate(["level_count", -1]));
         $this->assertFalse($this->validate(["level_count", 0]));
+        $this->assertFalse($this->validate(["level_count", 0.99]));
         $this->assertFalse($this->validate(["level_count", 101]));
     }
 
@@ -128,10 +129,11 @@ class StoreHouseValidationTest extends ValidationTestCase {
     }
 
     public function test_area_invalid_data_failure(): void {
-        $this->assertFalse($this->validate(["area", null], ["kitchen_area", null]));
-        $this->assertFalse($this->validate(["area", ""], ["kitchen_area", ""]));
-        $this->assertFalse($this->validate(["area", -1], ["kitchen_area", -1]));
-        $this->assertFalse($this->validate(["area", 0], ["kitchen_area", 0]));
+        $this->assertFalse($this->validate(["area", null],  ["kitchen_area", null]));
+        $this->assertFalse($this->validate(["area", ""],    ["kitchen_area", ""]));
+        $this->assertFalse($this->validate(["area", -1],    ["kitchen_area", -1]));
+        $this->assertFalse($this->validate(["area", 0],     ["kitchen_area", 0]));
+        $this->assertFalse($this->validate(["area", 1.01], ["kitchen_area", 1]));
         $this->assertFalse($this->validate(["area", 10001], ["kitchen_area", 1]));
     }
 
@@ -145,6 +147,7 @@ class StoreHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", ""]));
         $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", -1]));
         $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 0]));
+        $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 0.99]));
         $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 10001]));
         $this->assertFalse($this->validate(["area", 1], ["kitchen_area", 2]));
         $this->assertFalse($this->validate(["area", 9999], ["kitchen_area", 10000]));
@@ -203,6 +206,7 @@ class StoreHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["room_count", ""]));
         $this->assertFalse($this->validate(["room_count", -1]));
         $this->assertFalse($this->validate(["room_count", 0]));
+        $this->assertFalse($this->validate(["room_count", 1.99]));
         $this->assertFalse($this->validate(["room_count", 101]));
     }
 
@@ -215,6 +219,7 @@ class StoreHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["land_area", ""]));
         $this->assertFalse($this->validate(["land_area", -1]));
         $this->assertFalse($this->validate(["land_area", 0]));
+        $this->assertFalse($this->validate(["land_area", 1.99]));
         $this->assertFalse($this->validate(["land_area", 10001]));
     }
 

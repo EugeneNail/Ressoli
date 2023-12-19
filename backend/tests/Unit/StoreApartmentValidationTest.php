@@ -145,18 +145,20 @@ class StoreApartmentValidationTest extends ValidationTestCase {
     }
 
     public function test_level_valid_data_success(): void {
-        $this->assertTrue($this->validate(["level", 1], ["level_count", 100]));
+        $this->assertTrue($this->validate(["level", 1],   ["level_count", 100]));
         $this->assertTrue($this->validate(["level", 100], ["level_count", 100]));
     }
 
     public function test_level_invalid_data_failure(): void {
         $this->assertFalse($this->validate(["level", null], ["level_count", 100]));
-        $this->assertFalse($this->validate(["level", ""], ["level_count", 100]));
-        $this->assertFalse($this->validate(["level", -1], ["level_count", 100]));
-        $this->assertFalse($this->validate(["level", 0], ["level_count", 100]));
-        $this->assertFalse($this->validate(["level", 101], ["level_count", 100]));
-        $this->assertFalse($this->validate(["level", 5], ["level_count", 4]));
-        $this->assertFalse($this->validate(["level", 100], ["level_count", 99]));
+        $this->assertFalse($this->validate(["level", ""],   ["level_count", 100]));
+        $this->assertFalse($this->validate(["level", -1],   ["level_count", 100]));
+        $this->assertFalse($this->validate(["level", 0],    ["level_count", 100]));
+        $this->assertFalse($this->validate(["level", 101],  ["level_count", 100]));
+        $this->assertFalse($this->validate(["level", 101],  ["level_count", 100]));
+        $this->assertFalse($this->validate(["level", 5],    ["level_count", 4]));
+        $this->assertFalse($this->validate(["level", 100],  ["level_count", 99]));
+        $this->assertFalse($this->validate(["level", 99.9],  ["level_count", 99]));
     }
 
     public function test_level_count_valid_data_success(): void {
@@ -166,10 +168,11 @@ class StoreApartmentValidationTest extends ValidationTestCase {
 
     public function test_level_count_invalid_data_failure(): void {
         $this->assertFalse($this->validate(["level", null], ["level_count", null]));
-        $this->assertFalse($this->validate(["level", ""], ["level_count", ""]));
-        $this->assertFalse($this->validate(["level", -1], ["level_count", -1]));
-        $this->assertFalse($this->validate(["level", 0], ["level_count", 0]));
-        $this->assertFalse($this->validate(["level", 1], ["level_count", 101]));
+        $this->assertFalse($this->validate(["level", ""],   ["level_count", ""]));
+        $this->assertFalse($this->validate(["level", -1],   ["level_count", -1]));
+        $this->assertFalse($this->validate(["level", 0],    ["level_count", 0]));
+        $this->assertFalse($this->validate(["level", 1],    ["level_count", 101]));
+        $this->assertFalse($this->validate(["level", 1],    ["level_count", 1.01]));
     }
 
     public function test_has_heating_valid_data_success(): void {
@@ -244,6 +247,7 @@ class StoreApartmentValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["area", ""]));
         $this->assertFalse($this->validate(["area", -1]));
         $this->assertFalse($this->validate(["area", 0]));
+        $this->assertFalse($this->validate(["area", 9999.9]));
         $this->assertFalse($this->validate(["area", 10001]));
     }
 
@@ -259,6 +263,7 @@ class StoreApartmentValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["room_count", true]));
         $this->assertFalse($this->validate(["room_count", false]));
         $this->assertFalse($this->validate(["room_count", 0]));
+        $this->assertFalse($this->validate(["room_count", 99.9]));
         $this->assertFalse($this->validate(["room_count", 101]));
     }
 

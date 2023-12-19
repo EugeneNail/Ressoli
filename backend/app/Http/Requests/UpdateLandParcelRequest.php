@@ -28,7 +28,7 @@ class UpdateLandParcelRequest extends FormRequest {
             "electricity" => ["required", "string", Rule::in($options["electricity"])],
             "water" => ["required", "string", Rule::in($options["water"])],
             "sewer" => ["required", "string", Rule::in($options["sewer"])],
-            "area" => ["required", "numeric", "gt:0", "lte:10000"]
+            "area" => ["required", "numeric", "integer", "gt:0", "lte:10000"]
         ];
     }
 }

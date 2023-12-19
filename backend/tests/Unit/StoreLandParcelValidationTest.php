@@ -25,9 +25,6 @@ class StoreLandParcelValidationTest extends ValidationTestCase {
 
     public function test_water_valid_data_success(): void {
         $this->assertTrue($this->validate(["water", $this->options["water"][0]]));
-        $this->assertTrue($this->validate(["water", "None"]));
-        $this->assertTrue($this->validate(["water", "On the boundary"]));
-        $this->assertTrue($this->validate(["water", "Well"]));
     }
 
     public function test_water_invalid_data_failure(): void {
@@ -74,12 +71,8 @@ class StoreLandParcelValidationTest extends ValidationTestCase {
     }
 
     public function test_area_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("area", null));
-        $this->assertFalse($this->validateField("area", ""));
-        $this->assertFalse($this->validateField("area", "aosdlasd"));
-        $this->assertFalse($this->validateField("area", 0));
-        $this->assertFalse($this->validateField("area", -1));
-        $this->assertFalse($this->validateField("area", 10001));
+        $this->assertFalse($this->validate(["area", 100.123123]));
+        $this->assertFalse($this->validate(["area", 9999.999]));
         $this->assertFalse($this->validate(["area", null]));
         $this->assertFalse($this->validate(["area", ""]));
         $this->assertFalse($this->validate(["area", "aosdlasd"]));

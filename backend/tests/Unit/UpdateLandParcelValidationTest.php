@@ -23,13 +23,13 @@ class UpdateLandParcelValidationTest extends ValidationTestCase {
 
     public function test_water_valid_data_success(): void {
         $this->assertTrue($this->validate(["water", $this->options["water"][0]]));
-        $this->assertTrue($this->validate(["water", "None"]));
-        $this->assertTrue($this->validate(["water", "On the boundary"]));
-        $this->assertTrue($this->validate(["water", "Well"]));
     }
 
     public function test_water_invalid_data_failure(): void {
         $this->assertFalse($this->validate(["water", null]));
+        $this->assertFalse($this->validate(["water", ""]));
+        $this->assertFalse($this->validate(["water", "aosdlasd"]));
+        $this->assertFalse($this->validate(["water", 1234]));
     }
 
     public function test_gas_valid_data_success(): void {
@@ -72,6 +72,8 @@ class UpdateLandParcelValidationTest extends ValidationTestCase {
     }
 
     public function test_area_invalid_data_failure(): void {
+        $this->assertFalse($this->validate(["area", 100.123123]));
+        $this->assertFalse($this->validate(["area", 9999.999]));
         $this->assertFalse($this->validate(["area", null]));
         $this->assertFalse($this->validate(["area", ""]));
         $this->assertFalse($this->validate(["area", "aosdlasd"]));

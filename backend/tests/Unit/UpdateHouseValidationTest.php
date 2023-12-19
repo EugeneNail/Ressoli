@@ -123,6 +123,7 @@ class UpdateHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["level_count", ""]));
         $this->assertFalse($this->validate(["level_count", -1]));
         $this->assertFalse($this->validate(["level_count", 0]));
+        $this->assertFalse($this->validate(["level_count", 1.99]));
         $this->assertFalse($this->validate(["level_count", 101]));
     }
 
@@ -131,6 +132,7 @@ class UpdateHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["area", ""], ["kitchen_area", ""]));
         $this->assertFalse($this->validate(["area", -1], ["kitchen_area", -1]));
         $this->assertFalse($this->validate(["area", 0], ["kitchen_area", 0]));
+        $this->assertFalse($this->validate(["area", 1.99], ["kitchen_area", 1]));
         $this->assertFalse($this->validate(["area", 10001], ["kitchen_area", 1]));
     }
 
@@ -145,6 +147,7 @@ class UpdateHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", -1]));
         $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 0]));
         $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 10001]));
+        $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 1.99]));
         $this->assertFalse($this->validate(["area", 1], ["kitchen_area", 2]));
         $this->assertFalse($this->validate(["area", 9999], ["kitchen_area", 10000]));
     }
@@ -204,6 +207,7 @@ class UpdateHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["room_count", -1]));
         $this->assertFalse($this->validate(["room_count", 0]));
         $this->assertFalse($this->validate(["room_count", 101]));
+        $this->assertFalse($this->validate(["room_count", 1.99]));
     }
 
     public function test_land_area_valid_data_success(): void {
@@ -217,6 +221,7 @@ class UpdateHouseValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["land_area", -1]));
         $this->assertFalse($this->validate(["land_area", 0]));
         $this->assertFalse($this->validate(["land_area", 10001]));
+        $this->assertFalse($this->validate(["land_area", 1.99]));
     }
 
     public function test_has_garage_valid_data_success(): void {
