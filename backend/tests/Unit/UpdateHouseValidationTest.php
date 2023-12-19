@@ -10,7 +10,7 @@ use Database\Seeders\HouseOptionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
-class UpdateHouseValidationTest extends RequestValidationTest {
+class UpdateHouseValidationTest extends ValidationTestCase {
     use RefreshDatabase;
 
     private array $data;
@@ -26,217 +26,216 @@ class UpdateHouseValidationTest extends RequestValidationTest {
     }
 
     public function test_water_valid_data_success(): void {
-
-        $this->assertTrue($this->validateField("water", $this->options["water"][0]));
+        $this->assertTrue($this->validate(["water", $this->options["water"][0]]));
     }
 
     public function test_water_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("water", null));
-        $this->assertFalse($this->validateField("water", ""));
-        $this->assertFalse($this->validateField("water", 123));
-        $this->assertFalse($this->validateField("water", "Invalid"));
+        $this->assertFalse($this->validate(["water", null]));
+        $this->assertFalse($this->validate(["water", ""]));
+        $this->assertFalse($this->validate(["water", 123]));
+        $this->assertFalse($this->validate(["water", "Invalid"]));
     }
 
     public function test_gas_valid_data_success(): void {
-        $this->assertTrue($this->validateField("gas", $this->options["gas"][0]));
+        $this->assertTrue($this->validate(["gas", $this->options["gas"][0]]));
     }
 
     public function test_gas_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("gas", null));
-        $this->assertFalse($this->validateField("gas", ""));
-        $this->assertFalse($this->validateField("gas", 123));
-        $this->assertFalse($this->validateField("gas", "Invalid"));
+        $this->assertFalse($this->validate(["gas", null]));
+        $this->assertFalse($this->validate(["gas", ""]));
+        $this->assertFalse($this->validate(["gas", 123]));
+        $this->assertFalse($this->validate(["gas", "Invalid"]));
     }
 
     public function test_electricity_valid_data_success(): void {
-        $this->assertTrue($this->validateField("electricity", $this->options["electricity"][0]));
+        $this->assertTrue($this->validate(["electricity", $this->options["electricity"][0]]));
     }
 
     public function test_electricity_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("electricity", null));
-        $this->assertFalse($this->validateField("electricity", ""));
-        $this->assertFalse($this->validateField("electricity", 123));
-        $this->assertFalse($this->validateField("electricity", "Invalid"));
+        $this->assertFalse($this->validate(["electricity", null]));
+        $this->assertFalse($this->validate(["electricity", ""]));
+        $this->assertFalse($this->validate(["electricity", 123]));
+        $this->assertFalse($this->validate(["electricity", "Invalid"]));
     }
 
     public function test_sewer_valid_data_success(): void {
-        $this->assertTrue($this->validateField("sewer", $this->options["sewer"][0]));
+        $this->assertTrue($this->validate(["sewer", $this->options["sewer"][0]]));
     }
 
     public function test_sewer_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("sewer", null));
-        $this->assertFalse($this->validateField("sewer", ""));
-        $this->assertFalse($this->validateField("sewer", 123));
-        $this->assertFalse($this->validateField("sewer", "Invalid"));
+        $this->assertFalse($this->validate(["sewer", null]));
+        $this->assertFalse($this->validate(["sewer", ""]));
+        $this->assertFalse($this->validate(["sewer", 123]));
+        $this->assertFalse($this->validate(["sewer", "Invalid"]));
     }
 
     public function test_walls_valid_data_success(): void {
-        $this->assertTrue($this->validateField("walls", $this->options["walls"][0]));
+        $this->assertTrue($this->validate(["walls", $this->options["walls"][0]]));
     }
 
     public function test_walls_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("walls", null));
-        $this->assertFalse($this->validateField("walls", ""));
-        $this->assertFalse($this->validateField("walls", 123));
-        $this->assertFalse($this->validateField("walls", "Invalid"));
+        $this->assertFalse($this->validate(["walls", null]));
+        $this->assertFalse($this->validate(["walls", ""]));
+        $this->assertFalse($this->validate(["walls", 123]));
+        $this->assertFalse($this->validate(["walls", "Invalid"]));
     }
 
     public function test_condition_valid_data_success(): void {
-        $this->assertTrue($this->validateField("condition", $this->options["condition"][0]));
+        $this->assertTrue($this->validate(["condition", $this->options["condition"][0]]));
     }
 
     public function test_condition_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("condition", null));
-        $this->assertFalse($this->validateField("condition", ""));
-        $this->assertFalse($this->validateField("condition", 123));
-        $this->assertFalse($this->validateField("condition", "Invalid"));
+        $this->assertFalse($this->validate(["condition", null]));
+        $this->assertFalse($this->validate(["condition", ""]));
+        $this->assertFalse($this->validate(["condition", 123]));
+        $this->assertFalse($this->validate(["condition", "Invalid"]));
     }
 
     public function test_roof_valid_data_success(): void {
-        $this->assertTrue($this->validateField("roof", $this->options["roof"][0]));
+        $this->assertTrue($this->validate(["roof", $this->options["roof"][0]]));
     }
 
     public function test_roof_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("roof", null));
-        $this->assertFalse($this->validateField("roof", ""));
-        $this->assertFalse($this->validateField("roof", 123));
-        $this->assertFalse($this->validateField("roof", "Invalid"));
+        $this->assertFalse($this->validate(["roof", null]));
+        $this->assertFalse($this->validate(["roof", ""]));
+        $this->assertFalse($this->validate(["roof", 123]));
+        $this->assertFalse($this->validate(["roof", "Invalid"]));
     }
 
     public function test_floor_valid_data_success(): void {
-        $this->assertTrue($this->validateField("floor", $this->options["floor"][0]));
+        $this->assertTrue($this->validate(["floor", $this->options["floor"][0]]));
     }
 
     public function test_floor_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("floor", null));
-        $this->assertFalse($this->validateField("floor", ""));
-        $this->assertFalse($this->validateField("floor", 123));
-        $this->assertFalse($this->validateField("floor", "Invalid"));
+        $this->assertFalse($this->validate(["floor", null]));
+        $this->assertFalse($this->validate(["floor", ""]));
+        $this->assertFalse($this->validate(["floor", 123]));
+        $this->assertFalse($this->validate(["floor", "Invalid"]));
     }
 
     public function test_level_count_valid_data_success(): void {
-        $this->assertTrue($this->validateField("level_count", 1));
-        $this->assertTrue($this->validateField("level_count", 100));
+        $this->assertTrue($this->validate(["level_count", 1]));
+        $this->assertTrue($this->validate(["level_count", 100]));
     }
 
     public function test_level_count_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("level_count", null));
-        $this->assertFalse($this->validateField("level_count", ""));
-        $this->assertFalse($this->validateField("level_count", -1));
-        $this->assertFalse($this->validateField("level_count", 0));
-        $this->assertFalse($this->validateField("level_count", 101));
+        $this->assertFalse($this->validate(["level_count", null]));
+        $this->assertFalse($this->validate(["level_count", ""]));
+        $this->assertFalse($this->validate(["level_count", -1]));
+        $this->assertFalse($this->validate(["level_count", 0]));
+        $this->assertFalse($this->validate(["level_count", 101]));
     }
 
     public function test_area_invalid_data_failure(): void {
-        $this->assertFalse($this->validateMultipleFields(["area", null],  ["kitchen_area", null]));
-        $this->assertFalse($this->validateMultipleFields(["area", ""],    ["kitchen_area", ""]));
-        $this->assertFalse($this->validateMultipleFields(["area", -1],    ["kitchen_area", -1]));
-        $this->assertFalse($this->validateMultipleFields(["area", 0],     ["kitchen_area", 0]));
-        $this->assertFalse($this->validateMultipleFields(["area", 10001], ["kitchen_area", 1]));
+        $this->assertFalse($this->validate(["area", null], ["kitchen_area", null]));
+        $this->assertFalse($this->validate(["area", ""], ["kitchen_area", ""]));
+        $this->assertFalse($this->validate(["area", -1], ["kitchen_area", -1]));
+        $this->assertFalse($this->validate(["area", 0], ["kitchen_area", 0]));
+        $this->assertFalse($this->validate(["area", 10001], ["kitchen_area", 1]));
     }
 
     public function test_kitchen_area_valid_data_success(): void {
-        $this->assertTrue($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 1]));
-        $this->assertTrue($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 10000]));
+        $this->assertTrue($this->validate(["area", 10000], ["kitchen_area", 1]));
+        $this->assertTrue($this->validate(["area", 10000], ["kitchen_area", 10000]));
     }
 
     public function test_kitchen_area_invalid_data_failure(): void {
-        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", null]));
-        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", ""]));
-        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", -1]));
-        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 0]));
-        $this->assertFalse($this->validateMultipleFields(["area", 10000],     ["kitchen_area", 10001]));
-        $this->assertFalse($this->validateMultipleFields(["area", 1],         ["kitchen_area", 2]));
-        $this->assertFalse($this->validateMultipleFields(["area", 9999],      ["kitchen_area", 10000]));
+        $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", null]));
+        $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", ""]));
+        $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", -1]));
+        $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 0]));
+        $this->assertFalse($this->validate(["area", 10000], ["kitchen_area", 10001]));
+        $this->assertFalse($this->validate(["area", 1], ["kitchen_area", 2]));
+        $this->assertFalse($this->validate(["area", 9999], ["kitchen_area", 10000]));
     }
 
     public function test_hot_water_valid_data_success(): void {
-        $this->assertTrue($this->validateField("hot_water", $this->options["hot_water"][0]));
+        $this->assertTrue($this->validate(["hot_water", $this->options["hot_water"][0]]));
     }
 
     public function test_hot_water_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("hot_water", null));
-        $this->assertFalse($this->validateField("hot_water", ""));
-        $this->assertFalse($this->validateField("hot_water", 123));
-        $this->assertFalse($this->validateField("hot_water", "Invalid"));
+        $this->assertFalse($this->validate(["hot_water", null]));
+        $this->assertFalse($this->validate(["hot_water", ""]));
+        $this->assertFalse($this->validate(["hot_water", 123]));
+        $this->assertFalse($this->validate(["hot_water", "Invalid"]));
     }
 
     public function test_heating_valid_data_success(): void {
-        $this->assertTrue($this->validateField("heating", $this->options["heating"][0]));
+        $this->assertTrue($this->validate(["heating", $this->options["heating"][0]]));
     }
 
     public function test_heating_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("heating", null));
-        $this->assertFalse($this->validateField("heating", ""));
-        $this->assertFalse($this->validateField("heating", 123));
-        $this->assertFalse($this->validateField("heating", "Invalid"));
+        $this->assertFalse($this->validate(["heating", null]));
+        $this->assertFalse($this->validate(["heating", ""]));
+        $this->assertFalse($this->validate(["heating", 123]));
+        $this->assertFalse($this->validate(["heating", "Invalid"]));
     }
 
     public function test_bath_valid_data_success(): void {
-        $this->assertTrue($this->validateField("bath", $this->options["bath"][0]));
+        $this->assertTrue($this->validate(["bath", $this->options["bath"][0]]));
     }
 
     public function test_bath_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("bath", null));
-        $this->assertFalse($this->validateField("bath", ""));
-        $this->assertFalse($this->validateField("bath", 123));
-        $this->assertFalse($this->validateField("bath", "Invalid"));
+        $this->assertFalse($this->validate(["bath", null]));
+        $this->assertFalse($this->validate(["bath", ""]));
+        $this->assertFalse($this->validate(["bath", 123]));
+        $this->assertFalse($this->validate(["bath", "Invalid"]));
     }
 
     public function test_bathroom_valid_data_success(): void {
-        $this->assertTrue($this->validateField("bathroom", $this->options["bathroom"][0]));
+        $this->assertTrue($this->validate(["bathroom", $this->options["bathroom"][0]]));
     }
 
     public function test_bathroom_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("bathroom", null));
-        $this->assertFalse($this->validateField("bathroom", ""));
-        $this->assertFalse($this->validateField("bathroom", 123));
-        $this->assertFalse($this->validateField("bathroom", "Invalid"));
+        $this->assertFalse($this->validate(["bathroom", null]));
+        $this->assertFalse($this->validate(["bathroom", ""]));
+        $this->assertFalse($this->validate(["bathroom", 123]));
+        $this->assertFalse($this->validate(["bathroom", "Invalid"]));
     }
 
     public function test_room_count_valid_data_success(): void {
-        $this->assertTrue($this->validateField("room_count", 1));
-        $this->assertTrue($this->validateField("room_count", 100));
+        $this->assertTrue($this->validate(["room_count", 1]));
+        $this->assertTrue($this->validate(["room_count", 100]));
     }
 
     public function test_room_count_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("room_count", null));
-        $this->assertFalse($this->validateField("room_count", ""));
-        $this->assertFalse($this->validateField("room_count", -1));
-        $this->assertFalse($this->validateField("room_count", 0));
-        $this->assertFalse($this->validateField("room_count", 101));
+        $this->assertFalse($this->validate(["room_count", null]));
+        $this->assertFalse($this->validate(["room_count", ""]));
+        $this->assertFalse($this->validate(["room_count", -1]));
+        $this->assertFalse($this->validate(["room_count", 0]));
+        $this->assertFalse($this->validate(["room_count", 101]));
     }
 
     public function test_land_area_valid_data_success(): void {
-        $this->assertTrue($this->validateField("land_area", 1));
-        $this->assertTrue($this->validateField("land_area", 9999));
+        $this->assertTrue($this->validate(["land_area", 1]));
+        $this->assertTrue($this->validate(["land_area", 9999]));
     }
 
     public function test_land_area_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("land_area", null));
-        $this->assertFalse($this->validateField("land_area", ""));
-        $this->assertFalse($this->validateField("land_area", -1));
-        $this->assertFalse($this->validateField("land_area", 0));
-        $this->assertFalse($this->validateField("land_area", 10001));
+        $this->assertFalse($this->validate(["land_area", null]));
+        $this->assertFalse($this->validate(["land_area", ""]));
+        $this->assertFalse($this->validate(["land_area", -1]));
+        $this->assertFalse($this->validate(["land_area", 0]));
+        $this->assertFalse($this->validate(["land_area", 10001]));
     }
 
     public function test_has_garage_valid_data_success(): void {
-        $this->assertTrue($this->validateField("has_garage", true));
-        $this->assertTrue($this->validateField("has_garage", false));
-        $this->assertTrue($this->validateField("has_garage", 1));
-        $this->assertTrue($this->validateField("has_garage", 0));
-        $this->assertTrue($this->validateField("has_garage", "1"));
-        $this->assertTrue($this->validateField("has_garage", "0"));
+        $this->assertTrue($this->validate(["has_garage", true]));
+        $this->assertTrue($this->validate(["has_garage", false]));
+        $this->assertTrue($this->validate(["has_garage", 1]));
+        $this->assertTrue($this->validate(["has_garage", 0]));
+        $this->assertTrue($this->validate(["has_garage", "1"]));
+        $this->assertTrue($this->validate(["has_garage", "0"]));
     }
 
     public function test_has_garage_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("has_garage", null));
-        $this->assertFalse($this->validateField("has_garage", ""));
-        $this->assertFalse($this->validateField("has_garage", -1));
-        $this->assertFalse($this->validateField("has_garage", "asdasdasd"));
-        $this->assertFalse($this->validateField("has_garage", "on"));
-        $this->assertFalse($this->validateField("has_garage", "off"));
-        $this->assertFalse($this->validateField("has_garage", "yes"));
-        $this->assertFalse($this->validateField("has_garage", "no"));
+        $this->assertFalse($this->validate(["has_garage", null]));
+        $this->assertFalse($this->validate(["has_garage", ""]));
+        $this->assertFalse($this->validate(["has_garage", -1]));
+        $this->assertFalse($this->validate(["has_garage", "asdasdasd"]));
+        $this->assertFalse($this->validate(["has_garage", "on"]));
+        $this->assertFalse($this->validate(["has_garage", "off"]));
+        $this->assertFalse($this->validate(["has_garage", "yes"]));
+        $this->assertFalse($this->validate(["has_garage", "no"]));
     }
 }

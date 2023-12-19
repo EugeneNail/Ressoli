@@ -14,7 +14,7 @@ use Database\Seeders\StaticDataSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
-class StoreApplicationValidationTest extends RequestValidationTest {
+class StoreApplicationValidationTest extends ValidationTestCase {
 
     use RefreshDatabase;
 
@@ -41,115 +41,115 @@ class StoreApplicationValidationTest extends RequestValidationTest {
 
     public function test_client_id_valid_data_success(): void {
         $client = Client::factory()->create();
-        $this->assertTrue($this->validateField("client_id", $client->id));
+        $this->assertTrue($this->validate(["client_id", $client->id]));
     }
 
     public function test_client_id_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("client_id", null));
-        $this->assertFalse($this->validateField("client_id", ""));
-        $this->assertFalse($this->validateField("client_id", "1"));
-        $this->assertFalse($this->validateField("client_id", 0));
-        $this->assertFalse($this->validateField("client_id", -1));
-        $this->assertFalse($this->validateField("client_id", 999));
+        $this->assertFalse($this->validate(["client_id", null]));
+        $this->assertFalse($this->validate(["client_id", ""]));
+        $this->assertFalse($this->validate(["client_id", "1"]));
+        $this->assertFalse($this->validate(["client_id", 0]));
+        $this->assertFalse($this->validate(["client_id", -1]));
+        $this->assertFalse($this->validate(["client_id", 999]));
     }
 
     public function test_address_id_valid_data_success(): void {
         $address = Address::factory()->create();
-        $this->assertTrue($this->validateField("address_id", $address->id));
+        $this->assertTrue($this->validate(["address_id", $address->id]));
     }
 
     public function test_address_id_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("address_id", null));
-        $this->assertFalse($this->validateField("address_id", ""));
-        $this->assertFalse($this->validateField("address_id", "1"));
-        $this->assertFalse($this->validateField("address_id", 0));
-        $this->assertFalse($this->validateField("address_id", -1));
-        $this->assertFalse($this->validateField("address_id", 999));
+        $this->assertFalse($this->validate(["address_id", null]));
+        $this->assertFalse($this->validate(["address_id", ""]));
+        $this->assertFalse($this->validate(["address_id", "1"]));
+        $this->assertFalse($this->validate(["address_id", 0]));
+        $this->assertFalse($this->validate(["address_id", -1]));
+        $this->assertFalse($this->validate(["address_id", 999]));
     }
 
     public function test_land_parcel_id_valid_data_success(): void {
         $this->setRulesFor("land-parcel");
-        $this->assertTrue($this->validateField("applicable_id", $this->landParcelId));
+        $this->assertTrue($this->validate(["applicable_id", $this->landParcelId]));
     }
 
     public function test_land_parcel_id_invalid_data_failure(): void {
         $this->setRulesFor("land-parcel");
-        $this->assertFalse($this->validateField("applicable_id", null));
-        $this->assertFalse($this->validateField("applicable_id", 0));
-        $this->assertFalse($this->validateField("applicable_id", -1));
-        $this->assertFalse($this->validateField("applicable_id", "test"));
+        $this->assertFalse($this->validate(["applicable_id", null]));
+        $this->assertFalse($this->validate(["applicable_id", 0]));
+        $this->assertFalse($this->validate(["applicable_id", -1]));
+        $this->assertFalse($this->validate(["applicable_id", "test"]));
     }
 
     public function test_house_id_valid_data_success(): void {
         $this->setRulesFor("house");
-        $this->assertTrue($this->validateField("applicable_id", $this->houseId));
+        $this->assertTrue($this->validate(["applicable_id", $this->houseId]));
     }
 
     public function test_house_id_invalid_data_failure(): void {
         $this->setRulesFor("house");
-        $this->assertFalse($this->validateField("applicable_id", null));
-        $this->assertFalse($this->validateField("applicable_id", 0));
-        $this->assertFalse($this->validateField("applicable_id", -1));
-        $this->assertFalse($this->validateField("applicable_id", "test"));
+        $this->assertFalse($this->validate(["applicable_id", null]));
+        $this->assertFalse($this->validate(["applicable_id", 0]));
+        $this->assertFalse($this->validate(["applicable_id", -1]));
+        $this->assertFalse($this->validate(["applicable_id", "test"]));
     }
 
     public function test_apartment_id_valid_data_success(): void {
         $this->setRulesFor("apartment");
-        $this->assertTrue($this->validateField("applicable_id", $this->apartmentId));
+        $this->assertTrue($this->validate(["applicable_id", $this->apartmentId]));
     }
 
     public function test_apartment_id_invalid_data_failure(): void {
         $this->setRulesFor("apartment");
-        $this->assertFalse($this->validateField("applicable_id", null));
-        $this->assertFalse($this->validateField("applicable_id", 0));
-        $this->assertFalse($this->validateField("applicable_id", -1));
-        $this->assertFalse($this->validateField("applicable_id", "test"));
+        $this->assertFalse($this->validate(["applicable_id", null]));
+        $this->assertFalse($this->validate(["applicable_id", 0]));
+        $this->assertFalse($this->validate(["applicable_id", -1]));
+        $this->assertFalse($this->validate(["applicable_id", "test"]));
     }
 
     public function test_contract_valid_data_success(): void {
         $options = app()->make(GetOptions::class)->run(Application::class);
-        $this->assertTrue($this->validateField("contract", $options["contract"][0]));
+        $this->assertTrue($this->validate(["contract", $options["contract"][0]]));
     }
 
     public function test_contract_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("contract", null));
-        $this->assertFalse($this->validateField("contract", ""));
-        $this->assertFalse($this->validateField("contract", 123));
-        $this->assertFalse($this->validateField("contract", "Invalid"));
+        $this->assertFalse($this->validate(["contract", null]));
+        $this->assertFalse($this->validate(["contract", ""]));
+        $this->assertFalse($this->validate(["contract", 123]));
+        $this->assertFalse($this->validate(["contract", "Invalid"]));
     }
 
     public function test_price_valid_data_success(): void {
-        $this->assertTrue($this->validateField("price", 1));
-        $this->assertTrue($this->validateField("price", 10000000));
-        $this->assertTrue($this->validateField("price", 1234567));
+        $this->assertTrue($this->validate(["price", 1]));
+        $this->assertTrue($this->validate(["price", 10000000]));
+        $this->assertTrue($this->validate(["price", 1234567]));
     }
 
     public function test_price_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("price", null));
-        $this->assertFalse($this->validateField("price", ""));
-        $this->assertFalse($this->validateField("price", "test"));
-        $this->assertFalse($this->validateField("price", 0));
-        $this->assertFalse($this->validateField("price", -1));
-        $this->assertFalse($this->validateField("price", 10000001));
+        $this->assertFalse($this->validate(["price", null]));
+        $this->assertFalse($this->validate(["price", ""]));
+        $this->assertFalse($this->validate(["price", "test"]));
+        $this->assertFalse($this->validate(["price", 0]));
+        $this->assertFalse($this->validate(["price", -1]));
+        $this->assertFalse($this->validate(["price", 10000001]));
     }
 
     public function test_has_mortgage_valid_data_success(): void {
-        $this->assertTrue($this->validateField("has_mortgage", true));
-        $this->assertTrue($this->validateField("has_mortgage", false));
-        $this->assertTrue($this->validateField("has_mortgage", 1));
-        $this->assertTrue($this->validateField("has_mortgage", 0));
-        $this->assertTrue($this->validateField("has_mortgage", "1"));
-        $this->assertTrue($this->validateField("has_mortgage", "0"));
+        $this->assertTrue($this->validate(["has_mortgage", true]));
+        $this->assertTrue($this->validate(["has_mortgage", false]));
+        $this->assertTrue($this->validate(["has_mortgage", 1]));
+        $this->assertTrue($this->validate(["has_mortgage", 0]));
+        $this->assertTrue($this->validate(["has_mortgage", "1"]));
+        $this->assertTrue($this->validate(["has_mortgage", "0"]));
     }
 
     public function test_has_mortgage_invalid_data_failure(): void {
-        $this->assertFalse($this->validateField("has_mortgage", -1));
-        $this->assertFalse($this->validateField("has_mortgage", ""));
-        $this->assertFalse($this->validateField("has_mortgage", "asdasdasd"));
-        $this->assertFalse($this->validateField("has_mortgage", "on"));
-        $this->assertFalse($this->validateField("has_mortgage", "off"));
-        $this->assertFalse($this->validateField("has_mortgage", null));
-        $this->assertFalse($this->validateField("has_mortgage", "yes"));
-        $this->assertFalse($this->validateField("has_mortgage", "no"));
+        $this->assertFalse($this->validate(["has_mortgage", -1]));
+        $this->assertFalse($this->validate(["has_mortgage", ""]));
+        $this->assertFalse($this->validate(["has_mortgage", "asdasdasd"]));
+        $this->assertFalse($this->validate(["has_mortgage", "on"]));
+        $this->assertFalse($this->validate(["has_mortgage", "off"]));
+        $this->assertFalse($this->validate(["has_mortgage", null]));
+        $this->assertFalse($this->validate(["has_mortgage", "yes"]));
+        $this->assertFalse($this->validate(["has_mortgage", "no"]));
     }
 }
