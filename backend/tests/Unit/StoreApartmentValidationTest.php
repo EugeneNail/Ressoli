@@ -23,15 +23,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_water_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_water", true));
+        $this->assertTrue($this->validateField("has_water", false));
         $this->assertTrue($this->validateField("has_water", 1));
         $this->assertTrue($this->validateField("has_water", 0));
         $this->assertTrue($this->validateField("has_water", "1"));
         $this->assertTrue($this->validateField("has_water", "0"));
-        $this->assertTrue($this->validateField("has_water", null));
-        $this->assertTrue($this->validateField("has_water", ""));
     }
 
     public function test_has_water_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_water", null));
+        $this->assertFalse($this->validateField("has_water", ""));
         $this->assertFalse($this->validateField("has_water", -1));
         $this->assertFalse($this->validateField("has_water", "asdasdasd"));
         $this->assertFalse($this->validateField("has_water", "on"));
@@ -41,15 +43,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_gas_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_gas", true));
+        $this->assertTrue($this->validateField("has_gas", false));
         $this->assertTrue($this->validateField("has_gas", 1));
         $this->assertTrue($this->validateField("has_gas", 0));
         $this->assertTrue($this->validateField("has_gas", "1"));
         $this->assertTrue($this->validateField("has_gas", "0"));
-        $this->assertTrue($this->validateField("has_gas", null));
-        $this->assertTrue($this->validateField("has_gas", ""));
     }
 
     public function test_has_gas_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_gas", null));
+        $this->assertFalse($this->validateField("has_gas", ""));
         $this->assertFalse($this->validateField("has_gas", -1));
         $this->assertFalse($this->validateField("has_gas", "asdasdasd"));
         $this->assertFalse($this->validateField("has_gas", "on"));
@@ -59,15 +63,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_electricity_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_electricity", true));
+        $this->assertTrue($this->validateField("has_electricity", false));
         $this->assertTrue($this->validateField("has_electricity", 1));
         $this->assertTrue($this->validateField("has_electricity", 0));
         $this->assertTrue($this->validateField("has_electricity", "1"));
         $this->assertTrue($this->validateField("has_electricity", "0"));
-        $this->assertTrue($this->validateField("has_electricity", null));
-        $this->assertTrue($this->validateField("has_electricity", ""));
     }
 
     public function test_has_electricity_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_electricity", null));
+        $this->assertFalse($this->validateField("has_electricity", ""));
         $this->assertFalse($this->validateField("has_electricity", -1));
         $this->assertFalse($this->validateField("has_electricity", "asdasdasd"));
         $this->assertFalse($this->validateField("has_electricity", "on"));
@@ -77,15 +83,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_sewer_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_sewer", true));
+        $this->assertTrue($this->validateField("has_sewer", false));
         $this->assertTrue($this->validateField("has_sewer", 1));
         $this->assertTrue($this->validateField("has_sewer", 0));
         $this->assertTrue($this->validateField("has_sewer", "1"));
         $this->assertTrue($this->validateField("has_sewer", "0"));
-        $this->assertTrue($this->validateField("has_sewer", null));
-        $this->assertTrue($this->validateField("has_sewer", ""));
     }
 
     public function test_has_sewer_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_sewer", null));
+        $this->assertFalse($this->validateField("has_sewer", ""));
         $this->assertFalse($this->validateField("has_sewer", -1));
         $this->assertFalse($this->validateField("has_sewer", "asdasdasd"));
         $this->assertFalse($this->validateField("has_sewer", "on"));
@@ -165,15 +173,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_heating_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_heating", true));
+        $this->assertTrue($this->validateField("has_heating", false));
         $this->assertTrue($this->validateField("has_heating", 1));
         $this->assertTrue($this->validateField("has_heating", 0));
         $this->assertTrue($this->validateField("has_heating", "1"));
         $this->assertTrue($this->validateField("has_heating", "0"));
-        $this->assertTrue($this->validateField("has_heating", null));
-        $this->assertTrue($this->validateField("has_heating", ""));
     }
 
     public function test_has_heating_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_heating", null));
+        $this->assertFalse($this->validateField("has_heating", ""));
         $this->assertFalse($this->validateField("has_heating", -1));
         $this->assertFalse($this->validateField("has_heating", "asdasdasd"));
         $this->assertFalse($this->validateField("has_heating", "on"));
@@ -183,15 +193,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_hot_water_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_hot_water", true));
+        $this->assertTrue($this->validateField("has_hot_water", false));
         $this->assertTrue($this->validateField("has_hot_water", 1));
         $this->assertTrue($this->validateField("has_hot_water", 0));
         $this->assertTrue($this->validateField("has_hot_water", "1"));
         $this->assertTrue($this->validateField("has_hot_water", "0"));
-        $this->assertTrue($this->validateField("has_hot_water", null));
-        $this->assertTrue($this->validateField("has_hot_water", ""));
     }
 
     public function test_has_hot_water_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_hot_water", null));
+        $this->assertFalse($this->validateField("has_hot_water", ""));
         $this->assertFalse($this->validateField("has_hot_water", -1));
         $this->assertFalse($this->validateField("has_hot_water", "asdasdasd"));
         $this->assertFalse($this->validateField("has_hot_water", "on"));
@@ -244,20 +256,24 @@ class StoreApartmentValidationTest extends RequestValidationTest {
         $this->assertFalse($this->validateField("room_count", null));
         $this->assertFalse($this->validateField("room_count", ""));
         $this->assertFalse($this->validateField("room_count", -1));
+        $this->assertFalse($this->validateField("room_count", true));
+        $this->assertFalse($this->validateField("room_count", false));
         $this->assertFalse($this->validateField("room_count", 0));
         $this->assertFalse($this->validateField("room_count", 101));
     }
 
     public function test_has_loggia_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_loggia", true));
+        $this->assertTrue($this->validateField("has_loggia", false));
         $this->assertTrue($this->validateField("has_loggia", 1));
         $this->assertTrue($this->validateField("has_loggia", 0));
         $this->assertTrue($this->validateField("has_loggia", "1"));
         $this->assertTrue($this->validateField("has_loggia", "0"));
-        $this->assertTrue($this->validateField("has_loggia", null));
-        $this->assertTrue($this->validateField("has_loggia", ""));
     }
 
     public function test_has_loggia_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_loggia", null));
+        $this->assertFalse($this->validateField("has_loggia", ""));
         $this->assertFalse($this->validateField("has_loggia", -1));
         $this->assertFalse($this->validateField("has_loggia", "asdasdasd"));
         $this->assertFalse($this->validateField("has_loggia", "on"));
@@ -267,15 +283,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_balcony_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_balcony", true));
+        $this->assertTrue($this->validateField("has_balcony", false));
         $this->assertTrue($this->validateField("has_balcony", 1));
         $this->assertTrue($this->validateField("has_balcony", 0));
         $this->assertTrue($this->validateField("has_balcony", "1"));
         $this->assertTrue($this->validateField("has_balcony", "0"));
-        $this->assertTrue($this->validateField("has_balcony", null));
-        $this->assertTrue($this->validateField("has_balcony", ""));
     }
 
     public function test_has_balcony_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_balcony", null));
+        $this->assertFalse($this->validateField("has_balcony", ""));
         $this->assertFalse($this->validateField("has_balcony", -1));
         $this->assertFalse($this->validateField("has_balcony", "asdasdasd"));
         $this->assertFalse($this->validateField("has_balcony", "on"));
@@ -285,15 +303,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_garage_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_garage", true));
+        $this->assertTrue($this->validateField("has_garage", false));
         $this->assertTrue($this->validateField("has_garage", 1));
         $this->assertTrue($this->validateField("has_garage", 0));
         $this->assertTrue($this->validateField("has_garage", "1"));
         $this->assertTrue($this->validateField("has_garage", "0"));
-        $this->assertTrue($this->validateField("has_garage", null));
-        $this->assertTrue($this->validateField("has_garage", ""));
     }
 
     public function test_has_garage_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_garage", null));
+        $this->assertFalse($this->validateField("has_garage", ""));
         $this->assertFalse($this->validateField("has_garage", -1));
         $this->assertFalse($this->validateField("has_garage", "asdasdasd"));
         $this->assertFalse($this->validateField("has_garage", "on"));
@@ -303,15 +323,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_garbage_chute_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_garbage_chute", true));
+        $this->assertTrue($this->validateField("has_garbage_chute", false));
         $this->assertTrue($this->validateField("has_garbage_chute", 1));
         $this->assertTrue($this->validateField("has_garbage_chute", 0));
         $this->assertTrue($this->validateField("has_garbage_chute", "1"));
         $this->assertTrue($this->validateField("has_garbage_chute", "0"));
-        $this->assertTrue($this->validateField("has_garbage_chute", null));
-        $this->assertTrue($this->validateField("has_garbage_chute", ""));
     }
 
     public function test_has_garbage_chute_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_garbage_chute", null));
+        $this->assertFalse($this->validateField("has_garbage_chute", ""));
         $this->assertFalse($this->validateField("has_garbage_chute", -1));
         $this->assertFalse($this->validateField("has_garbage_chute", "asdasdasd"));
         $this->assertFalse($this->validateField("has_garbage_chute", "on"));
@@ -321,15 +343,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_has_elevator_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_elevator", true));
+        $this->assertTrue($this->validateField("has_elevator", false));
         $this->assertTrue($this->validateField("has_elevator", 1));
         $this->assertTrue($this->validateField("has_elevator", 0));
         $this->assertTrue($this->validateField("has_elevator", "1"));
         $this->assertTrue($this->validateField("has_elevator", "0"));
-        $this->assertTrue($this->validateField("has_elevator", null));
-        $this->assertTrue($this->validateField("has_elevator", ""));
     }
 
     public function test_has_elevator_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_elevator", null));
+        $this->assertFalse($this->validateField("has_elevator", ""));
         $this->assertFalse($this->validateField("has_elevator", -1));
         $this->assertFalse($this->validateField("has_elevator", "asdasdasd"));
         $this->assertFalse($this->validateField("has_elevator", "on"));
@@ -339,15 +363,17 @@ class StoreApartmentValidationTest extends RequestValidationTest {
     }
 
     public function test_is_corner_valid_data_success(): void {
+        $this->assertTrue($this->validateField("is_corner", true));
+        $this->assertTrue($this->validateField("is_corner", false));
         $this->assertTrue($this->validateField("is_corner", 1));
         $this->assertTrue($this->validateField("is_corner", 0));
         $this->assertTrue($this->validateField("is_corner", "1"));
         $this->assertTrue($this->validateField("is_corner", "0"));
-        $this->assertTrue($this->validateField("is_corner", null));
-        $this->assertTrue($this->validateField("is_corner", ""));
     }
 
     public function test_is_corner_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("is_corner", null));
+        $this->assertFalse($this->validateField("is_corner", ""));
         $this->assertFalse($this->validateField("is_corner", -1));
         $this->assertFalse($this->validateField("is_corner", "asdasdasd"));
         $this->assertFalse($this->validateField("is_corner", "on"));

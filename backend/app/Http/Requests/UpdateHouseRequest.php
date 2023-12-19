@@ -33,7 +33,7 @@ class UpdateHouseRequest extends FormRequest {
             "roof" => ["required", "string", Rule::in($options["roof"])],
             "floor" => ["required", "string", Rule::in($options["floor"])],
             "level_count" => ["required", "numeric", "gt:0", "lte:100"],
-            "has_garage" => ["nullable", "boolean"],
+            "has_garage" => ["required", "boolean"],
             "hot_water" => ["required", "string", Rule::in($options["hot_water"])],
             "heating" => ["required", "string", Rule::in($options["heating"])],
             "bath" => ["required", "string", Rule::in($options["bath"])],

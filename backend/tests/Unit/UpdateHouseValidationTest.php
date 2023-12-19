@@ -221,15 +221,17 @@ class UpdateHouseValidationTest extends RequestValidationTest {
     }
 
     public function test_has_garage_valid_data_success(): void {
+        $this->assertTrue($this->validateField("has_garage", true));
+        $this->assertTrue($this->validateField("has_garage", false));
         $this->assertTrue($this->validateField("has_garage", 1));
         $this->assertTrue($this->validateField("has_garage", 0));
         $this->assertTrue($this->validateField("has_garage", "1"));
         $this->assertTrue($this->validateField("has_garage", "0"));
-        $this->assertTrue($this->validateField("has_garage", null));
-        $this->assertTrue($this->validateField("has_garage", ""));
     }
 
     public function test_has_garage_invalid_data_failure(): void {
+        $this->assertFalse($this->validateField("has_garage", null));
+        $this->assertFalse($this->validateField("has_garage", ""));
         $this->assertFalse($this->validateField("has_garage", -1));
         $this->assertFalse($this->validateField("has_garage", "asdasdasd"));
         $this->assertFalse($this->validateField("has_garage", "on"));

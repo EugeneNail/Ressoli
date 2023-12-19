@@ -24,7 +24,6 @@ class ApplicationController extends Controller {
         $applicable = $this->getApplicable($request->applicable, $data->applicable_id);
 
         $application = new Application($data->toArray());
-        $application->has_mortgage = "1";
         $application->user()->associate($request->user());
         $application->client()->associate($client);
         $application->address()->associate($address);
