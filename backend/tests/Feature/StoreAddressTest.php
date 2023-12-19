@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Address;
 use App\Models\User;
 use Database\Seeders\AddressOptionsSeeder;
-use Database\Seeders\StaticDataSeeder;
 use Database\Seeders\TestAddressSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;

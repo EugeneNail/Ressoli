@@ -18,7 +18,8 @@ class Application extends Model {
     ];
 
     protected $casts = [
-        "is_active" => "boolean"
+        "is_active" => "boolean",
+        "has_mortgage",
     ];
 
     public function user(): BelongsTo {

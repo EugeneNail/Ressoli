@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HouseController;
@@ -44,6 +45,10 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::group(["prefix" => "apartments"], function () {
         Route::post("/", [ApartmentController::class, "store"]);
         Route::put("/{apartment}", [ApartmentController::class, "update"]);
+    });
+
+    Route::group(["prefix" => "applications"], function () {
+        Route::post("/", [ApplicationController::class, "store"]);
     });
 
     Route::group(["prefix" => "options"], function () {
