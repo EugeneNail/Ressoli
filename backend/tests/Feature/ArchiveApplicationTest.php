@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Application;
-use Database\Seeders\StaticDataSeeder;
+use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,7 +15,7 @@ class ArchiveApplicationTest extends AuthorizedTestCase {
 
     public function setUp(): void {
         parent::setUp();
-        $this->seed(StaticDataSeeder::class);
+        $this->seed(GlobalOptionsSeeder::class);
         $this->route = "/api/applications/1/archive";
         $this->application = Application::factory()->withHouse()->active()->create();
     }

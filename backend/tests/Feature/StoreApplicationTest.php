@@ -8,7 +8,7 @@ use App\Models\Application;
 use App\Models\Client;
 use App\Models\House;
 use App\Models\LandParcel;
-use Database\Seeders\StaticDataSeeder;
+use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -20,7 +20,7 @@ class StoreApplicationTest extends AuthorizedTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->route = "/api/applications";
-        $this->seed(StaticDataSeeder::class);
+        $this->seed(GlobalOptionsSeeder::class);
     }
 
     public function test_store_invalid_applicable_404(): void {

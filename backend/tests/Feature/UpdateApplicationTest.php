@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Application;
 use App\Models\User;
-use Database\Seeders\StaticDataSeeder;
+use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,7 +16,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->route = "/api/applications";
-        $this->seed(StaticDataSeeder::class);
+        $this->seed(GlobalOptionsSeeder::class);
     }
 
     public function test_update_invalid_data_422(): void {

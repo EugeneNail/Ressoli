@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class StaticDataSeeder extends Seeder {
+class GlobalOptionsSeeder extends Seeder {
 
     use WithoutModelEvents;
     use RefreshDatabase;

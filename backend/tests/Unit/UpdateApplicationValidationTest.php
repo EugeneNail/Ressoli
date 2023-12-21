@@ -10,7 +10,7 @@ use App\Models\Application;
 use App\Models\Client;
 use App\Models\House;
 use App\Models\LandParcel;
-use Database\Seeders\StaticDataSeeder;
+use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Routing\Route;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +27,7 @@ class UpdateApplicationValidationTest extends ValidationTestCase {
 
     public function setUp(): void {
         parent::setUp();
-        $this->seed(StaticDataSeeder::class);
+        $this->seed(GlobalOptionsSeeder::class);
         $this->setRulesFor("land-parcels");
         $this->houseId = House::factory()->create()->id;
         $this->landParcelId = LandParcel::factory()->state(fn () => ["id" => 2])->create()->id;
