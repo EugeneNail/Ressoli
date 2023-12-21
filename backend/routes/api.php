@@ -50,6 +50,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::group(["prefix" => "applications"], function () {
         Route::post("/{applicables}", [ApplicationController::class, "store"]);
         Route::put("/{applicables}/{application}", [ApplicationController::class, "update"]);
+        Route::patch("/{application}/activate", [ApplicationController::class, "activate"]);
+        Route::patch("/{application}/archive", [ApplicationController::class, "archive"]);
     });
 
     Route::group(["prefix" => "options"], function () {

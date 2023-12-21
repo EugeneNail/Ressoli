@@ -66,14 +66,14 @@ class ApplicationFactory extends Factory {
     }
 
     public function active(): static {
-        return $this->state(fn () => [
-            "is_active" => true
-        ]);
+        return $this->state(fn () => ["is_active" => true]);
+    }
+
+    public function inactive(): static {
+        return $this->state(fn () => ["is_active" => false]);
     }
 
     public function withUser(User $user) {
-        return $this->state(fn () => [
-            "user_id" => $user
-        ]);
+        return $this->state(fn () => ["user_id" => $user]);
     }
 }

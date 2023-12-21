@@ -62,4 +62,18 @@ class ApplicationController extends Controller {
 
         return $modelClasses[$applicables]::find($applicableId);
     }
+
+    public function activate(Application $application) {
+        $application->is_active = true;
+        $application->save();
+
+        return response()->noContent();
+    }
+
+    public function archive(Application $application) {
+        $application->is_active = false;
+        $application->save();
+
+        return response()->noContent();
+    }
 }
