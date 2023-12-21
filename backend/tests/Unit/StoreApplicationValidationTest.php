@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Actions\GetOptions;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Models\Address;
 use App\Models\Apartment;
@@ -12,6 +13,8 @@ use App\Models\House;
 use App\Models\LandParcel;
 use Database\Seeders\StaticDataSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use PHPUnit\Framework\TestCase;
 
 class StoreApplicationValidationTest extends ValidationTestCase {
@@ -27,16 +30,20 @@ class StoreApplicationValidationTest extends ValidationTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(StaticDataSeeder::class);
-        $this->setRulesFor("land-parcel");
+        $this->setRulesFor("land-parcels");
         $this->houseId = House::factory()->create()->id;
         $this->landParcelId = LandParcel::factory()->state(fn () => ["id" => 2])->create()->id;
         $this->apartmentId = Apartment::factory()->state(fn () => ["id" => 3])->create()->id;
     }
 
-    private function setRulesFor(string $applicableType): void {
-        $this->rules = (new StoreApplicationRequest())
-            ->merge(["applicable" => $applicableType])
-            ->rules();
+    private function setRulesFor(string $applicables): void {
+        $request = new StoreApplicationRequest([], [], [], [], [], ["REQUEST_URI" => "applications/" . $applicables]);
+
+        $request->setRouteResolver(function () use ($request) {
+            return (new Route("POST", "applications/{applicables}", []))->bind($request);
+        });
+
+        $this->rules = $request->rules();
     }
 
     public function test_client_id_valid_data_success(): void {
@@ -70,12 +77,12 @@ class StoreApplicationValidationTest extends ValidationTestCase {
     }
 
     public function test_land_parcel_id_valid_data_success(): void {
-        $this->setRulesFor("land-parcel");
+        $this->setRulesFor("land-parcels");
         $this->assertTrue($this->validate(["applicable_id", $this->landParcelId]));
     }
 
     public function test_land_parcel_id_invalid_data_failure(): void {
-        $this->setRulesFor("land-parcel");
+        $this->setRulesFor("land-parcels");
         $this->assertFalse($this->validate(["applicable_id", null]));
         $this->assertFalse($this->validate(["applicable_id", 0]));
         $this->assertFalse($this->validate(["applicable_id", -1]));
@@ -84,12 +91,12 @@ class StoreApplicationValidationTest extends ValidationTestCase {
     }
 
     public function test_house_id_valid_data_success(): void {
-        $this->setRulesFor("house");
+        $this->setRulesFor("houses");
         $this->assertTrue($this->validate(["applicable_id", $this->houseId]));
     }
 
     public function test_house_id_invalid_data_failure(): void {
-        $this->setRulesFor("house");
+        $this->setRulesFor("houses");
         $this->assertFalse($this->validate(["applicable_id", null]));
         $this->assertFalse($this->validate(["applicable_id", 0]));
         $this->assertFalse($this->validate(["applicable_id", -1]));
@@ -98,12 +105,12 @@ class StoreApplicationValidationTest extends ValidationTestCase {
     }
 
     public function test_apartment_id_valid_data_success(): void {
-        $this->setRulesFor("apartment");
+        $this->setRulesFor("apartments");
         $this->assertTrue($this->validate(["applicable_id", $this->apartmentId]));
     }
 
     public function test_apartment_id_invalid_data_failure(): void {
-        $this->setRulesFor("apartment");
+        $this->setRulesFor("apartments");
         $this->assertFalse($this->validate(["applicable_id", null]));
         $this->assertFalse($this->validate(["applicable_id", 0]));
         $this->assertFalse($this->validate(["applicable_id", -1]));

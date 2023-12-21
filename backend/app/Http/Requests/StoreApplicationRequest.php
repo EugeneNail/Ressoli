@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class StoreApplicationRequest extends FormRequest {
 
@@ -25,7 +26,6 @@ class StoreApplicationRequest extends FormRequest {
      */
     public function rules(): array {
         $options = app()->make(GetOptions::class)->run(Application::class);
-
         return [
             "client_id" => ["required", "numeric", "integer", "exists:clients,id"],
             "address_id" => ["required", "numeric", "integer", "exists:addresses,id"],
@@ -37,17 +37,18 @@ class StoreApplicationRequest extends FormRequest {
     }
 
     private function getApplicableRule(): string {
-        $applicableType = $this->input("applicable");
-        $map = [
-            "land-parcel" => "land_parcels",
-            "house" => "houses",
-            "apartment" => "apartments"
+        $allowedApplicables = [
+            "land-parcels",
+            "houses",
+            "apartments"
         ];
+        $applicables = $this->route("applicables");
 
-        if (!array_key_exists($applicableType, $map)) {
-            abort(Response::HTTP_BAD_REQUEST, "Invalid applicable type");
+        if (!in_array($applicables, $allowedApplicables)) {
+            abort(Response::HTTP_NOT_FOUND, "Invalid applicable type");
         }
 
-        return "exists:" . $map[$applicableType] . ",id";
+        //Str::snake() won't work because it can't convert kebab case strings
+        return "exists:" . str_replace("-", "_", $applicables) . ",id";
     }
 }

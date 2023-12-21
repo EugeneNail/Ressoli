@@ -23,22 +23,22 @@ class StoreApplicationTest extends AuthorizedTestCase {
         $this->seed(StaticDataSeeder::class);
     }
 
-    public function test_store_invalid_applicable_400(): void {
+    public function test_store_invalid_applicable_404(): void {
         $this->data = Application::factory()->withHouse()->make()->toArray();
-        $response = $this->postJson($this->route . "?applicable=houses", $this->data);
-        $response->assertStatus(400);
+        $response = $this->postJson($this->route . "/house", $this->data);
+        $response->assertStatus(404);
         $this->assertDatabaseCount(Application::class, 0);
     }
 
-    public function test_store_no_applicable_400(): void {
+    public function test_store_no_applicable_404(): void {
         $this->data = Application::factory()->withHouse()->make()->toArray();
         $response = $this->postJson($this->route, $this->data);
-        $response->assertStatus(400);
+        $response->assertStatus(404);
         $this->assertDatabaseCount(Application::class, 0);
     }
 
     public function test_store_invalid_data_422(): void {
-        $response = $this->postJson($this->route . "?applicable=house", []);
+        $response = $this->postJson($this->route . "/houses", []);
         $response->assertStatus(422);
         $this->assertDatabaseCount(Application::class, 0);
         $response->assertJsonValidationErrors([
@@ -52,7 +52,7 @@ class StoreApplicationTest extends AuthorizedTestCase {
 
     public function test_store_valid_data_house_201(): void {
         $this->data = Application::factory()->withHouse()->make()->toArray();
-        $response = $this->postJson($this->route . "?applicable=house", $this->data);
+        $response = $this->postJson($this->route . "/houses", $this->data);
 
         $response->assertStatus(201);
         $this->assertIsInt(json_decode($response->getContent()));
@@ -75,7 +75,7 @@ class StoreApplicationTest extends AuthorizedTestCase {
 
     public function test_store_valid_data_land_parcel_201(): void {
         $this->data = Application::factory()->withLandParcel()->make()->toArray();
-        $response = $this->postJson($this->route . "?applicable=land-parcel", $this->data);
+        $response = $this->postJson($this->route . "/land-parcels", $this->data);
 
         $response->assertStatus(201);
         $this->assertIsInt(json_decode($response->getContent()));
@@ -98,7 +98,7 @@ class StoreApplicationTest extends AuthorizedTestCase {
 
     public function test_store_valid_data_apartment_201(): void {
         $this->data = Application::factory()->withApartment()->make()->toArray();
-        $response = $this->postJson($this->route . "?applicable=apartment", $this->data);
+        $response = $this->postJson($this->route . "/apartments", $this->data);
 
         $response->assertStatus(201);
         $this->assertIsInt(json_decode($response->getContent()));
