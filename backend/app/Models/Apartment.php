@@ -48,6 +48,11 @@ class Apartment extends Model {
         "is_corner" => "boolean",
     ];
 
+    protected $hidden = [
+        "created_at",
+        "updated_at",
+    ];
+
     public function application(): MorphOne {
         return $this->morphOne(Application::class, "applicable");
     }

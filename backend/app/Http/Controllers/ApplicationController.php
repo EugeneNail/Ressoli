@@ -76,4 +76,15 @@ class ApplicationController extends Controller {
 
         return response()->noContent();
     }
+
+    public function show(int $id) {
+        $application = Application::with([
+            "address",
+            "user:id",
+            "client",
+            "applicable"
+        ])->find($id);
+
+        return response()->json($application);
+    }
 }

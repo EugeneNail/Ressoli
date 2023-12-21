@@ -20,6 +20,11 @@ class Address extends Model {
         "latitude"
     ];
 
+    protected $hidden = [
+        "created_at",
+        "updated_at",
+    ];
+
     public function applications(): HasMany {
         return $this->hasMany(Application::class);
     }

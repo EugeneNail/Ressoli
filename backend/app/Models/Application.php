@@ -21,6 +21,15 @@ class Application extends Model {
         "has_mortgage" => "boolean",
     ];
 
+    protected $hidden = [
+        "user_id",
+        "client_id",
+        "address_id",
+        "applicable_id",
+        "applicable_type",
+        "updated_at"
+    ];
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
