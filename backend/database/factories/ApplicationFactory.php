@@ -64,4 +64,16 @@ class ApplicationFactory extends Factory {
             "applicable_type" => LandParcel::class
         ]);
     }
+
+    public function active(): static {
+        return $this->state(fn () => [
+            "is_active" => true
+        ]);
+    }
+
+    public function withUser(User $user) {
+        return $this->state(fn () => [
+            "user_id" => $user
+        ]);
+    }
 }

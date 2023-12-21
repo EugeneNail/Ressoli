@@ -11,7 +11,6 @@ class Application extends Model {
     use HasFactory;
 
     protected $fillable = [
-        "is_active",
         "price",
         "contract",
         "has_mortgage",
@@ -19,7 +18,7 @@ class Application extends Model {
 
     protected $casts = [
         "is_active" => "boolean",
-        "has_mortgage",
+        "has_mortgage" => "boolean",
     ];
 
     public function user(): BelongsTo {

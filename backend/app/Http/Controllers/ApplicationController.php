@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Address;
 use App\Models\Apartment;
 use App\Models\Application;
@@ -21,7 +22,7 @@ class ApplicationController extends Controller {
         $data = $request->safe();
         $client = Client::find($data->client_id);
         $address = Address::find($data->address_id);
-        $applicable = $this->getApplicable($request->applicable, $data->applicable_id);
+        $applicable = $this->getApplicable($request, $data->applicable_id);
 
         $application = new Application($data->toArray());
         $application->user()->associate($request->user());
@@ -33,13 +34,32 @@ class ApplicationController extends Controller {
         return response()->json($application->id, Response::HTTP_CREATED);
     }
 
-    private function getApplicable(string $applicable, int | string $applicableId): Model {
-        $map = [
-            "land-parcel" => LandParcel::class,
-            "house" => House::class,
-            "apartment" => Apartment::class
+    public function update(UpdateApplicationRequest $request, string $applicables, Application $application) {
+        if ($application === null) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
+        $data = $request->safe();
+        $client = Client::find($data->client_id);
+        $address = Address::find($data->address_id);
+        $applicable = $this->getApplicable($applicables, $data->applicable_id);
+
+        $application->client()->associate($client);
+        $application->address()->associate($address);
+        $application->applicable()->associate($applicable);
+        $application->update($data->toArray());
+        $application->save();
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getApplicable(string $applicables, int | string $applicableId): Model {
+        $modelClasses = [
+            "land-parcels" => LandParcel::class,
+            "houses" => House::class,
+            "apartments" => Apartment::class
         ];
 
-        return $map[$applicable]::find($applicableId);
+        return $modelClasses[$applicables]::find($applicableId);
     }
 }
