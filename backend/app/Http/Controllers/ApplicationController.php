@@ -18,11 +18,11 @@ use Illuminate\Http\Response;
 
 class ApplicationController extends Controller {
 
-    public function store(StoreApplicationRequest $request) {
+    public function store(StoreApplicationRequest $request, string $applicables) {
         $data = $request->safe();
         $client = Client::find($data->client_id);
         $address = Address::find($data->address_id);
-        $applicable = $this->getApplicable($request, $data->applicable_id);
+        $applicable = $this->getApplicable($applicables, $data->applicable_id);
 
         $application = new Application($data->toArray());
         $application->user()->associate($request->user());
