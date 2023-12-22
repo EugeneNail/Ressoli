@@ -1,0 +1,46 @@
+@import ../../_variables
+
+.form
+    padding: 2rem
+    background: $background-main
+    display: flex
+    flex-direction: column
+    border-radius: 10px
+
+    &__header
+        margin-top: 1rem
+        color: $font-strong
+        text-align: center
+        font-weight: 900
+
+    &__subtext
+        margin-top: 1rem
+        color: $font-weak
+        font-size: 1.6rem
+
+    &__input-group
+        margin-top: 5rem
+        display: flex
+        gap: 1.8rem
+        flex-direction: column
+
+    &__button-group
+        margin-top: 5rem
+        display: grid
+        grid-auto-flow: column
+        gap: 2rem
+        grid-template-columns: repeat(auto-fit, 1fr)
+
+    &__message
+        text-align: center
+        font-size: 1.2rem
+        margin-top: 3rem
+        border-top: 1px solid $border
+        padding-top: 2rem
+
+    &__link
+        color: $accent
+        margin-left: 0.5rem
+
+        &:hover
+            text-decoration: underline
