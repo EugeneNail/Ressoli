@@ -1,0 +1,56 @@
+@import ../../_variables
+
+.menu
+    width: 100%
+    height: 100%
+    background: $background-main
+    display: grid
+    align-content: center
+    padding: 1rem
+    grid-template-rows: auto 1fr auto
+    gap: 4rem
+
+    &__logo
+        aspect-ratio: 1 / 1
+
+    &__icon
+        width: 100%
+
+    &__links
+        display: flex
+        height: 100%
+        gap: 1.5rem
+        flex-direction: column
+
+    &__logout-button
+        display: grid
+        place-items: center
+        aspect-ratio: 1 / 1
+        width: 100%
+        color: $font-weak
+        cursor: pointer
+        user-select: none
+
+        &:hover
+            color: $invalid
+
+.menu-link
+    display: grid
+    place-items: center
+    aspect-ratio: 1 / 1
+    width: 100%
+
+    *
+        color: $font-weak
+
+    &:hover *
+        color: $font-strong
+
+    &.active *
+        color: $font-strong
+
+    &__icon
+        font-size: 3rem
+
+    &__label
+        font-size: 1rem
