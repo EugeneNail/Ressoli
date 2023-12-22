@@ -65,6 +65,23 @@ class ApplicationFactory extends Factory {
         ]);
     }
 
+    public function withRandomApplicable(): static {
+        return $this->state(function () {
+            $modelClasses = [
+                House::class,
+                LandParcel::class,
+                Apartment::class
+            ];
+            $applicableClass = $modelClasses[fake()->numberBetween(0, 2)];
+            $applicable = $applicableClass::factory()->create();
+
+            return [
+                "applicable_id" => $applicable->id,
+                "applicable_type" => get_class($applicable)
+            ];
+        });
+    }
+
     public function active(): static {
         return $this->state(fn () => ["is_active" => true]);
     }

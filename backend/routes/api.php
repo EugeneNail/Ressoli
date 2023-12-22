@@ -53,6 +53,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
         Route::patch("/{application}/activate", [ApplicationController::class, "activate"]);
         Route::patch("/{application}/archive", [ApplicationController::class, "archive"]);
         Route::get("/{id}", [ApplicationController::class, "show"]);
+        Route::get("/", [ApplicationController::class, "index"]);
     });
 
     Route::group(["prefix" => "options"], function () {
