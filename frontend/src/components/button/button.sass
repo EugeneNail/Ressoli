@@ -1,0 +1,40 @@
+@import ../../_variables
+
+.button
+    cursor: pointer
+    font-size: 1.6rem
+    border-radius: 0.3em
+    text-align: center
+    padding: 1.2rem 2rem
+    width: fit-content
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 1rem
+    transition: .3s
+
+    &_icon-only
+        width: 4.5rem
+        height: 4.5rem
+        padding: 0
+
+    &.primary
+        color: white
+        background: $accent
+
+        &:hover
+            background: darken($accent, 10%)
+
+        &:active
+            background: darken($accent, 5%)
+
+    &.secondary
+        border: 2px dotted $accent
+        background: none
+        color: $accent
+
+        &:hover
+            border: 2px solid $accent
+
+    &.wide
+        width: 100%
