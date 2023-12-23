@@ -56,9 +56,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
         Route::get("/", [ApplicationController::class, "index"]);
     });
 
-    Route::group(["prefix" => "options"], function () {
-        Route::get("/address", [OptionController::class, "forAddress"]);
-    });
+    Route::get("/options/{type}", OptionController::class);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
