@@ -23,7 +23,7 @@ class ClientController extends Controller {
 
         if ($client->name !== $data->name || $client->last_name !== $data->last_name) {
             return response()->json(
-                ["errors" => ["phone_number" => "This phone number has already been taken by another client"]],
+                ["errors" => ["phone_number" => ["This phone number has already been taken by another client"]]],
                 Response::HTTP_CONFLICT
             );
         }
