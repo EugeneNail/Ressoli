@@ -99,6 +99,7 @@ export function Numeric({
           name={name}
           id={name}
           defaultValue={initialValue}
+          onWheel={(e) => e?.currentTarget?.blur()}
           onInput={() => setActive(true)}
           onFocus={() => setActive(true)}
           onBlur={handleBlur}

@@ -21,7 +21,7 @@ export function Menu() {
   return (
     <nav className="menu">
       <div className="menu__logo">
-        <img src="./img/logo.png" className="menu__icon" />
+        <img src="/img/logo.png" className="menu__icon" />
       </div>
       <div className="menu__links">
         <MenuLink label="Dashboard" to="/dashboard" icon="grid_view" />

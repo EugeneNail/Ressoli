@@ -58,6 +58,9 @@ input[type=number]
         color: $accent
 
     &__label
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
         text-transform: capitalize
         user-select: none
         transition: .3s ease
@@ -80,6 +83,9 @@ input[type=number]
         color: $accent
 
     &__input
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
         color: $font-strong
         appearance: none
         font-size: 1.6rem
@@ -160,6 +166,9 @@ input[type=number]
 
     &:has(input:checked) &__square
         background: $accent
+
+    &:has(input:checked) &__label
+        color: $font-strong
 
     &__icon
         font-size: 2.3rem
