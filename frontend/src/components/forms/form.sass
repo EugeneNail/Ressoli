@@ -1,7 +1,7 @@
 @import ../../_variables
 
 .form
-    padding: 2rem
+    padding: 2rem 3rem
     background: $background-main
     display: flex
     flex-direction: column
@@ -13,16 +13,19 @@
         text-align: center
         font-weight: 900
 
+        &.left
+            text-align: left
+
     &__subtext
         margin-top: 1rem
         color: $font-weak
         font-size: 1.6rem
 
     &__input-group
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))
         margin-top: 5rem
-        display: flex
         gap: 1.8rem
-        flex-direction: column
 
     &__button-group
         margin-top: 5rem

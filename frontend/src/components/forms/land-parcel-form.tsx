@@ -1,7 +1,8 @@
 import { FormWithOptions } from "../../models/form-with-options";
 import { LandParcel } from "../../models/land-parcel";
 import { LandParcelOptions } from "../../models/land-parcel-options";
-import Button from "../button/button";
+import { Dropdown } from "../custom-control/dropdown";
+import { Numeric } from "../custom-control/numeric";
 import { FormProps } from "./form-props";
 
 export class LandParcelFormErrors {
@@ -14,13 +15,66 @@ export class LandParcelFormErrors {
 
 type LandParcelFormProps = FormProps<LandParcelFormErrors, LandParcel> & FormWithOptions<LandParcelOptions>;
 
-export function LandParcelForm({ submit, errors, options }: LandParcelFormProps) {
+export function LandParcelForm({
+  errors,
+  submit = (e) => e.preventDefault(),
+  initialState = new LandParcel(),
+  options,
+  name = "",
+}: LandParcelFormProps) {
   return (
-    <form className="form" onSubmit={submit}>
-      <div className="form__input-group"></div>
-      <div className="form__button-group">
-        <Button wide text="Create new application" />
+    <form className="form" onSubmit={submit} id={name}>
+      <h2 className="form__header left">Land Parcel</h2>
+      <div className="form__input-group">
+        <Dropdown
+          label="Water"
+          name="water"
+          icon="water_drop"
+          options={options.water}
+          errors={errors.values.water}
+          resetError={errors.reset}
+          initialValue={initialState?.water}
+        />
+        <Dropdown
+          label="Gas"
+          name="gas"
+          icon="local_fire_department"
+          options={options.gas}
+          errors={errors.values.gas}
+          resetError={errors.reset}
+          initialValue={initialState?.gas}
+        />
+        <Dropdown
+          label="Electicity"
+          name="electricity"
+          icon="flash_on"
+          options={options.electricity}
+          errors={errors.values.electricity}
+          resetError={errors.reset}
+          initialValue={initialState?.electricity}
+        />
+        <Dropdown
+          label="Sewer"
+          name="sewer"
+          icon="water_pump"
+          options={options.sewer}
+          errors={errors.values.sewer}
+          resetError={errors.reset}
+          initialValue={initialState?.sewer}
+        />
+        <Numeric
+          label="Area"
+          name="area"
+          icon="zoom_out_map"
+          min={1}
+          step={1}
+          max={10000}
+          errors={errors.values.area}
+          resetError={errors.reset}
+          initialValue={initialState?.area?.toString()}
+        />
       </div>
+      <div className="form__button-group"></div>
     </form>
   );
 }
