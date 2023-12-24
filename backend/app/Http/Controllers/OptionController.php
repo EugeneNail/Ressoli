@@ -6,6 +6,7 @@ use App\Actions\GetOptions;
 use App\Http\Requests\IndexApplicableOptionsRequest;
 use App\Models\Address;
 use App\Models\Apartment;
+use App\Models\Application;
 use App\Models\House;
 use App\Models\LandParcel;
 use App\Models\Option;
@@ -20,6 +21,7 @@ class OptionController extends Controller {
             "houses" => House::class,
             "apartments" => Apartment::class,
             "addresses" => Address::class,
+            "applications" => Application::class
         ];
 
         if (!array_key_exists($type, $map)) {
