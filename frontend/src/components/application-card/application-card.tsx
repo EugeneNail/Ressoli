@@ -7,24 +7,13 @@ import classNames from "classnames";
 import { CardHouse } from "../../models/card-house";
 import { CardApartment } from "../../models/card-apartment";
 import { Link } from "react-router-dom";
+import { Format } from "../../services/format";
 
 type ApplicationCardProps = {
   application: CardApplication<CardLandParcel | CardApartment | CardHouse>;
 };
 
 export function ApplicationCard({ application }: ApplicationCardProps) {
-  function getAddress() {
-    const { number, unit, street, typeOfStreet, city, postalCode } = application.address;
-    let address = `${number} ${street} ${typeOfStreet}`;
-
-    if (unit !== null && unit != "") {
-      address += `, Apt ${unit}`;
-    }
-    address += `, ${city}, ${postalCode}`;
-
-    return address;
-  }
-
   function getAttributes() {
     const { type } = application.applicable;
     if (type == "Land Parcel") {
@@ -71,12 +60,6 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
     );
   }
 
-  function getDate() {
-    const date = new Date(application.date);
-
-    return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
-  }
-
   return (
     <Link target="_blank" to={application.id.toString()} className="application-card">
       <p className={classNames("application-card__status", { archived: !application.isActive })}>
@@ -88,13 +71,13 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
           {application.applicable.type} for {application.contract}
         </h3>
         <div className="application-card__price-label">Property price</div>
-        <p className="application-card__address">{getAddress()}</p>
+        <p className="application-card__address">{Format.toFullAddress(application.address)}</p>
         <div className="application-card__price">{application.price}</div>
       </div>
       <div className="application-card__attribute-group">{getAttributes()}</div>
       <div className="application-card__info-group">
         <ApplicationCardInfo label="Contract" value={application.contract} />
-        <ApplicationCardInfo label="Date" value={getDate()} />
+        <ApplicationCardInfo label="Date" value={Format.toShortDate(application.date)} />
         <ApplicationCardInfo label="Client" value={application.client} />
       </div>
     </Link>
