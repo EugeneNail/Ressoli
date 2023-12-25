@@ -1,0 +1,20 @@
+@import ../../_variables
+
+.spinner
+    display: grid
+    height: fit-content
+    width: fit-content
+    aspect-ratio: 1 / 1
+
+    &__icon
+        align-self: center
+        font-size: 100%
+        animation: spin 1s infinite linear
+        color: $accent
+
+@keyframes spin
+    0%
+        transform: rotateZ(0deg)
+
+    100%
+        transform: rotateZ(360deg)
