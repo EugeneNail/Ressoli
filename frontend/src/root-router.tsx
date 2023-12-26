@@ -5,6 +5,7 @@ import { LoginPage } from "./pages/login-page";
 import { SignupPage } from "./pages/signup-page";
 import { NewLandParcelPage } from "./pages/new-land-parcel-page";
 import { LandParcelsPage } from "./pages/land-parcels-page";
+import { LandParcelPage } from "./pages/land-parcel-page";
 
 export function RootRouter() {
   return (
@@ -19,6 +20,7 @@ export function RootRouter() {
           <Route path="/land-parcels">
             <Route path="/land-parcels" element={<LandParcelsPage />} />
             <Route path="/land-parcels/new" element={<NewLandParcelPage />} />
+            <Route path="/land-parcels/:id" element={<LandParcelPage />} />
           </Route>
         </Route>
       </Routes>
