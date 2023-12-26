@@ -12,7 +12,7 @@ import api from "../services/api";
 import { env } from "../env";
 import { useNavigate } from "react-router";
 
-export function NewLandParcelPage() {
+export function CreateLandParcelPage() {
   const clientFormErrors = useErrors(new ClientFormErrors());
   const addressFormErrors = useErrors(new AddressFormErrors());
   const applicableFormErrors = useErrors(new LandParcelFormErrors());
