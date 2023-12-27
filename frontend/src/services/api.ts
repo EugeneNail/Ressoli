@@ -4,9 +4,8 @@ import { env } from "../env";
 const api = axios.create({
   baseURL: env.API_URL,
   headers: {
-    post: {
-      Accept: "aplication/json",
-    },
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 });
