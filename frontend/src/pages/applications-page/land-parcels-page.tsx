@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import "./applications-page.sass";
-import { CardApplication } from "../models/card-application";
-import { CardLandParcel } from "../models/card-land-parcel";
-import api from "../services/api";
-import { env } from "../env";
-import { ApplicationCard } from "../components/application-card/application-card";
-import Button from "../components/button/button";
-import { Spinner } from "../components/spinner/spinner";
-import { Icon } from "../components/icon/icon";
+import { CardApplication } from "../../models/card-application";
+import { CardLandParcel } from "../../models/card-land-parcel";
+import api from "../../services/api";
+import { env } from "../../env";
+import { ApplicationCard } from "../../components/application-card/application-card";
+import Button from "../../components/button/button";
+import { Spinner } from "../../components/spinner/spinner";
+import { Icon } from "../../components/icon/icon";
 
 export function LandParcelsPage() {
   const [isLoading, setLoading] = useState(true);

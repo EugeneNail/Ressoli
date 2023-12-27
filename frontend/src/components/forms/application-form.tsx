@@ -1,3 +1,4 @@
+import { FormEvent } from "react";
 import { Application } from "../../models/application";
 import { ApplicationOptions } from "../../models/application-options";
 import { FormWithOptions } from "../../models/form-with-options";
@@ -20,13 +21,17 @@ type ApplicationFormProps = FormProps<ApplicationFormErrors, Application<any>> &
 
 export function ApplicationForm({
   errors,
-  submit,
+  submit = () => {},
   options,
   initialState = new Application<any>(),
-  name,
 }: ApplicationFormProps) {
+  function onSubmit(event: FormEvent) {
+    event.preventDefault();
+    submit();
+  }
+
   return (
-    <form className="form" onSubmit={submit} id={name}>
+    <form className="form" onSubmit={onSubmit} id="applicationForm">
       <h2 className="form__header left">Application</h2>
       <div className="form__input-group">
         <Dropdown

@@ -17,13 +17,12 @@ type LandParcelFormProps = FormProps<LandParcelFormErrors, LandParcel> & FormWit
 
 export function LandParcelForm({
   errors,
-  submit = (e) => e.preventDefault(),
+  submit = () => {},
   initialState = new LandParcel(),
   options,
-  name = "",
 }: LandParcelFormProps) {
   return (
-    <form className="form" onSubmit={submit} id={name}>
+    <form className="form" onSubmit={submit} id="applicableForm">
       <h2 className="form__header left">Land Parcel</h2>
       <div className="form__input-group">
         <Dropdown

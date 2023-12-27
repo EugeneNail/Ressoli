@@ -11,14 +11,9 @@ export class ClientFormErrors {
 
 type ClientFormProps = FormProps<ClientFormErrors, Client>;
 
-export function ClientForm({
-  errors,
-  submit = (e) => e.preventDefault(),
-  initialState = new Client(),
-  name,
-}: ClientFormProps) {
+export function ClientForm({ errors, submit = () => {}, initialState = new Client() }: ClientFormProps) {
   return (
-    <form className="form" onSubmit={submit} id={name}>
+    <form className="form" onSubmit={submit} id="clientForm">
       <h2 className="form__header left">Client</h2>
       <div className="form__input-group">
         <Field

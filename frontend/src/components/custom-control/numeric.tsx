@@ -92,7 +92,7 @@ export function Numeric({
         </div>
         <p className="control__label">{label}</p>
         <input
-          key={Math.random()}
+          key={initialValue}
           ref={ref}
           autoComplete="off"
           type="number"

@@ -7,9 +7,10 @@ import { MainSectionAttribute } from "./main-section-attribute";
 import api from "../../services/api";
 import { env } from "../../env";
 import classNames from "classnames";
+import { House } from "../../models/House";
 
 type MainSectionProps = {
-  application: Application<LandParcel>;
+  application: Application<LandParcel | House>;
 };
 
 export function MainSection({ application }: MainSectionProps) {

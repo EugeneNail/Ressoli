@@ -16,15 +16,9 @@ export class AddressFormErrors {
 
 type AddressFormProps = FormProps<AddressFormErrors, Address> & FormWithOptions<AddressOptions>;
 
-export function AddressForm({
-  errors,
-  submit = (e) => e.preventDefault(),
-  initialState = new Address(),
-  name,
-  options,
-}: AddressFormProps) {
+export function AddressForm({ errors, submit = () => {}, initialState = new Address(), options }: AddressFormProps) {
   return (
-    <form className="form" onSubmit={submit} id={name}>
+    <form className="form" onSubmit={submit} id="addressForm">
       <h2 className="form__header left">Address</h2>
       <div className="form__input-group">
         <Field

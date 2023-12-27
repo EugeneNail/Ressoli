@@ -3,10 +3,14 @@ import { GuestLayout } from "./layouts/guest-layout";
 import { DefaultLayout } from "./layouts/default-layout";
 import { LoginPage } from "./pages/login-page";
 import { SignupPage } from "./pages/signup-page";
-import { CreateLandParcelPage } from "./pages/create-land-parcel-page";
-import { LandParcelsPage } from "./pages/land-parcels-page";
-import { LandParcelPage } from "./pages/land-parcel-page";
-import { EditLandParcelPage } from "./pages/edit-land-parcel-page";
+import { CreateLandParcelPage } from "./pages/editable-application-page/create-application-page/create-land-parcel-page";
+import { LandParcelsPage } from "./pages/applications-page/land-parcels-page";
+import { LandParcelPage } from "./pages/application-page/land-parcel-page";
+import { EditLandParcelPage } from "./pages/editable-application-page/edit-application-page/edit-land-parcel-page";
+import { HousesPage } from "./pages/applications-page/houses-page";
+import { CreateHousePage } from "./pages/editable-application-page/create-application-page/create-house-page";
+import { HousePage } from "./pages/application-page/house-page";
+import { EditHousePage } from "./pages/editable-application-page/edit-application-page/edit-house-page";
 
 export function RootRouter() {
   return (
@@ -23,6 +27,13 @@ export function RootRouter() {
             <Route path="/land-parcels/new" element={<CreateLandParcelPage />} />
             <Route path="/land-parcels/:id" element={<LandParcelPage />} />
             <Route path="/land-parcels/:id/edit" element={<EditLandParcelPage />} />
+          </Route>
+
+          <Route path="/houses">
+            <Route path="/houses" element={<HousesPage />} />
+            <Route path="/houses/new" element={<CreateHousePage />} />
+            <Route path="/houses/:id" element={<HousePage />} />
+            <Route path="/houses/:id/edit" element={<EditHousePage />} />
           </Route>
         </Route>
       </Routes>
