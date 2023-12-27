@@ -48,4 +48,10 @@ class UpdateApplicationRequest extends FormRequest {
         //Str::snake() won't work because it can't convert kebab case strings
         return "exists:" . str_replace("-", "_", $applicables) . ",id";
     }
+
+    public function prepareForValidation() {
+        $this->merge([
+            "has_mortgage" => $this->input("has_mortgage") ?? false
+        ]);
+    }
 }

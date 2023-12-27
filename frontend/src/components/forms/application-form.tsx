@@ -1,5 +1,5 @@
+import { Application } from "../../models/application";
 import { ApplicationOptions } from "../../models/application-options";
-import { EditableApplication } from "../../models/editable-application";
 import { FormWithOptions } from "../../models/form-with-options";
 import Button from "../button/button";
 import { Checkbox } from "../custom-control/checkbox";
@@ -16,13 +16,13 @@ export class ApplicationFormErrors {
   hasMortgage: string[] = [];
 }
 
-type ApplicationFormProps = FormProps<ApplicationFormErrors, EditableApplication> & FormWithOptions<ApplicationOptions>;
+type ApplicationFormProps = FormProps<ApplicationFormErrors, Application<any>> & FormWithOptions<ApplicationOptions>;
 
 export function ApplicationForm({
   errors,
   submit,
   options,
-  initialState = new EditableApplication(),
+  initialState = new Application<any>(),
   name,
 }: ApplicationFormProps) {
   return (
