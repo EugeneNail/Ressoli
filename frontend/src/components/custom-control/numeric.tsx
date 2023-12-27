@@ -38,7 +38,7 @@ export function Numeric({
       setActive(true);
       isDirty.current = true;
     }
-  }, [errors]);
+  }, [errors, initialValue]);
 
   function handleBlur(event: FocusEvent<HTMLInputElement>) {
     setActive(event.target.value.length > 0);
@@ -92,6 +92,7 @@ export function Numeric({
         </div>
         <p className="control__label">{label}</p>
         <input
+          key={Math.random()}
           ref={ref}
           autoComplete="off"
           type="number"

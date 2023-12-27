@@ -13,7 +13,7 @@ export function Checkbox({ label, name, checked = false }: CheckboxProps) {
 
   useEffect(() => {
     ref.current.checked = checked;
-  }, []);
+  }, [checked]);
 
   return (
     <label htmlFor={name} className="checkbox">

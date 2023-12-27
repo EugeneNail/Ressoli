@@ -28,7 +28,7 @@ export function Dropdown({
       setActive(true);
       isDirty.current = true;
     }
-  }, [errors]);
+  }, [errors, initialValue]);
 
   function handleBlur(event: FocusEvent<HTMLSelectElement>) {
     setActive(event.target.value.length > 0);

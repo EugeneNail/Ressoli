@@ -31,7 +31,7 @@ export function Field({
       setActive(true);
       isDirty.current = true;
     }
-  }, [errors]);
+  }, [errors, initialValue]);
 
   function handleBlur(event: FocusEvent<HTMLInputElement>) {
     setActive(event.target.value.length > 0);
