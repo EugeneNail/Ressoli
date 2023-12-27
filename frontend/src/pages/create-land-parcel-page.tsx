@@ -90,6 +90,10 @@ export function CreateLandParcelPage() {
     if (status === 201) {
       navigate(`/${applicableRoute}/${data}`);
     }
+
+    if (status === 422) {
+      applicationFormErrors.set(data.errors);
+    }
   }
 
   return (
