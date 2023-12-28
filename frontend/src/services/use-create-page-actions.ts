@@ -4,8 +4,9 @@ import { PageErrors } from "./use-page-errors";
 import { HouseFormErrors } from "../components/forms/house-form";
 import { LandParcelFormErrors } from "../components/forms/land-parcel-form";
 import { useNavigate } from "react-router";
+import { ApartmentFormErrors } from "../components/forms/apartment-form";
 
-export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormErrors>(
+export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormErrors | ApartmentFormErrors>(
   errors: PageErrors<A>,
   applicableRoute: string
 ) {

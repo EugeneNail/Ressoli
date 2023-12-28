@@ -5,8 +5,9 @@ import { HouseOptions } from "../models/house-options";
 import { LandParcelOptions } from "../models/land-parcel-options";
 import { env } from "../env";
 import api from "./api";
+import { ApartmentOptions } from "../models/apartment-options";
 
-export function usePageOptions<O extends LandParcelOptions | HouseOptions>(
+export function usePageOptions<O extends LandParcelOptions | HouseOptions | ApartmentOptions>(
   initialApplicableOptions: O,
   applicableRoute: string
 ) {

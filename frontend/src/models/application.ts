@@ -1,9 +1,10 @@
 import { House } from "./House";
 import { Address } from "./address";
+import { Apartment } from "./apartment";
 import { Client } from "./client";
 import { LandParcel } from "./land-parcel";
 
-export class Application<A extends LandParcel | House> {
+export class Application<A extends LandParcel | House | Apartment> {
   id: number = 0;
   isActive: boolean = false;
   contract: string = "";

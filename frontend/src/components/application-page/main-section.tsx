@@ -8,9 +8,10 @@ import api from "../../services/api";
 import { env } from "../../env";
 import classNames from "classnames";
 import { House } from "../../models/House";
+import { Apartment } from "../../models/apartment";
 
 type MainSectionProps = {
-  application: Application<LandParcel | House>;
+  application: Application<LandParcel | House | Apartment>;
 };
 
 export function MainSection({ application }: MainSectionProps) {

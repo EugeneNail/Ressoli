@@ -43,7 +43,7 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
       <>
         <ApplicationCardAttribute value={area + " m²"} icon="zoom_out_map" />
         <ApplicationCardAttribute value={landArea + " m²"} icon="outdoor_garden" />
-        <ApplicationCardAttribute value={roomCount} icon="bed" />
+        <ApplicationCardAttribute value={roomCount} icon="king_bed" />
       </>
     );
   }
@@ -53,9 +53,9 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
     return (
       <>
         <ApplicationCardAttribute value={area + " m²"} icon="zoom_out_map" />
-        <ApplicationCardAttribute value={roomCount} icon="bed" />
+        <ApplicationCardAttribute value={roomCount} icon="king_bed" />
         <ApplicationCardAttribute value={level + " / " + levelCount} icon="floor" />
-        {hasGarage && <ApplicationCardAttribute icon="car" />}
+        {hasGarage && <ApplicationCardAttribute icon="garage" />}
       </>
     );
   }

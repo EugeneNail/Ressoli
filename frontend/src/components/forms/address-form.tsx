@@ -14,9 +14,18 @@ export class AddressFormErrors {
   postalCode: string[] = [];
 }
 
-type AddressFormProps = FormProps<AddressFormErrors, Address> & FormWithOptions<AddressOptions>;
+type AddressFormProps = FormProps<AddressFormErrors, Address> &
+  FormWithOptions<AddressOptions> & {
+    forApartment?: boolean;
+  };
 
-export function AddressForm({ errors, submit = () => {}, initialState = new Address(), options }: AddressFormProps) {
+export function AddressForm({
+  errors,
+  submit = () => {},
+  initialState = new Address(),
+  options,
+  forApartment,
+}: AddressFormProps) {
   return (
     <form className="form" onSubmit={submit} id="addressForm">
       <h2 className="form__header left">Address</h2>
@@ -31,7 +40,7 @@ export function AddressForm({ errors, submit = () => {}, initialState = new Addr
         />
         <Field
           initialValue={initialState?.number}
-          label="Unit (optional)"
+          label={"Unit" + (forApartment ? "" : " (optional)")}
           name="unit"
           icon="apartment"
           errors={errors.values.number}

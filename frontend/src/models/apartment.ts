@@ -1,0 +1,24 @@
+export class Apartment {
+  id: number = 0;
+  hasWater: boolean = false;
+  hasGas: boolean = false;
+  hasElectricity: boolean = false;
+  hasSewer: boolean = false;
+  condition: string = "";
+  walls: string = "";
+  ceiling: number = 0;
+  level: number = 0;
+  levelCount: number = 0;
+  hasHeating: boolean = false;
+  hasHotWater: boolean = false;
+  bath: string = "";
+  bathroom: string = "";
+  area: number = 0;
+  roomCount: number = 0;
+  hasLoggia: boolean = false;
+  hasBalcony: boolean = false;
+  hasGarage: boolean = false;
+  hasGarbageChute: boolean = false;
+  hasElevator: boolean = false;
+  isCorner: boolean = false;
+}

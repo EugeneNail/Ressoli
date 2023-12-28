@@ -70,10 +70,14 @@ export function Numeric({
   function adjustByStep(vector: -1 | 1) {
     const { current: input } = ref;
     const initialValue: number = input.value.length > 0 ? parseFloat(input.value) : 0;
-    const newValue = initialValue + step * vector;
+    let newValue = initialValue + step * vector;
 
-    if (newValue < min || (max != null && newValue > max)) {
-      return;
+    if (newValue != null && newValue < min) {
+      newValue = min;
+    }
+
+    if (max != null && newValue > max) {
+      newValue = max;
     }
 
     input.value = newValue.toFixed(precision).toString();

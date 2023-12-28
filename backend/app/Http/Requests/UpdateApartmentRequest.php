@@ -47,4 +47,21 @@ class UpdateApartmentRequest extends FormRequest {
             "is_corner" => ["required", "boolean"],
         ];
     }
+
+    public function prepareForValidation() {
+        $this->merge([
+            "has_water" => $this->input("has_water") ?? false,
+            "has_gas" => $this->input("has_gas") ?? false,
+            "has_electricity" => $this->input("has_electricity") ?? false,
+            "has_sewer" => $this->input("has_sewer") ?? false,
+            "has_heating" => $this->input("has_heating") ?? false,
+            "has_hot_water" => $this->input("has_hot_water") ?? false,
+            "has_loggia" => $this->input("has_loggia") ?? false,
+            "has_balcony" => $this->input("has_balcony") ?? false,
+            "has_garage" => $this->input("has_garage") ?? false,
+            "has_garbage_chute" => $this->input("has_garbage_chute") ?? false,
+            "has_elevator" => $this->input("has_elevator") ?? false,
+            "is_corner" => $this->input("is_corner") ?? false,
+        ]);
+    }
 }

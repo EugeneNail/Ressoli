@@ -11,6 +11,10 @@ import { HousesPage } from "./pages/applications-page/houses-page";
 import { CreateHousePage } from "./pages/editable-application-page/create-application-page/create-house-page";
 import { HousePage } from "./pages/application-page/house-page";
 import { EditHousePage } from "./pages/editable-application-page/edit-application-page/edit-house-page";
+import { ApartmentsPage } from "./pages/applications-page/apartments-page";
+import { ApartmentPage } from "./pages/application-page/apartment-page";
+import { CreateApartmentPage } from "./pages/editable-application-page/create-application-page/create-apartment-page";
+import { EditApartmentPage } from "./pages/editable-application-page/edit-application-page/edit-apartment-page";
 
 export function RootRouter() {
   return (
@@ -22,6 +26,7 @@ export function RootRouter() {
         </Route>
         <Route element={<DefaultLayout />}>
           <Route path="/dashboard" />
+
           <Route path="/land-parcels">
             <Route path="/land-parcels" element={<LandParcelsPage />} />
             <Route path="/land-parcels/new" element={<CreateLandParcelPage />} />
@@ -34,6 +39,13 @@ export function RootRouter() {
             <Route path="/houses/new" element={<CreateHousePage />} />
             <Route path="/houses/:id" element={<HousePage />} />
             <Route path="/houses/:id/edit" element={<EditHousePage />} />
+          </Route>
+
+          <Route path="/apartments">
+            <Route path="/apartments" element={<ApartmentsPage />} />
+            <Route path="/apartments/new" element={<CreateApartmentPage />} />
+            <Route path="/apartments/:id" element={<ApartmentPage />} />
+            <Route path="/apartments/:id/edit" element={<EditApartmentPage />} />
           </Route>
         </Route>
       </Routes>

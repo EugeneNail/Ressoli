@@ -1,3 +1,4 @@
+import { ApartmentFormErrors } from "../components/forms/apartment-form";
 import { HouseFormErrors } from "../components/forms/house-form";
 import { LandParcelFormErrors } from "../components/forms/land-parcel-form";
 import { env } from "../env";
@@ -5,7 +6,7 @@ import api from "./api";
 import { PageErrors } from "./use-page-errors";
 import { useNavigate } from "react-router";
 
-export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErrors>(
+export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErrors | ApartmentFormErrors>(
   errors: PageErrors<A>,
   applicableRoute: string,
   applicationId: string,

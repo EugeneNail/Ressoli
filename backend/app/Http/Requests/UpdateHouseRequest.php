@@ -44,4 +44,10 @@ class UpdateHouseRequest extends FormRequest {
             "land_area" => ["required", "numeric", "integer", "gt:0", "lte:10000"],
         ];
     }
+
+    public function prepareForValidation() {
+        $this->merge([
+            "has_garage" => $this->input("has_garage") ?? false
+        ]);
+    }
 }
