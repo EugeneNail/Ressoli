@@ -1,14 +1,18 @@
 @import ../../_variables
 
 .application-page
-    display: flex
-    flex-direction: column
+    display: grid
     gap: 2rem
+    min-height: calc(100% - 4rem)
 
     &__section
         background: $background-main
         border-radius: 1.8rem
         padding: 3rem
+
+    &__spinner
+        font-size: 10rem
+        place-self: center
 
 .main-section
 

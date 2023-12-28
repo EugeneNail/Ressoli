@@ -13,6 +13,7 @@ import { useEditPageActions } from "../../../services/use-edit-page-actions";
 import { ApartmentForm, ApartmentFormErrors } from "../../../components/forms/apartment-form";
 import { ApartmentOptions } from "../../../models/apartment-options";
 import { Apartment } from "../../../models/apartment";
+import { Spinner } from "../../../components/spinner/spinner";
 
 export function EditApartmentPage() {
   const { id } = useParams<{ id: string }>();
@@ -21,25 +22,36 @@ export function EditApartmentPage() {
   const options = usePageOptions(new ApartmentOptions(), applicableRoute);
   const [initialState, setInitialState] = useState<Application<Apartment>>();
   const actions = useEditPageActions(errors, applicableRoute, id as string, initialState?.applicable.id as number);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     options.load();
     api.get<Application<Apartment>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
       setInitialState(data);
+      setLoading(false);
     });
   }, []);
 
   return (
     <div className="editable-application-page">
-      <ClientForm initialState={initialState?.client} errors={errors.client} />
-      <AddressForm initialState={initialState?.address} options={options.address} errors={errors.address} />
-      <ApartmentForm initialState={initialState?.applicable} options={options.applicable} errors={errors.applicable} />
-      <ApplicationForm
-        initialState={initialState}
-        submit={actions.updateApplication}
-        options={options.application}
-        errors={errors.application}
-      />
+      {isLoading && <Spinner className="editable-application-page__spinner" />}
+      {!isLoading && (
+        <>
+          <ClientForm initialState={initialState?.client} errors={errors.client} />
+          <AddressForm initialState={initialState?.address} options={options.address} errors={errors.address} />
+          <ApartmentForm
+            initialState={initialState?.applicable}
+            options={options.applicable}
+            errors={errors.applicable}
+          />
+          <ApplicationForm
+            initialState={initialState}
+            submit={actions.updateApplication}
+            options={options.application}
+            errors={errors.application}
+          />
+        </>
+      )}
     </div>
   );
 }
