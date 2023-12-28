@@ -1,13 +1,13 @@
 import { useParams } from "react-router";
 import "../application-page.sass";
 import { useEffect, useState } from "react";
-import { Application } from "../../models/application";
-import api from "../../services/api";
-import { env } from "../../env";
-import { MainSection } from "../../components/application-page/main-section";
-import { LocationSection } from "../../components/application-page/location-section";
-import { House } from "../../models/House";
-import { HouseSection } from "../../components/application-page/house-section";
+import { Application } from "../../../models/application";
+import api from "../../../services/api";
+import { env } from "../../../env";
+import { MainSection } from "../../../components/application-page/main-section";
+import { LocationSection } from "../../../components/application-page/location-section";
+import { House } from "../../../models/House";
+import { HouseSection } from "../../../components/application-page/house-section";
 
 export function HousePage() {
   const { id } = useParams<{ id: string }>();

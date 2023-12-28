@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { ApplicationCard } from "../../components/application-card/application-card";
-import Button from "../../components/button/button";
-import { Icon } from "../../components/icon/icon";
-import { Spinner } from "../../components/spinner/spinner";
-import { env } from "../../env";
-import { CardApplication } from "../../models/card-application";
-
-import api from "../../services/api";
-import { CardHouse } from "../../models/card-house";
+import { ApplicationCard } from "../../../components/application-card/application-card";
+import Button from "../../../components/button/button";
+import { Icon } from "../../../components/icon/icon";
+import { Spinner } from "../../../components/spinner/spinner";
+import { env } from "../../../env";
+import { CardApplication } from "../../../models/card-application";
+import api from "../../../services/api";
+import { CardHouse } from "../../../models/card-house";
+import "../applications-page.sass";
 
 export function HousesPage() {
   const [isLoading, setLoading] = useState(true);

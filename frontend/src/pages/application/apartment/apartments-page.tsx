@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import "./applications-page.sass";
-import { CardApplication } from "../../models/card-application";
-import { CardLandParcel } from "../../models/card-land-parcel";
-import api from "../../services/api";
-import { env } from "../../env";
-import { ApplicationCard } from "../../components/application-card/application-card";
-import Button from "../../components/button/button";
-import { Spinner } from "../../components/spinner/spinner";
-import { Icon } from "../../components/icon/icon";
+import { useState, useEffect } from "react";
+import { ApplicationCard } from "../../../components/application-card/application-card";
+import Button from "../../../components/button/button";
+import { Icon } from "../../../components/icon/icon";
+import { Spinner } from "../../../components/spinner/spinner";
+import { env } from "../../../env";
+import { CardApplication } from "../../../models/card-application";
+import "../applications-page.sass";
+import api from "../../../services/api";
+import { CardApartment } from "../../../models/card-apartment";
 
-export function LandParcelsPage() {
+export function ApartmentsPage() {
   const [isLoading, setLoading] = useState(true);
-  const [applications, setApplications] = useState<CardApplication<CardLandParcel>[]>([]);
+  const [applications, setApplications] = useState<CardApplication<CardApartment>[]>([]);
 
   useEffect(() => {
     api
-      .get<{ data: CardApplication<CardLandParcel>[] }>(`${env.API_URL}/applications?types[]=land-parcels`)
+      .get<{ data: CardApplication<CardApartment>[] }>(`${env.API_URL}/applications?types[]=apartments`)
       .then((response) => {
         setApplications(response.data.data);
         setLoading(false);

@@ -1,13 +1,13 @@
 import { useParams } from "react-router";
 import "../application-page.sass";
 import { useEffect, useState } from "react";
-import { LandParcel } from "../../models/land-parcel";
-import { Application } from "../../models/application";
-import api from "../../services/api";
-import { env } from "../../env";
-import { MainSection } from "../../components/application-page/main-section";
-import { LandParcelSection } from "../../components/application-page/land-parcel-section";
-import { LocationSection } from "../../components/application-page/location-section";
+import { LandParcel } from "../../../models/land-parcel";
+import { Application } from "../../../models/application";
+import api from "../../../services/api";
+import { env } from "../../../env";
+import { MainSection } from "../../../components/application-page/main-section";
+import { LandParcelSection } from "../../../components/application-page/land-parcel-section";
+import { LocationSection } from "../../../components/application-page/location-section";
 
 export function LandParcelPage() {
   const { id } = useParams<{ id: string }>();

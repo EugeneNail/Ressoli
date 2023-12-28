@@ -3,18 +3,18 @@ import { GuestLayout } from "./layouts/guest-layout";
 import { DefaultLayout } from "./layouts/default-layout";
 import { LoginPage } from "./pages/login-page";
 import { SignupPage } from "./pages/signup-page";
-import { CreateLandParcelPage } from "./pages/editable-application-page/create-application-page/create-land-parcel-page";
-import { LandParcelsPage } from "./pages/applications-page/land-parcels-page";
-import { LandParcelPage } from "./pages/application-page/land-parcel-page";
-import { EditLandParcelPage } from "./pages/editable-application-page/edit-application-page/edit-land-parcel-page";
-import { HousesPage } from "./pages/applications-page/houses-page";
-import { CreateHousePage } from "./pages/editable-application-page/create-application-page/create-house-page";
-import { HousePage } from "./pages/application-page/house-page";
-import { EditHousePage } from "./pages/editable-application-page/edit-application-page/edit-house-page";
-import { ApartmentsPage } from "./pages/applications-page/apartments-page";
-import { ApartmentPage } from "./pages/application-page/apartment-page";
-import { CreateApartmentPage } from "./pages/editable-application-page/create-application-page/create-apartment-page";
-import { EditApartmentPage } from "./pages/editable-application-page/edit-application-page/edit-apartment-page";
+import { CreateLandParcelPage } from "./pages/application/land-parcel/create-land-parcel-page";
+import { LandParcelsPage } from "./pages/application/land-parcel/land-parcels-page";
+import { LandParcelPage } from "./pages/application/land-parcel/land-parcel-page";
+import { EditLandParcelPage } from "./pages/application/land-parcel/edit-land-parcel-page";
+import { HousesPage } from "./pages/application/house/houses-page";
+import { CreateHousePage } from "./pages/application/house/create-house-page";
+import { HousePage } from "./pages/application/house/house-page";
+import { EditHousePage } from "./pages/application/house/edit-house-page";
+import { ApartmentsPage } from "./pages/application/apartment/apartments-page";
+import { ApartmentPage } from "./pages/application/apartment/apartment-page";
+import { CreateApartmentPage } from "./pages/application/apartment/create-apartment-page";
+import { EditApartmentPage } from "./pages/application/apartment/edit-apartment-page";
 
 export function RootRouter() {
   return (
