@@ -51,7 +51,7 @@ export function HouseForm({ errors, submit = () => {}, initialState = new House(
           icon="king_bed"
           min={1}
           step={1}
-          max={10000}
+          max={100}
           errors={errors.values.roomCount}
           resetError={errors.reset}
           initialValue={initialState?.roomCount.toString()}
@@ -160,7 +160,7 @@ export function HouseForm({ errors, submit = () => {}, initialState = new House(
           icon="floor"
           min={1}
           step={1}
-          max={10000}
+          max={100}
           errors={errors.values.levelCount}
           resetError={errors.reset}
           initialValue={initialState?.levelCount.toString()}
