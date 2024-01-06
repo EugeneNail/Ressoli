@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Application extends Model {
@@ -22,11 +23,6 @@ class Application extends Model {
     ];
 
     protected $hidden = [
-        "user_id",
-        "client_id",
-        "address_id",
-        "applicable_id",
-        "applicable_type",
         "updated_at"
     ];
 
@@ -44,5 +40,9 @@ class Application extends Model {
 
     public function applicable(): MorphTo {
         return $this->morphTo();
+    }
+
+    public function photos(): HasMany {
+        return $this->hasMany(Photo::class);
     }
 }

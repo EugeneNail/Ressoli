@@ -30,10 +30,10 @@ class StoreApplicationTest extends AuthorizedTestCase {
         $this->assertDatabaseCount(Application::class, 0);
     }
 
-    public function test_store_no_applicable_404(): void {
+    public function test_store_no_applicable_405(): void {
         $this->data = Application::factory()->withHouse()->make()->toArray();
         $response = $this->postJson($this->route, $this->data);
-        $response->assertStatus(404);
+        $response->assertStatus(405);
         $this->assertDatabaseCount(Application::class, 0);
     }
 

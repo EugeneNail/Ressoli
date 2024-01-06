@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\LandParcelController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\PhotoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
         Route::get("/{id}", [ApplicationController::class, "show"]);
         Route::get("/", [ApplicationController::class, "index"]);
     });
+
+    Route::post("/photos", PhotoController::class);
 
     Route::get("/options/{type}", OptionController::class);
 });
