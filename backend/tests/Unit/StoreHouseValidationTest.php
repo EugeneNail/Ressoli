@@ -18,7 +18,7 @@ class StoreHouseValidationTest extends ValidationTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(HouseOptionsSeeder::class);
-        $this->rules = (new StoreHouseRequest())->rules();
+        $this->setRules(StoreHouseRequest::class);
         $this->options = app()->make(GetOptions::class)->run(House::class);
     }
 

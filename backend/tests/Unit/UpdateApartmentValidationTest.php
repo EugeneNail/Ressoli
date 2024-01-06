@@ -20,7 +20,7 @@ class UpdateApartmentValidationTest extends ValidationTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(ApartmentOptionsSeeder::class);
-        $this->rules = (new UpdateApartmentRequest())->rules();
+        $this->setRules(UpdateApartmentRequest::class);
         $this->options = app()->make(GetOptions::class)->run(Apartment::class);
     }
 

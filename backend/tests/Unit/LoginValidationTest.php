@@ -10,7 +10,7 @@ class LoginValidationTest extends ValidationTestCase {
 
     public function setUp(): void {
         parent::setUp();
-        $this->rules = (new LoginRequest())->rules();
+        $this->setRules(LoginRequest::class);
     }
 
 

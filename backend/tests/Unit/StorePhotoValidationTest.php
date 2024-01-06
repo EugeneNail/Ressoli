@@ -9,6 +9,7 @@ class StorePhotoValidationTest extends ValidationTestCase {
 
     public function setUp(): void {
         parent::setUp();
+        $this->setRules(StorePhotoRequest::class);
         $this->rules = (new StorePhotoRequest())->rules();
     }
 

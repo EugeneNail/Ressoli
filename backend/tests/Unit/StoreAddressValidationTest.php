@@ -15,7 +15,7 @@ class StoreAddressValidationTest extends ValidationTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(AddressOptionsSeeder::class);
-        $this->rules = (new StoreAddressRequest())->rules($this->app->make(GetOptions::class));
+        $this->setRules(StoreAddressRequest::class);
     }
 
     public function test_number_valid_data_success(): void {

@@ -19,7 +19,7 @@ class StoreLandParcelValidationTest extends ValidationTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(LandParcelOptionsSeeder::class);
-        $this->rules = (new StoreLandParcelRequest())->rules();
+        $this->setRules(StoreLandParcelRequest::class);
         $this->options = app()->make(GetOptions::class)->run(LandParcel::class);
     }
 

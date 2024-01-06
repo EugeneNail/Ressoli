@@ -13,15 +13,13 @@ use PHPUnit\Framework\TestCase;
 class UpdateHouseValidationTest extends ValidationTestCase {
     use RefreshDatabase;
 
-    private array $data;
 
     private array $options;
 
     public function setUp(): void {
         parent::setUp();
         $this->seed(HouseOptionsSeeder::class);
-        $this->rules = (new UpdateHouseRequest())->rules();
-        $this->data = House::factory()->test()->make()->toArray();
+        $this->setRules(UpdateHouseRequest::class);
         $this->options = app()->make(GetOptions::class)->run(House::class);
     }
 

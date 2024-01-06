@@ -18,7 +18,7 @@ class StoreApartmentValidationTest extends ValidationTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(ApartmentOptionsSeeder::class);
-        $this->rules = (new StoreApartmentRequest())->rules();
+        $this->setRules(StoreApartmentRequest::class);
         $this->options = app()->make(GetOptions::class)->run(Apartment::class);
     }
 

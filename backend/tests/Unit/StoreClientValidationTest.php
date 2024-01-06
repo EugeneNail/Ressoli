@@ -9,7 +9,7 @@ class StoreClientValidationTest extends ValidationTestCase {
 
     public function setUp(): void {
         parent::setUp();
-        $this->rules = (new StoreClientRequest())->rules();
+        $this->setRules(StoreClientRequest::class);
     }
 
     public function test_name_valid_data_success(): void {

@@ -13,6 +13,10 @@ class ValidationTestCase extends TestCase {
         parent::setUp();
     }
 
+    public function setRules(string $requestClass) {
+        $this->rules = (new $requestClass())->rules();
+    }
+
     /**
      * Validates one field or multiple fields.
      * Can be applied when validation rules for multiple fields are referenced from each other

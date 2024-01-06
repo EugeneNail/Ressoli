@@ -17,7 +17,7 @@ class UpdateLandParcelValidationTest extends ValidationTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(LandParcelOptionsSeeder::class);
-        $this->rules = (new UpdateLandParcelRequest())->rules();
+        $this->setRules(UpdateLandParcelRequest::class);
         $this->options = app()->make(GetOptions::class)->run(LandParcel::class);
     }
 

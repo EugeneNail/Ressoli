@@ -21,8 +21,8 @@ class StoreAddressRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(GetOptions $getOptions): array {
-        $types_of_street = $getOptions->run(Address::class)["type_of_street"];
+    public function rules(): array {
+        $types_of_street = app()->make(GetOptions::class)->run(Address::class)["type_of_street"];
 
         return [
             "number" => ["required", "string", "ssand", "max:8"],

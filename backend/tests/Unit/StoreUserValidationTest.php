@@ -13,7 +13,7 @@ class StoreUserValidationTest extends ValidationTestCase {
 
     public function setUp(): void {
         parent::setUp();
-        $this->rules = (new StoreUserRequest())->rules();
+        $this->setRules(StoreUserRequest::class);
     }
 
     public function test_name_valid_data_success(): void {
