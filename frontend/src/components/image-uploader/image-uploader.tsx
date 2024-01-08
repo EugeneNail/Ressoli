@@ -8,10 +8,10 @@ import "../button/button.sass";
 
 type ImageUploaderProps = {
   addIndices: (newIndices: number[]) => void;
-  allowedPhotos: number;
+  maxPhotos: number;
 };
 
-export function ImageUploader({ addIndices, allowedPhotos }: ImageUploaderProps) {
+export function ImageUploader({ addIndices, maxPhotos }: ImageUploaderProps) {
   const [fileCount, setFileCount] = useState(0);
   const [isDragged, setDragged] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ export function ImageUploader({ addIndices, allowedPhotos }: ImageUploaderProps)
     setFileCount(files.length);
     const payload = new FormData();
 
-    for (let i = 0; i < Math.min(files.length, allowedPhotos); i++) {
+    for (let i = 0; i < Math.min(files.length, maxPhotos); i++) {
       const file = (await resizeFile(files[i])) as File;
       payload.append("photos[]", file);
     }
@@ -86,7 +86,11 @@ export function ImageUploader({ addIndices, allowedPhotos }: ImageUploaderProps)
           {isDragged ? "Release the button to drop" : "Drag your photos here or"}
         </p>
       )}
-      {isLoading && <p className="image-uploader__message">Uploading {fileCount} photos to the server</p>}
+      {isLoading && (
+        <p className="image-uploader__message">
+          Uploading {Math.min(fileCount, maxPhotos)} photo{fileCount === 1 ? "" : "s"} to the server
+        </p>
+      )}
       {!isDragged && !isLoading && (
         <label htmlFor="imageUploader" className="image-uploader__button button primary">
           <input type="file" id="imageUploader" multiple className="image-uploader__input" onChange={handleChange} />

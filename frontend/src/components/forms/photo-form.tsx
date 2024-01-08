@@ -19,14 +19,20 @@ export function PhotoForm({ initialState = [] }: PhotoFormProps) {
 
   return (
     <form className="form photo-form" id="photoForm">
-      {ids.map((id) => (
-        <div key={id} className="photo-form__photo">
-          <input className="photo-form__hidden" type="hidden" name="photos[]" value={id} />
-          <img src={`${env.API_URL}/photos/${id}`} className="photo-form__image" />
-          <Icon className="photo-form__remove" name="delete" onClick={() => removeIndex(id)} />
-        </div>
-      ))}
-      {maxPhotos - ids.length > 0 && <ImageUploader addIndices={addIndices} allowedPhotos={maxPhotos - ids.length} />}
+      <h2 className="form__header left">Photos</h2>
+      <p className="form__subtext">
+        {ids.length} of {maxPhotos} photos uploaded
+      </p>
+      <div className="photo-form__photos">
+        {ids.map((id) => (
+          <div key={id} className="photo-form__photo">
+            <input className="photo-form__hidden" type="hidden" name="photos[]" value={id} />
+            <img src={`${env.API_URL}/photos/${id}`} className="photo-form__image" />
+            <Icon className="photo-form__remove" name="delete" onClick={() => removeIndex(id)} />
+          </div>
+        ))}
+        {maxPhotos - ids.length > 0 && <ImageUploader addIndices={addIndices} maxPhotos={maxPhotos - ids.length} />}
+      </div>
     </form>
   );
 }
