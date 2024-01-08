@@ -59,10 +59,20 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
     }
   }
 
+  function addPhotos(payload: FormData): void {
+    const data = new FormData(document.getElementById("photoForm") as HTMLFormElement);
+    Array.from(data.entries())
+      .filter((entry) => entry[0] === "photos[]")
+      .forEach((entry) => {
+        payload.append("photos[]", entry[1]);
+      });
+  }
+
   async function updateApplication() {
     const payload = new FormData(document.getElementById("applicationForm") as HTMLFormElement);
     payload.set("clientId", await updateClient());
     payload.set("addressId", await updateAddress());
+    addPhotos(payload);
     payload.set("applicableId", await updateApplicable());
     const { data, status } = await api.put(`${env.API_URL}/applications/${applicableRoute}/${applicationId}`, payload);
 

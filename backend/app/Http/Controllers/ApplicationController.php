@@ -37,7 +37,11 @@ class ApplicationController extends Controller {
         $application->address()->associate($address);
         $application->applicable()->associate($applicable);
         $application->save();
-        $this->associatePhotos($data->photos, $application, $this->maxPhotos);
+
+        if ($request->has("photos")) {
+            $this->associatePhotos($data->photos, $application, $this->maxPhotos);
+        }
+
 
         return response()->json($application->id, Response::HTTP_CREATED);
     }
@@ -58,6 +62,11 @@ class ApplicationController extends Controller {
         $application->applicable()->associate($applicable);
         $application->update($data->toArray());
         $application->save();
+
+        $application->photos()
+            ->whereNotIn("id", $request->input("photos"))
+            ->delete();
+        $this->associatePhotos($data->photos, $application, $this->maxPhotos - $application->photos()->count());
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }

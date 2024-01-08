@@ -14,6 +14,7 @@ import { HouseForm, HouseFormErrors } from "../../../components/forms/house-form
 import { HouseOptions } from "../../../models/house-options";
 import { House } from "../../../models/House";
 import { Spinner } from "../../../components/spinner/spinner";
+import { PhotoForm } from "../../../components/forms/photo-form";
 
 export function EditHousePage() {
   const { id } = useParams<{ id: string }>();
@@ -40,6 +41,7 @@ export function EditHousePage() {
           <ClientForm initialState={initialState?.client} errors={errors.client} />
           <AddressForm initialState={initialState?.address} options={options.address} errors={errors.address} />
           <HouseForm initialState={initialState?.applicable} options={options.applicable} errors={errors.applicable} />
+          <PhotoForm initialState={initialState?.photos.map((photo) => photo.id)} />
           <ApplicationForm
             initialState={initialState}
             submit={actions.updateApplication}

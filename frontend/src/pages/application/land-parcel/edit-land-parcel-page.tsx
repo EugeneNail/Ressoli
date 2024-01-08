@@ -14,6 +14,7 @@ import { usePageErrors } from "../../../services/use-page-errors";
 import { usePageOptions } from "../../../services/use-page-options";
 import { useEditPageActions } from "../../../services/use-edit-page-actions";
 import { Spinner } from "../../../components/spinner/spinner";
+import { PhotoForm } from "../../../components/forms/photo-form";
 
 export function EditLandParcelPage() {
   const { id } = useParams<{ id: string }>();
@@ -44,6 +45,7 @@ export function EditLandParcelPage() {
             options={options.applicable}
             errors={errors.applicable}
           />
+          <PhotoForm initialState={initialState?.photos.map((photo) => photo.id)} />
           <ApplicationForm
             initialState={initialState}
             submit={actions.updateApplication}

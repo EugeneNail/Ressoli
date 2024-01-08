@@ -27,7 +27,6 @@ export function PhotoForm({ initialState = [] }: PhotoFormProps) {
         </div>
       ))}
       {maxPhotos - ids.length > 0 && <ImageUploader addIndices={addIndices} allowedPhotos={maxPhotos - ids.length} />}
-      <input type="hidden" name="photos[]" value={[]} />
     </form>
   );
 }

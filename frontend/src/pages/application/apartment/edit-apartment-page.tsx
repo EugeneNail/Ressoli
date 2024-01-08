@@ -14,6 +14,7 @@ import { ApartmentForm, ApartmentFormErrors } from "../../../components/forms/ap
 import { ApartmentOptions } from "../../../models/apartment-options";
 import { Apartment } from "../../../models/apartment";
 import { Spinner } from "../../../components/spinner/spinner";
+import { PhotoForm } from "../../../components/forms/photo-form";
 
 export function EditApartmentPage() {
   const { id } = useParams<{ id: string }>();
@@ -44,6 +45,7 @@ export function EditApartmentPage() {
             options={options.applicable}
             errors={errors.applicable}
           />
+          <PhotoForm initialState={initialState?.photos.map((photo) => photo.id)} />
           <ApplicationForm
             initialState={initialState}
             submit={actions.updateApplication}

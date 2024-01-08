@@ -10,6 +10,7 @@ use App\Models\Application;
 use App\Models\Client;
 use App\Models\House;
 use App\Models\LandParcel;
+use App\Models\Photo;
 use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Routing\Route;
@@ -160,5 +161,22 @@ class UpdateApplicationValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["has_mortgage", null]));
         $this->assertFalse($this->validate(["has_mortgage", "yes"]));
         $this->assertFalse($this->validate(["has_mortgage", "no"]));
+    }
+
+    public function test_photos_valid_data_success(): void {
+        $this->assertTrue($this->validate(["photos", null], ["photos.*", null]));
+        $photos = Photo::factory()
+            ->count(5)
+            ->create()
+            ->map(fn ($photo) => $photo->id)
+            ->toArray();
+        $this->assertTrue($this->validate(["photos", $photos], ["photos.*", $photos]));
+        $this->assertTrue($this->validate(["photos", ["1"]], ["photos.*", ["1"]]));
+    }
+
+    public function test_photos_invalid_data_failure(): void {
+        $this->assertFalse($this->validate(["photos", []], ["photos.*", []]));
+        $this->assertFalse($this->validate(["photos", ["a"]], ["photos.*", ["a"]]));
+        $this->assertFalse($this->validate(["photos", [null]], ["photos.*", [null]]));
     }
 }
