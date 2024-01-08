@@ -9,6 +9,7 @@ import { LocationSection } from "../../../components/application-page/location-s
 import { Apartment } from "../../../models/apartment";
 import { ApartmentSection } from "../../../components/application-page/apartment-section";
 import { Spinner } from "../../../components/spinner/spinner";
+import { PhotoSection } from "../../../components/application-page/photo-section";
 
 export function ApartmentPage() {
   const [isLoading, setLoading] = useState(true);
@@ -29,6 +30,7 @@ export function ApartmentPage() {
         <>
           <MainSection application={application} />
           <ApartmentSection apartment={application.applicable} />
+          {application.photos && <PhotoSection photos={application.photos} />}
           <LocationSection address={application.address} />
         </>
       )}

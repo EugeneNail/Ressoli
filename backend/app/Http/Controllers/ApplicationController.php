@@ -123,7 +123,8 @@ class ApplicationController extends Controller {
             "address",
             "user:id",
             "client",
-            "applicable"
+            "applicable",
+            "photos"
         ])->find($id);
 
         return response()->json($application);

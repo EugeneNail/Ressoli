@@ -9,6 +9,7 @@ import { MainSection } from "../../../components/application-page/main-section";
 import { LandParcelSection } from "../../../components/application-page/land-parcel-section";
 import { LocationSection } from "../../../components/application-page/location-section";
 import { Spinner } from "../../../components/spinner/spinner";
+import { PhotoSection } from "../../../components/application-page/photo-section";
 
 export function LandParcelPage() {
   const { id } = useParams<{ id: string }>();
@@ -29,6 +30,7 @@ export function LandParcelPage() {
         <>
           <MainSection application={application} />
           <LandParcelSection landParcel={application.applicable} />
+          {application.photos && <PhotoSection photos={application.photos} />}
           <LocationSection address={application.address} />
         </>
       )}

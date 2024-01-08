@@ -9,6 +9,7 @@ import { LocationSection } from "../../../components/application-page/location-s
 import { House } from "../../../models/House";
 import { HouseSection } from "../../../components/application-page/house-section";
 import { Spinner } from "../../../components/spinner/spinner";
+import { PhotoSection } from "../../../components/application-page/photo-section";
 
 export function HousePage() {
   const { id } = useParams<{ id: string }>();
@@ -28,6 +29,7 @@ export function HousePage() {
       {!isLoading && (
         <>
           <MainSection application={application} />
+          {application.photos.length > 0 && <PhotoSection photos={application.photos} />}
           <HouseSection house={application.applicable} />
           <LocationSection address={application.address} />
         </>
