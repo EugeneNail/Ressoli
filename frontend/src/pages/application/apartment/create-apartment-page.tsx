@@ -8,6 +8,7 @@ import { usePageOptions } from "../../../services/use-page-options";
 import { useCreatePageActions } from "../../../services/use-create-page-actions";
 import { ApartmentForm, ApartmentFormErrors } from "../../../components/forms/apartment-form";
 import { ApartmentOptions } from "../../../models/apartment-options";
+import { PhotoForm } from "../../../components/forms/photo-form";
 
 export function CreateApartmentPage() {
   const applicableRoute = "apartments";
@@ -24,6 +25,7 @@ export function CreateApartmentPage() {
       <ClientForm errors={errors.client} />
       <AddressForm forApartment options={options.address} errors={errors.address} />
       <ApartmentForm options={options.applicable} errors={errors.applicable} />
+      <PhotoForm />
       <ApplicationForm
         submit={actions.createNewApplication}
         options={options.application}

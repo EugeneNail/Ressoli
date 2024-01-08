@@ -12,14 +12,18 @@ use App\Models\Application;
 use App\Models\Client;
 use App\Models\House;
 use App\Models\LandParcel;
+use App\Models\Photo;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller {
+
+    private int $maxPhotos = 15;
 
     public function store(StoreApplicationRequest $request, string $applicables) {
         $data = $request->safe();
@@ -33,6 +37,7 @@ class ApplicationController extends Controller {
         $application->address()->associate($address);
         $application->applicable()->associate($applicable);
         $application->save();
+        $this->associatePhotos($data->photos, $application, $this->maxPhotos);
 
         return response()->json($application->id, Response::HTTP_CREATED);
     }
@@ -55,6 +60,25 @@ class ApplicationController extends Controller {
         $application->save();
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+
+    private function associatePhotos(array $photoIds, Application $application, int $maxPhotos) {
+        if (!$photoIds) {
+            return;
+        }
+
+        Photo::findMany($photoIds)
+            ->take($maxPhotos)
+            ->each(function ($photo) use ($application) {
+                $oldPath = $photo->path;
+                $newPath = str_replace("/temp", "", $photo->path);
+                $photo->setAttribute("path", $newPath)
+                    ->application()
+                    ->associate($application)
+                    ->save();
+                Storage::disk("local")->move($oldPath, $newPath);
+            });
     }
 
 

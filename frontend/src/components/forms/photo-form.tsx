@@ -7,7 +7,7 @@ type PhotoFormProps = { initialState?: number[] };
 
 export function PhotoForm({ initialState = [] }: PhotoFormProps) {
   const [ids, setIds] = useState<number[]>(initialState);
-  const allowedPhotos = 5;
+  const maxPhotos = 15;
 
   function addIndices(newIds: number[]) {
     setIds([...ids, ...newIds]);
@@ -26,7 +26,8 @@ export function PhotoForm({ initialState = [] }: PhotoFormProps) {
           <Icon className="photo-form__remove" name="delete" onClick={() => removeIndex(id)} />
         </div>
       ))}
-      {allowedPhotos - ids.length > 0 && <ImageUploader addIndices={addIndices} allowedPhotos={5 - ids.length} />}
+      {maxPhotos - ids.length > 0 && <ImageUploader addIndices={addIndices} allowedPhotos={maxPhotos - ids.length} />}
+      <input type="hidden" name="photos[]" value={[]} />
     </form>
   );
 }

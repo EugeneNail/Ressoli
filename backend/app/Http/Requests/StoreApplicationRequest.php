@@ -33,6 +33,8 @@ class StoreApplicationRequest extends FormRequest {
             "price" => ["required", "numeric", "integer", "gt:0", "lte:10000000"],
             "contract" => ["required", "string", Rule::in($options["contract"])],
             "has_mortgage" => ["required", "boolean"],
+            "photos" => ["nullable", "array"],
+            "photos.*" => ["required", "integer", "exists:photos,id"]
         ];
     }
 

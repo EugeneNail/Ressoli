@@ -8,6 +8,7 @@ import { HouseForm, HouseFormErrors } from "../../../components/forms/house-form
 import { usePageErrors } from "../../../services/use-page-errors";
 import { usePageOptions } from "../../../services/use-page-options";
 import { useCreatePageActions } from "../../../services/use-create-page-actions";
+import { PhotoForm } from "../../../components/forms/photo-form";
 
 export function CreateHousePage() {
   const applicableRoute = "houses";
@@ -24,6 +25,7 @@ export function CreateHousePage() {
       <ClientForm errors={errors.client} />
       <AddressForm options={options.address} errors={errors.address} />
       <HouseForm options={options.applicable} errors={errors.applicable} />
+      <PhotoForm />
       <ApplicationForm
         submit={actions.createNewApplication}
         options={options.application}

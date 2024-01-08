@@ -8,6 +8,7 @@ import { ApplicationForm } from "../../../components/forms/application-form";
 import { usePageErrors } from "../../../services/use-page-errors";
 import { usePageOptions } from "../../../services/use-page-options";
 import { useCreatePageActions } from "../../../services/use-create-page-actions";
+import { PhotoForm } from "../../../components/forms/photo-form";
 
 export function CreateLandParcelPage() {
   const applicableRoute = "land-parcels";
@@ -24,6 +25,7 @@ export function CreateLandParcelPage() {
       <ClientForm errors={errors.client} />
       <AddressForm options={options.address} errors={errors.address} />
       <LandParcelForm options={options.applicable} errors={errors.applicable} />
+      <PhotoForm />
       <ApplicationForm
         submit={actions.createNewApplication}
         options={options.application}

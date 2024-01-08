@@ -42,6 +42,15 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
     }
   }
 
+  function addPhotos(payload: FormData): void {
+    const data = new FormData(document.getElementById("photoForm") as HTMLFormElement);
+    Array.from(data.entries())
+      .filter((entry) => entry[0] === "photos[]")
+      .forEach((entry) => {
+        payload.append("photos[]", entry[1]);
+      });
+  }
+
   async function createApplicable() {
     const payload = new FormData(document.getElementById("applicableForm") as HTMLFormElement);
     const { data, status } = await api.post(`${env.API_URL}/${applicableRoute}`, payload);
@@ -61,6 +70,7 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
     const payload = new FormData(document.getElementById("applicationForm") as HTMLFormElement);
     payload.set("clientId", await createClient());
     payload.set("addressId", await createAddress());
+    addPhotos(payload);
     payload.set("applicableId", await createApplicable());
     const { data, status } = await api.post(`${env.API_URL}/applications/${applicableRoute}`, payload);
 
