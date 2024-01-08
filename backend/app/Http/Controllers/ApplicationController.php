@@ -132,7 +132,7 @@ class ApplicationController extends Controller {
 
 
     public function index(IndexApplicationsRequest $request) {
-        $applications = Application::with(["client", "address", "applicable"])
+        $applications = Application::with(["client", "address", "applicable", "photos"])
             ->when($request->has("types"), fn ($builder) => $this->applyTypeFilters($builder, $request))
             ->get();
 

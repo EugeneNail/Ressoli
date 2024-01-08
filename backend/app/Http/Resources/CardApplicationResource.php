@@ -15,8 +15,12 @@ class CardApplicationResource extends JsonResource {
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array {
+        $photos = $this->photos;
+        $preview = $photos->count() > 0 ? $photos[0]->id : null;
+
         return [
             "id" => $this->id,
+            "preview" => $preview,
             "is_active" => $this->is_active,
             "address" => $this->address,
             "price" => $this->price,

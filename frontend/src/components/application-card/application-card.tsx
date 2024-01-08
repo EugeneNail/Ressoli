@@ -8,6 +8,7 @@ import { CardHouse } from "../../models/card-house";
 import { CardApartment } from "../../models/card-apartment";
 import { Link } from "react-router-dom";
 import { Format } from "../../services/format";
+import { env } from "../../env";
 
 type ApplicationCardProps = {
   application: CardApplication<CardLandParcel | CardApartment | CardHouse>;
@@ -60,12 +61,16 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
     );
   }
 
+  function getPreview() {
+    return application.preview !== null ? `${env.API_URL}/photos/${application.preview}` : "/img/no-photo.png";
+  }
+
   return (
     <Link target="_blank" to={application.id.toString()} className="application-card">
       <p className={classNames("application-card__status", { archived: !application.isActive })}>
         {application.isActive ? "Active" : "Archived"}
       </p>
-      <img src="/img/no-photo.png" alt="" className="application-card__photo" />
+      <img src={getPreview()} className="application-card__photo" />
       <div className="application-card__main-group">
         <h3 className="application-card__title">
           {application.applicable.type} for {application.contract}

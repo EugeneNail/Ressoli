@@ -6,6 +6,7 @@ import { CardLandParcel } from "./card-land-parcel";
 export type CardApplication<A extends CardLandParcel | CardHouse | CardApartment> = {
   id: number;
   isActive: boolean;
+  preview: number | null;
   address: Address;
   date: Date;
   client: string;
