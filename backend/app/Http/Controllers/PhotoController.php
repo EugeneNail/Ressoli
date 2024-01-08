@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller {
 
-    public function __invoke(StorePhotoRequest $request) {
+    public function store(StorePhotoRequest $request) {
         $photos = [];
 
         foreach ($request->file("photos") as $file) {
@@ -19,5 +19,13 @@ class PhotoController extends Controller {
         }
 
         return response()->json($photos, Response::HTTP_CREATED);
+    }
+
+    public function show(Photo $photo) {
+        if ($photo === null) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->file($photo->path);
     }
 }

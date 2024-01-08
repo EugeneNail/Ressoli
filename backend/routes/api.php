@@ -57,7 +57,11 @@ Route::group(["middleware" => "auth:sanctum"], function () {
         Route::get("/", [ApplicationController::class, "index"]);
     });
 
-    Route::post("/photos", PhotoController::class);
+    Route::group(["prefix" => "photos"], function () {
+        Route::post("/", [PhotoController::class, "store"]);
+        Route::get("/{photo}", [PhotoController::class, "show"]);
+    });
+
 
     Route::get("/options/{type}", OptionController::class);
 });
