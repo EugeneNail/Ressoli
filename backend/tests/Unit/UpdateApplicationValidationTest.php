@@ -165,6 +165,7 @@ class UpdateApplicationValidationTest extends ValidationTestCase {
 
     public function test_photos_valid_data_success(): void {
         $this->assertTrue($this->validate(["photos", null], ["photos.*", null]));
+        $this->assertTrue($this->validate(["photos", []], ["photos.*", []]));
         $photos = Photo::factory()
             ->count(5)
             ->create()
@@ -175,7 +176,6 @@ class UpdateApplicationValidationTest extends ValidationTestCase {
     }
 
     public function test_photos_invalid_data_failure(): void {
-        $this->assertFalse($this->validate(["photos", []], ["photos.*", []]));
         $this->assertFalse($this->validate(["photos", ["a"]], ["photos.*", ["a"]]));
         $this->assertFalse($this->validate(["photos", [null]], ["photos.*", [null]]));
     }

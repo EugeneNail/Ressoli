@@ -67,16 +67,18 @@ class ApplicationController extends Controller {
             ->whereNotIn("id", $request->input("photos"))
             ->delete();
         $this->associatePhotos($data->photos, $application, $this->maxPhotos - $application->photos()->count());
+        if ($request->has("photos")) {
+            $application->photos()
+                ->whereNotIn("id", $request->input("photos"))
+                ->delete();
+            $this->associatePhotos($data->photos, $application, $this->maxPhotos);
+        }
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
 
     private function associatePhotos(array $photoIds, Application $application, int $maxPhotos) {
-        if (!$photoIds) {
-            return;
-        }
-
         Photo::findMany($photoIds)
             ->take($maxPhotos)
             ->each(function ($photo) use ($application) {

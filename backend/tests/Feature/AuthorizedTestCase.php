@@ -19,6 +19,7 @@ class AuthorizedTestCase extends TestCase {
 
     protected function setUp(): void {
         parent::setUp();
-        $this->actingAs(User::factory()->test()->create());
+        $this->seed(TestUserSeeder::class);
+        $this->actingAs(User::first());
     }
 }

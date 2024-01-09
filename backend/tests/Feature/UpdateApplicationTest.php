@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Application;
+use App\Models\Photo;
 use App\Models\User;
 use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -105,6 +106,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
         $this->data = Application::factory()
             ->withApartment()
             ->withUser($user)
+            ->has(Photo::factory(3))
             ->active()
             ->make()
             ->toArray();
