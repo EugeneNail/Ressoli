@@ -62,8 +62,4 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
 
     Route::get("/options/{type}", OptionController::class);
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+})->middleware("web");

@@ -29,13 +29,15 @@ class StoreUserTest extends TestCase {
 
     public function test_store_valid_data_201(): void {
         $response = $this->postJson($this->route, $this->data);
-        $response->assertStatus(201);
+        $response->assertStatus(204);
 
         $this->assertDatabaseHas(User::class, [
             "name" => "John",
             "last_name" => "Doe",
             "email" => "john.doe@gmail.com",
         ]);
+
+        $response->assertCookie("access_token");
     }
 
     public function test_store_invalid_data_422(): void {
@@ -44,6 +46,7 @@ class StoreUserTest extends TestCase {
         $response->assertStatus(422)
             ->assertJsonValidationErrors(["name", "lastName", "email", "password", "passwordConfirmation"]);
         $this->assertDatabaseCount(User::class, 0);
+        $response->assertCookieMissing("access_token");
     }
 
     public function test_store_duplicate_email_409(): void {
@@ -53,5 +56,6 @@ class StoreUserTest extends TestCase {
         $response->assertStatus(409);
         $this->assertDatabaseCount(User::class, 1);
         $response->assertJsonValidationErrors("email");
+        $response->assertCookieMissing("access_token");
     }
 }

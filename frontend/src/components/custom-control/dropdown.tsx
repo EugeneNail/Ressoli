@@ -12,7 +12,7 @@ export function Dropdown({
   name,
   label,
   resetError,
-  options,
+  options = [],
   initialValue = "",
   icon,
   helperText = "",

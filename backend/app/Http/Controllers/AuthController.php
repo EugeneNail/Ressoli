@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\MessageBag;
 
 class AuthController extends Controller {
@@ -22,10 +23,10 @@ class AuthController extends Controller {
             return response()->json(["errors" => $messages], Response::HTTP_CONFLICT);
         }
 
-        $user = User::create($data);
-        $token = $user->createToken($request->ip())->plainTextToken;
+        $token = User::create($data)->createToken($request->ip())->plainTextToken;
+        $cookie = cookie("access_token", $token, 60 * 24 * 7);
 
-        return response()->json($token, Response::HTTP_CREATED);
+        return response()->noContent()->withCookie($cookie);
     }
 
     public function login(LoginRequest $request, MessageBag $messages) {
@@ -42,12 +43,17 @@ class AuthController extends Controller {
         $user = User::where(["email" => $data["email"]])->first();
         $token = $user->createToken($request->ip())->plainTextToken;
 
-        return response()->json($token, Response::HTTP_OK);
+        $cookie = cookie('access_token', $token, 60 * 24 * 7);
+        return response()->noContent()->withCookie($cookie);
     }
 
     public function logout(Request $request) {
-        $request->user()->tokens()->where(["name" => $request->ip()])->delete();
+        $request->user()
+            ->tokens()
+            ->where(["name" => $request->ip()])
+            ->delete();
+        $cookie = Cookie::forget("access_token");
 
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return response()->noContent()->withCookie($cookie);
     }
 }

@@ -3,7 +3,6 @@ import { Icon } from "../icon/icon";
 import { MenuLink } from "./menu-link";
 import "./menu.sass";
 import api from "../../services/api";
-import { StorageUser } from "../../models/storage-user";
 
 export function Menu() {
   const navigate = useNavigate();
@@ -12,8 +11,6 @@ export function Menu() {
     const { status } = await api.post("/logout");
 
     if (status === 204) {
-      const user = new StorageUser();
-      user.token = "";
       navigate("/login");
     }
   }

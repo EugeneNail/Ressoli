@@ -27,9 +27,10 @@ class LoginTest extends TestCase {
     }
 
 
-    public function test_attempt_success_200(): void {
+    public function test_attempt_success_204(): void {
         $response = $this->postJson($this->route, $this->data);
-        $response->assertStatus(200);
+        $response->assertStatus(204);
+        $response->assertCookie("access_token");
     }
 
     public function test_attempt_failed_password_401(): void {
@@ -37,6 +38,7 @@ class LoginTest extends TestCase {
         $response = $this->postJson($this->route, $this->data);
 
         $response->assertStatus(401)->assertJsonValidationErrors(["email", "password"]);
+        $response->assertCookieMissing("access_token");
     }
 
     public function test_attempt_failed_email_401(): void {
@@ -44,5 +46,6 @@ class LoginTest extends TestCase {
         $response = $this->postJson($this->route, $this->data);
 
         $response->assertStatus(401)->assertJsonValidationErrors(["email", "password"]);
+        $response->assertCookieMissing("access_token");
     }
 }

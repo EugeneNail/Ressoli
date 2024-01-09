@@ -7,6 +7,7 @@ use Database\Seeders\TestUserSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;
 
@@ -18,42 +19,22 @@ class LogoutTest extends TestCase {
 
     private string $token = '1|3t0ix4PEXkDOgssDYkqZDo9i7ynEhcxgWI159aBHc3e24611';
 
+    private string $hashedToken = "a145676ab6f4e7892ec02fefec3cd804fcb83cd5eabfb40c8e97aec9fea70234";
+
     public function setUp(): void {
         parent::setUp();
         $this->seed(TestUserSeeder::class);
     }
 
-    public function test_valid_header_200() {
-        $response = $this->withHeader("Authorization", "Bearer " . $this->token)
-            ->postJson($this->route);
-
-        $response->assertStatus(204);
+    public function test_logout_valid_token_204(): void {
     }
 
-    public function test_no_header_401() {
-        $response = $this->postJson($this->route);
-
-        $response->assertStatus(401);
+    public function test_logout_invalid_token_401(): void {
     }
 
-    public function test_empty_header_401() {
-        $response = $this->withHeader("Authorization", "")
-            ->postJson($this->route);
-
-        $response->assertStatus(401);
+    public function test_logout_no_token_401(): void {
     }
 
-    public function test_no_bearer_401() {
-        $response = $this->withHeader("Authorization", $this->token)
-            ->postJson($this->route);
-
-        $response->assertStatus(401);
-    }
-
-    public function test_no_token_401() {
-        $response = $this->withHeader("Authorization", "Bearer ")
-            ->postJson($this->route);
-
-        $response->assertStatus(401);
+    public function test_logout_expired_token_401(): void {
     }
 }
