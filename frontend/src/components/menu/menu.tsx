@@ -22,9 +22,9 @@ export function Menu() {
       </div>
       <div className="menu__links">
         <MenuLink label="Dashboard" to="/dashboard" icon="grid_view" />
-        <MenuLink label="Houses" to="/houses" icon="house" />
-        <MenuLink label="Parcels" to="/land-parcels" icon="map" />
-        <MenuLink label="Apartments" to="/apartments" icon="apartment" />
+        <MenuLink label="Houses" to="/houses?types[]=houses" icon="house" />
+        <MenuLink label="Parcels" to="/land-parcels?types[]=land-parcels" icon="map" />
+        <MenuLink label="Apartments" to="/apartments?types[]=apartments" icon="apartment" />
       </div>
       <Icon name="logout" onClick={logout} className="menu__logout-button" />
     </nav>

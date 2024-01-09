@@ -8,26 +8,36 @@ import { CardApplication } from "../../../models/card-application";
 import api from "../../../services/api";
 import { CardHouse } from "../../../models/card-house";
 import "../applications-page.sass";
+import { Paginator } from "../../../components/paginator/paginator";
+import { PaginatedApplicationCollection } from "../../../models/paginated-applications-collection";
+import { useSearchParams } from "react-router-dom";
 
 export function HousesPage() {
   const [isLoading, setLoading] = useState(true);
   const [applications, setApplications] = useState<CardApplication<CardHouse>[]>([]);
+  const [lastPage, setLastPage] = useState(1);
+
+  const [params] = useSearchParams();
+  const page = params.get("page") ?? 1;
 
   useEffect(() => {
-    api.get<{ data: CardApplication<CardHouse>[] }>(`${env.API_URL}/applications?types[]=houses`).then((response) => {
-      setApplications(response.data.data);
+    setLoading(true);
+    const route = `${env.API_URL}/applications${document.location.search}`;
+    api.get<PaginatedApplicationCollection<CardHouse>>(route).then(({ data }) => {
+      setApplications(data.data);
+      setLastPage(data.meta.lastPage);
       setLoading(false);
     });
-  }, []);
+  }, [page]);
 
   return (
     <div className="applications-page">
+      <div className="applications-page__header">
+        <h1 className="applications-page__title">Found {applications.length} applications</h1>
+        <Button className="applications-page__header-button" to="new" text="Add application" />
+      </div>
       {!isLoading && applications.length !== 0 && (
         <>
-          <div className="applications-page__header">
-            <h1 className="applications-page__title">Found {applications.length} applications</h1>
-            <Button className="applications-page__header-button" to="new" text="Add application" />
-          </div>
           <div className="applications-page__applications">
             {applications.map((application) => (
               <ApplicationCard key={application.id} application={application} />
@@ -42,6 +52,14 @@ export function HousesPage() {
         </div>
       )}
       {isLoading && <Spinner className="applications-page__spinner" />}
+      {applications.length > 0 && (
+        <Paginator
+          lastPage={lastPage}
+          pageRadius={3}
+          currentPage={parseFloat(page as string)}
+          className="applications-page__paginator"
+        />
+      )}
     </div>
   );
 }
