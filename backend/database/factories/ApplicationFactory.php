@@ -39,30 +39,33 @@ class ApplicationFactory extends Factory {
     }
 
     public function withHouse(): static {
-        $house = House::factory()->create();
-
-        return $this->state(fn () => [
-            "applicable_id" => $house->id,
-            "applicable_type" => House::class
-        ]);
+        return $this->state(function () {
+            $house = House::factory()->create();
+            return    [
+                "applicable_id" => $house->id,
+                "applicable_type" => House::class
+            ];
+        });
     }
 
     public function withApartment(): static {
-        $apartment = Apartment::factory()->create();
-
-        return $this->state(fn () => [
-            "applicable_id" => $apartment->id,
-            "applicable_type" => Apartment::class
-        ]);
+        return $this->state(function () {
+            $apartment = Apartment::factory()->create();
+            return [
+                "applicable_id" => $apartment->id,
+                "applicable_type" => Apartment::class
+            ];
+        });
     }
 
     public function withLandParcel(): static {
-        $landParcel = LandParcel::factory()->create();
-
-        return $this->state(fn () => [
-            "applicable_id" => $landParcel->id,
-            "applicable_type" => LandParcel::class
-        ]);
+        return $this->state(function () {
+            $landParcel = LandParcel::factory()->create();
+            return [
+                "applicable_id" => $landParcel->id,
+                "applicable_type" => LandParcel::class
+            ];
+        });
     }
 
     public function withRandomApplicable(): static {
