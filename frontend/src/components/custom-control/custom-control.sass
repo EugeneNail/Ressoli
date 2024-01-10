@@ -208,3 +208,51 @@ input[type=number]
         &.selected
             background: $accent
             color: white
+
+.range
+    overflow: hidden
+    height: 3rem
+    width: 100%
+    display: flex
+    position: relative
+    align-items: center
+
+    &__progress
+        position: absolute
+        background: $accent
+        z-index: 3
+        height: 6px
+        pointer-events: none
+        margin: 0 3px
+
+    &__slider
+        position: absolute
+        box-sizing: border-box
+        appearance: none
+        width: 100%
+        margin: 0
+        padding: 0 2px
+        overflow: hidden
+        border: 0
+        border-radius: 1px
+        outline: none
+        background: linear-gradient($border, $border) no-repeat center
+        background-size: 100% 6px
+        pointer-events: none
+
+        &::-webkit-slider-thumb
+            z-index: 2
+            height: 3rem
+            width: 3rem
+            border-radius: .8rem
+            background-color: $accent
+            position: relative
+            cursor: pointer
+            appearance: none
+            pointer-events: all
+
+        &.left::-webkit-slider-thumb
+            left: -2px
+
+        &.right::-webkit-slider-thumb
+            left: 2px
