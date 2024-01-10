@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class IndexApplicationsTest extends AuthorizedTestCase {
+class IndexApplicationsFeatureTest extends AuthorizedTestCase {
 
     public function setUp(): void {
         parent::setUp();
@@ -19,7 +19,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         Application::factory()->withRandomApplicable()->count(25)->create();
     }
 
-    public function test_get_no_types_200_all_applicables(): void {
+    public function test_no_types_200_all_applicables(): void {
         $response = $this->get($this->route);
 
         $applications = collect(json_decode($response->getContent())->data);
@@ -31,7 +31,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasAllTypes);
     }
 
-    public function test_get_has_valid_structure(): void {
+    public function test_has_valid_structure(): void {
         $response = $this->get($this->route);
         $applications = collect(json_decode($response->getContent())->data);
 
@@ -72,7 +72,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         });
     }
 
-    public function test_get_all_types_200_all_applicables(): void {
+    public function test_all_types_200_all_applicables(): void {
         $response = $this->get($this->route . "?types[]=houses&types[]=land-parcels&types[]=apartments");
         $applications = collect(json_decode($response->getContent())->data);
 
@@ -90,7 +90,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $response->assertStatus(422);
     }
 
-    public function test_get_houses_200(): void {
+    public function test_houses_200(): void {
         $response = $this->getJson($this->route . "?types[]=houses");
         $response->assertStatus(200);
         $applications = collect(json_decode($response->getContent())->data);
@@ -99,7 +99,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasHousesOnly);
     }
 
-    public function test_get_land_parcels_200(): void {
+    public function test_land_parcels_200(): void {
         $response = $this->getJson($this->route . "?types[]=land-parcels");
         $response->assertStatus(200);
         $applications = collect(json_decode($response->getContent())->data);
@@ -108,7 +108,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasLandParcelsOnly);
     }
 
-    public function test_get_apartments_200(): void {
+    public function test_apartments_200(): void {
         $response = $this->getJson($this->route . "?types[]=apartments");
         $response->assertStatus(200);
         $applications = collect(json_decode($response->getContent())->data);
@@ -117,7 +117,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasLandParcelsOnly);
     }
 
-    public function test_get_owned_200(): void {
+    public function test_owned_200(): void {
         $response = $this->getJson($this->route . "?owned=true");
         $response->assertStatus(200);
         $hasOwnedOnly = collect(json_decode($response->getContent())->data)
@@ -126,7 +126,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasOwnedOnly);
     }
 
-    public function test_get_empty_owned_200(): void {
+    public function test_empty_owned_200(): void {
         $response = $this->getJson($this->route);
         $response->assertStatus(200);
         $hasOwnedOnly = collect(json_decode($response->getContent())->data)
@@ -135,7 +135,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertFalse($hasOwnedOnly);
     }
 
-    public function test_get_all_statuses_200(): void {
+    public function test_all_statuses_200(): void {
         $response = $this->getJson($this->route);
         $response->assertStatus(200);
         $hasAllStatuses = collect(json_decode($response->getContent())->data)
@@ -143,7 +143,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasAllStatuses);
     }
 
-    public function test_get_active_200(): void {
+    public function test_active_200(): void {
         $response = $this->getJson($this->route . "?statuses[]=active");
         $response->assertStatus(200);
         $hasActiveOnly = collect(json_decode($response->getContent())->data)
@@ -151,7 +151,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasActiveOnly);
     }
 
-    public function test_get_archived_200(): void {
+    public function test_archived_200(): void {
         $response = $this->getJson($this->route . "?statuses[]=archived");
         $response->assertStatus(200);
         $hasArchivedOnly = collect(json_decode($response->getContent())->data)
@@ -159,7 +159,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasArchivedOnly);
     }
 
-    public function test_get_min_price_200(): void {
+    public function test_min_price_200(): void {
         $price = 1000000;
         $response = $this->getJson($this->route . "?min-price={$price}");
         $response->assertStatus(200);
@@ -168,7 +168,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasAboveMinPriceOnly);
     }
 
-    public function test_get_max_price_200(): void {
+    public function test_max_price_200(): void {
         $price = 1000000;
         $response = $this->getJson($this->route . "?max-price={$price}");
         $response->assertStatus(200);
@@ -177,7 +177,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasBelowMaxPriceOnly);
     }
 
-    public function test_get_min_area_200(): void {
+    public function test_min_area_200(): void {
         $area = 1000;
         $response = $this->getJson($this->route . "?min-area={$area}");
         $response->assertStatus(200);
@@ -186,7 +186,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasAboveMinAreaOnly);
     }
 
-    public function test_get_max_area_200(): void {
+    public function test_max_area_200(): void {
         $area = 5000;
         $response = $this->getJson($this->route . "?max-area={$area}");
         $response->assertStatus(200);
@@ -195,7 +195,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasBelowMaxAreaOnly);
     }
 
-    public function test_get_sales_200(): void {
+    public function test_sales_200(): void {
         $response = $this->getJson($this->route . "?contracts[]=Sale");
         $response->assertStatus(200);
         $hasSaleOnly = collect(json_decode($response->getContent())->data)
@@ -203,7 +203,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasSaleOnly);
     }
 
-    public function test_get_rents_200(): void {
+    public function test_rents_200(): void {
         $response = $this->getJson($this->route . "?contracts[]=Rent");
         $response->assertStatus(200);
         $hasRentOnly = collect(json_decode($response->getContent())->data)
@@ -211,7 +211,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasRentOnly);
     }
 
-    public function test_get_empty_contracts_200(): void {
+    public function test_empty_contracts_200(): void {
         $response = $this->getJson($this->route);
         $response->assertStatus(200);
         $hasAllContracts = collect(json_decode($response->getContent())->data)
@@ -219,11 +219,11 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasAllContracts);
     }
 
-    public function test_get_before_date_200(): void {
+    public function test_after_date_200(): void {
         Application::factory()
             ->withRandomApplicable()
             ->withRandomDate(365)
-            ->count(50)
+            ->count(100)
             ->create();
         $date = "2024-06-30";
         $response = $this->getJson($this->route . "?min-date={$date}");
@@ -233,11 +233,11 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasAfterDateOnly);
     }
 
-    public function test_get_after_date_200(): void {
+    public function test_before_date_200(): void {
         Application::factory()
             ->withRandomApplicable()
             ->withRandomDate(365)
-            ->count(50)
+            ->count(100)
             ->create();
         $date = "2024-06-30";
         $response = $this->getJson($this->route . "?max-date={$date}");
@@ -247,7 +247,7 @@ class IndexApplicationsTest extends AuthorizedTestCase {
         $this->assertTrue($hasBeforeDateOnly);
     }
 
-    public function test_get_no_photos_200(): void {
+    public function test_no_photos_200(): void {
         Application::factory()
             ->withRandomApplicable()
             ->count(20)

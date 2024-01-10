@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ArchiveApplicationTest extends AuthorizedTestCase {
+class ArchiveApplicationFeatureTest extends AuthorizedTestCase {
 
     private Model $application;
 
@@ -20,7 +20,7 @@ class ArchiveApplicationTest extends AuthorizedTestCase {
         $this->application = Application::factory()->withHouse()->active()->create();
     }
 
-    public function test_activate_invalid_id_404(): void {
+    public function test_archive_invalid_id_404(): void {
         $response = $this->patchJson("/api/applications/999/archive");
 
         $response->assertStatus(404);
@@ -28,7 +28,7 @@ class ArchiveApplicationTest extends AuthorizedTestCase {
         $this->assertDatabaseHas(Application::class, ["id" => 1, "is_active" => true]);
     }
 
-    public function test_activate_success_204(): void {
+    public function test_archive_success_204(): void {
         $response = $this->patchJson($this->route);
 
         $response->assertStatus(204);

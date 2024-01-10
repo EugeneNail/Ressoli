@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UpdateLandParcelTest extends AuthorizedTestCase {
+class UpdateLandParcelFeatureTest extends AuthorizedTestCase {
 
     public function setUp(): void {
         parent::setUp();
@@ -18,7 +18,7 @@ class UpdateLandParcelTest extends AuthorizedTestCase {
         LandParcel::factory()->create();
     }
 
-    public function test_update_valid_data_204(): void {
+    public function test_valid_data_204(): void {
         $response = $this->putJson($this->route . "/1", $this->data);
 
         $response->assertStatus(204);
@@ -27,7 +27,7 @@ class UpdateLandParcelTest extends AuthorizedTestCase {
         $this->assertNull(json_decode($response->getContent()));
     }
 
-    public function test_update_invalid_id_404(): void {
+    public function test_invalid_id_404(): void {
         $response = $this->putJson($this->route . "/999", $this->data);
 
         $response->assertStatus(404);
@@ -35,7 +35,7 @@ class UpdateLandParcelTest extends AuthorizedTestCase {
         $this->assertDatabaseMissing(LandParcel::class, ["id" => 1] + $this->data);
     }
 
-    public function test_update_invalid_data_422(): void {
+    public function test_invalid_data_422(): void {
         $response = $this->putJson($this->route . "/1", []);
 
         $response->assertStatus(422);

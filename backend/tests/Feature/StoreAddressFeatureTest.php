@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class StoreAddressTest extends AuthorizedTestCase {
+class StoreAddressFeatureTest extends AuthorizedTestCase {
 
     use RefreshDatabase;
 
@@ -29,7 +29,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $response->assertStatus(405);
     }
 
-    public function test_create_invalid_place_names_data_404() {
+    public function test_invalid_place_names_data_404() {
         $this->data["street"] = "abcde-abcde-abcde-abcde-abcde-";
         $this->data["city"] = "abcde-abcde-abcde-abcde-abcde-";
         $this->data["number"] = "abcde-";
@@ -38,7 +38,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $response->assertStatus(404);
     }
 
-    public function test_create_valid_201() {
+    public function test_valid_201() {
         $response = $this->postJson($this->route, $this->data);
         $response->assertStatus(201);
 
@@ -46,7 +46,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $this->assertDatabaseHas(Address::class, $this->data);
     }
 
-    public function test_create_null_unit_201() {
+    public function test_null_unit_201() {
         unset($this->data["unit"]);
         $response = $this->postJson($this->route, $this->data);
 
@@ -55,7 +55,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $this->assertDatabaseHas(Address::class, $this->data);
     }
 
-    public function test_create_null_unit_over_non_null_unit_201() {
+    public function test_null_unit_over_non_null_unit_201() {
         $response = $this->postJson($this->route, $this->data);
         unset($this->data["unit"]);
         $response = $this->postJson($this->route, $this->data);
@@ -65,7 +65,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $this->assertDatabaseHas(Address::class, $this->data);
     }
 
-    public function test_create_null_postal_code_201() {
+    public function test_null_postal_code_201() {
         unset($this->data["postal_code"]);
         $response = $this->postJson($this->route, $this->data);
 
@@ -78,7 +78,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $this->assertDatabaseHas(Address::class, $this->data);
     }
 
-    public function test_create_null_postal_code_over_non_null_postal_code_201() {
+    public function test_null_postal_code_over_non_null_postal_code_201() {
         $response = $this->postJson($this->route, $this->data);
         unset($this->data["postal_code"]);
         $response = $this->postJson($this->route, $this->data);
@@ -88,7 +88,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $this->assertDatabaseHas(Address::class, $this->data);
     }
 
-    public function test_create_null_all_nullables_201() {
+    public function test_null_all_nullables_201() {
         unset($this->data["unit"]);
         unset($this->data["postal_code"]);
         $response = $this->postJson($this->route, $this->data);
@@ -102,7 +102,7 @@ class StoreAddressTest extends AuthorizedTestCase {
         $this->assertDatabaseHas(Address::class, $this->data);
     }
 
-    public function test_create_existing_address_200() {
+    public function test_existing_address_200() {
         $this->postJson($this->route, $this->data);
         $response = $this->postJson($this->route, $this->data);
 

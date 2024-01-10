@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class StoreClientTest extends AuthorizedTestCase {
+class StoreClientFeatureTest extends AuthorizedTestCase {
 
     use RefreshDatabase;
 
@@ -19,14 +19,14 @@ class StoreClientTest extends AuthorizedTestCase {
         $this->data = Client::factory()->test()->make()->toArray();
     }
 
-    public function test_store_valid_data_201(): void {
+    public function test_valid_data_201(): void {
         $response = $this->postJson($this->route, $this->data);
 
         $response->assertStatus(201);
         $this->assertDatabaseHas(Client::class, $this->data);
     }
 
-    public function test_store_with_existing_number_different_names_409(): void {
+    public function test_with_existing_number_different_names_409(): void {
         $this->postJson($this->route, $this->data);
         $this->data["name"] = "Jonathan";
         $this->data["last_name"] = "Donutson";

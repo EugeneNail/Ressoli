@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class LoginTest extends TestCase {
+class LoginFeatureTest extends TestCase {
 
     use RefreshDatabase;
 
@@ -27,13 +27,13 @@ class LoginTest extends TestCase {
     }
 
 
-    public function test_attempt_success_204(): void {
+    public function test_success_204(): void {
         $response = $this->postJson($this->route, $this->data);
         $response->assertStatus(204);
         $response->assertCookie("access_token");
     }
 
-    public function test_attempt_failed_password_401(): void {
+    public function test_invalid_password_401(): void {
         $this->data["password"] = "AnotherStrongPassword123";
         $response = $this->postJson($this->route, $this->data);
 
@@ -41,7 +41,7 @@ class LoginTest extends TestCase {
         $response->assertCookieMissing("access_token");
     }
 
-    public function test_attempt_failed_email_401(): void {
+    public function test_invalid_email_401(): void {
         $this->data["email"] = "anthony@list.com";
         $response = $this->postJson($this->route, $this->data);
 

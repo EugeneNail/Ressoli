@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class StoreLandParcelTest extends AuthorizedTestCase {
+class StoreLandParcelFeatureTest extends AuthorizedTestCase {
 
     public function setUp(): void {
         parent::setUp();
@@ -17,14 +17,14 @@ class StoreLandParcelTest extends AuthorizedTestCase {
         $this->data = LandParcel::factory()->test()->make()->toArray();
     }
 
-    public function test_store_valid_data_201(): void {
+    public function test_valid_data_201(): void {
         $response = $this->postJson($this->route, $this->data);
 
         $response->assertStatus(201);
         $this->assertDatabaseHas(LandParcel::class, $this->data);
     }
 
-    public function test_store_invalid_data_422(): void {
+    public function test_invalid_data_422(): void {
         $response = $this->postJson($this->route, []);
 
         $response->assertStatus(422)
@@ -32,7 +32,7 @@ class StoreLandParcelTest extends AuthorizedTestCase {
         $this->assertDatabaseCount(LandParcel::class, 0);
     }
 
-    public function test_store_existing_data_201(): void {
+    public function test_existing_data_201(): void {
         $this->postJson($this->route, $this->data);
         $response = $this->postJson($this->route, $this->data);
 

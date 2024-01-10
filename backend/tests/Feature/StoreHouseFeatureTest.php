@@ -8,29 +8,29 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UpdateHouseTest extends AuthorizedTestCase {
+class StoreHouseFeatureTest extends AuthorizedTestCase {
 
     public function setUp(): void {
         parent::setUp();
         $this->seed(HouseOptionsSeeder::class);
         $this->route = "/api/houses";
         $this->data = House::factory()->test()->make()->toArray();
-        House::factory()->create();
     }
 
-    public function test_update_valid_data_204(): void {
-        $response = $this->putJson($this->route . "/1", $this->data);
+    public function test_valid_data_201(): void {
+        $response = $this->postJson($this->route, $this->data);
+        $id = $response->content();
 
-        $response->assertStatus(204);
-        $this->assertDatabaseHas(House::class, ["id" => 1] + $this->data);
+        $response->assertStatus(201);
+        $this->assertDatabaseHas(House::class, ["id" => $id] + $this->data);
         $this->assertDatabaseCount(House::class, 1);
-        $this->assertNull(json_decode($response->getContent()));
+        $this->assertIsInt(json_decode($response->getContent()));
     }
 
-    public function test_update_invalid_data_422(): void {
+    public function test_invalid_data_422(): void {
         $response = $this->postJson($this->route, []);
         $response->assertStatus(422);
-        $this->assertDatabaseCount(House::class, 1);
+        $this->assertDatabaseCount(House::class, 0);
         $response->assertJsonValidationErrors([
             "water",
             "gas",
@@ -50,13 +50,5 @@ class UpdateHouseTest extends AuthorizedTestCase {
             "kitchenArea",
             "landArea",
         ]);
-    }
-
-    public function test_update_invalid_id_404(): void {
-        $response = $this->putJson($this->route . "/999", $this->data);
-
-        $response->assertStatus(404);
-        $this->assertDatabaseCount(House::class, 1);
-        $this->assertDatabaseMissing(House::class, ["id" => 1] + $this->data);
     }
 }

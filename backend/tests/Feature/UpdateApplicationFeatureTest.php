@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UpdateApplicationTest extends AuthorizedTestCase {
+class UpdateApplicationFeatureTest extends AuthorizedTestCase {
 
     use RefreshDatabase;
 
@@ -20,7 +20,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
         $this->seed(GlobalOptionsSeeder::class);
     }
 
-    public function test_update_invalid_data_422(): void {
+    public function test_invalid_data_422(): void {
         Application::factory()->withHouse()->create();
         $response = $this->putJson($this->route . "/houses" . "/1", []);
 
@@ -35,7 +35,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
         ]);
     }
 
-    public function test_update_empty_applicable_405(): void {
+    public function test_empty_applicable_405(): void {
         Application::factory()->withHouse()->create();
         $this->data = Application::factory()->withHouse()->make()->toArray();
         $response = $this->putJson($this->route . "/1", $this->data);
@@ -45,7 +45,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
         $this->assertDatabaseMissing(Application::class, $this->data);
     }
 
-    public function test_update_invalid_applicable_404(): void {
+    public function test_invalid_applicable_404(): void {
         Application::factory()->withHouse()->create();
         $this->data = Application::factory()->withHouse()->make()->toArray();
         $response = $this->putJson($this->route . "/house" . "/1", $this->data);
@@ -55,7 +55,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
         $this->assertDatabaseMissing(Application::class, $this->data);
     }
 
-    public function test_update_valid_data_house_204(): void {
+    public function test_valid_data_house_204(): void {
         $user = User::find(1);
         Application::factory()
             ->withHouse()
@@ -76,7 +76,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
         $this->assertNull(json_decode($response->getContent()));
     }
 
-    public function test_update_valid_data_land_parcel_204(): void {
+    public function test_valid_data_land_parcel_204(): void {
         $user = User::find(1);
         Application::factory()
             ->withLandParcel()
@@ -97,7 +97,7 @@ class UpdateApplicationTest extends AuthorizedTestCase {
         $this->assertNull(json_decode($response->getContent()));
     }
 
-    public function test_update_valid_data_apartment_204(): void {
+    public function test_valid_data_apartment_204(): void {
         $user = User::find(1);
         Application::factory()->withApartment()
             ->withUser($user)

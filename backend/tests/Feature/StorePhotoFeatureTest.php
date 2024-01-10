@@ -10,7 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class StorePhotoTest extends AuthorizedTestCase {
+class StorePhotoFeatureTest extends AuthorizedTestCase {
 
     use RefreshDatabase;
 
@@ -28,7 +28,7 @@ class StorePhotoTest extends AuthorizedTestCase {
         Storage::disk("local")->delete($files);
     }
 
-    public function test_store_one_photo_201(): void {
+    public function test_one_photo_201(): void {
         $this->data = ["photos" => [UploadedFile::fake()->image("test.jpg")->size(1024)]];
         $response = $this->postJson($this->route, $this->data);
 
@@ -41,7 +41,7 @@ class StorePhotoTest extends AuthorizedTestCase {
         });
     }
 
-    public function test_store_multiple_photos_201(): void {
+    public function test_multiple_photos_201(): void {
         $response = $this->postJson($this->route, $this->data);
 
         $response->assertStatus(201);
@@ -53,7 +53,7 @@ class StorePhotoTest extends AuthorizedTestCase {
         });
     }
 
-    public function test_store_invalid_data_failure_422(): void {
+    public function test_invalid_data_failure_422(): void {
         $this->data["photos"][] = UploadedFile::fake()->create(uniqid() .  ".pdf", 1024, "application/pdf");
         $response = $this->postJson($this->route, $this->data);
 

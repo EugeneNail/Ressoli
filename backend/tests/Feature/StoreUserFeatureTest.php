@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class StoreUserTest extends TestCase {
+class StoreUserFeatureTest extends TestCase {
 
     use RefreshDatabase;
 
@@ -27,7 +27,7 @@ class StoreUserTest extends TestCase {
         ];
     }
 
-    public function test_store_valid_data_201(): void {
+    public function test_valid_data_201(): void {
         $response = $this->postJson($this->route, $this->data);
         $response->assertStatus(204);
 
@@ -40,7 +40,7 @@ class StoreUserTest extends TestCase {
         $response->assertCookie("access_token");
     }
 
-    public function test_store_invalid_data_422(): void {
+    public function test_invalid_data_422(): void {
         $response = $this->postJson($this->route, []);
 
         $response->assertStatus(422)
@@ -49,7 +49,7 @@ class StoreUserTest extends TestCase {
         $response->assertCookieMissing("access_token");
     }
 
-    public function test_store_duplicate_email_409(): void {
+    public function test_duplicate_email_409(): void {
         $this->postJson($this->route, $this->data);
         $response = $this->postJson($this->route, $this->data);
 

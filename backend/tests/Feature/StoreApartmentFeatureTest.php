@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class StoreApartmentTest extends AuthorizedTestCase {
+class StoreApartmentFeatureTest extends AuthorizedTestCase {
 
     public function setUp(): void {
         parent::setUp();
@@ -17,7 +17,7 @@ class StoreApartmentTest extends AuthorizedTestCase {
         $this->data = Apartment::factory()->test()->make()->toArray();
     }
 
-    public function test_store_valid_data_201(): void {
+    public function test_valid_data_201(): void {
         $response = $this->postJson($this->route, $this->data);
         $id = $response->getContent();
 
@@ -27,7 +27,7 @@ class StoreApartmentTest extends AuthorizedTestCase {
         $this->assertIsInt(json_decode($response->getContent()));
     }
 
-    public function test_store_invalid_data_422(): void {
+    public function test_invalid_data_422(): void {
         $response = $this->postJson($this->route, []);
 
         $response->assertStatus(422);
