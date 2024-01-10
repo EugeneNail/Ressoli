@@ -96,4 +96,10 @@ class ApplicationFactory extends Factory {
     public function withUser(User $user) {
         return $this->state(fn () => ["user_id" => $user]);
     }
+
+    public function withRandomDate(int $dayDifference) {
+        return $this->state(fn () => [
+            "created_at" => date("Y-m-d", strtotime("2024-01-01 +" . rand(0, $dayDifference) . " days"))
+        ]);
+    }
 }

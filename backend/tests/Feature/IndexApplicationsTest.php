@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Application;
+use App\Models\Photo;
+use App\Models\User;
 use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -89,7 +91,8 @@ class IndexApplicationsTest extends AuthorizedTestCase {
     }
 
     public function test_get_houses_200(): void {
-        $response = $this->get($this->route . "?types[]=houses");
+        $response = $this->getJson($this->route . "?types[]=houses");
+        $response->assertStatus(200);
         $applications = collect(json_decode($response->getContent())->data);
         $hasHousesOnly = collect($applications)->every(fn ($application) => $application->applicable->type === "House");
 
@@ -97,7 +100,8 @@ class IndexApplicationsTest extends AuthorizedTestCase {
     }
 
     public function test_get_land_parcels_200(): void {
-        $response = $this->get($this->route . "?types[]=land-parcels");
+        $response = $this->getJson($this->route . "?types[]=land-parcels");
+        $response->assertStatus(200);
         $applications = collect(json_decode($response->getContent())->data);
         $hasLandParcelsOnly = collect($applications)->every(fn ($application) => $application->applicable->type === "Land Parcel");
 
@@ -105,10 +109,154 @@ class IndexApplicationsTest extends AuthorizedTestCase {
     }
 
     public function test_get_apartments_200(): void {
-        $response = $this->get($this->route . "?types[]=apartments");
+        $response = $this->getJson($this->route . "?types[]=apartments");
+        $response->assertStatus(200);
         $applications = collect(json_decode($response->getContent())->data);
-        $hasLandParcelsOnly = collect($applications)->every(fn ($application) => $application->applicable->type === "Apartment");
+        $hasLandParcelsOnly = $applications->every(fn ($application) => $application->applicable->type === "Apartment");
 
         $this->assertTrue($hasLandParcelsOnly);
+    }
+
+    public function test_get_owned_200(): void {
+        $response = $this->getJson($this->route . "?owned=true");
+        $response->assertStatus(200);
+        $hasOwnedOnly = collect(json_decode($response->getContent())->data)
+            ->map(fn ($application) => Application::find($application->id))
+            ->every(fn ($application) => $application["user_id"] === User::first()->id);
+        $this->assertTrue($hasOwnedOnly);
+    }
+
+    public function test_get_empty_owned_200(): void {
+        $response = $this->getJson($this->route);
+        $response->assertStatus(200);
+        $hasOwnedOnly = collect(json_decode($response->getContent())->data)
+            ->map(fn ($application) => Application::find($application->id))
+            ->every(fn ($application) => $application["user_id"] === User::first()->id);
+        $this->assertFalse($hasOwnedOnly);
+    }
+
+    public function test_get_all_statuses_200(): void {
+        $response = $this->getJson($this->route);
+        $response->assertStatus(200);
+        $hasAllStatuses = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->isActive === true || $application->isActive === false);
+        $this->assertTrue($hasAllStatuses);
+    }
+
+    public function test_get_active_200(): void {
+        $response = $this->getJson($this->route . "?statuses[]=active");
+        $response->assertStatus(200);
+        $hasActiveOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->isActive === true);
+        $this->assertTrue($hasActiveOnly);
+    }
+
+    public function test_get_archived_200(): void {
+        $response = $this->getJson($this->route . "?statuses[]=archived");
+        $response->assertStatus(200);
+        $hasArchivedOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->isActive == false);
+        $this->assertTrue($hasArchivedOnly);
+    }
+
+    public function test_get_min_price_200(): void {
+        $price = 1000000;
+        $response = $this->getJson($this->route . "?min-price={$price}");
+        $response->assertStatus(200);
+        $hasAboveMinPriceOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->price >= $price);
+        $this->assertTrue($hasAboveMinPriceOnly);
+    }
+
+    public function test_get_max_price_200(): void {
+        $price = 1000000;
+        $response = $this->getJson($this->route . "?max-price={$price}");
+        $response->assertStatus(200);
+        $hasBelowMaxPriceOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->price <= $price);
+        $this->assertTrue($hasBelowMaxPriceOnly);
+    }
+
+    public function test_get_min_area_200(): void {
+        $area = 1000;
+        $response = $this->getJson($this->route . "?min-area={$area}");
+        $response->assertStatus(200);
+        $hasAboveMinAreaOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->applicable->area >= $area);
+        $this->assertTrue($hasAboveMinAreaOnly);
+    }
+
+    public function test_get_max_area_200(): void {
+        $area = 5000;
+        $response = $this->getJson($this->route . "?max-area={$area}");
+        $response->assertStatus(200);
+        $hasBelowMaxAreaOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->applicable->area <= $area);
+        $this->assertTrue($hasBelowMaxAreaOnly);
+    }
+
+    public function test_get_sales_200(): void {
+        $response = $this->getJson($this->route . "?contracts[]=Sale");
+        $response->assertStatus(200);
+        $hasSaleOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->contract === "Sale");
+        $this->assertTrue($hasSaleOnly);
+    }
+
+    public function test_get_rents_200(): void {
+        $response = $this->getJson($this->route . "?contracts[]=Rent");
+        $response->assertStatus(200);
+        $hasRentOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->contract === "Rent");
+        $this->assertTrue($hasRentOnly);
+    }
+
+    public function test_get_empty_contracts_200(): void {
+        $response = $this->getJson($this->route);
+        $response->assertStatus(200);
+        $hasAllContracts = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->contract === "Sale" || $application->contract === "Rent");
+        $this->assertTrue($hasAllContracts);
+    }
+
+    public function test_get_before_date_200(): void {
+        Application::factory()
+            ->withRandomApplicable()
+            ->withRandomDate(365)
+            ->count(50)
+            ->create();
+        $date = "2024-06-30";
+        $response = $this->getJson($this->route . "?min-date={$date}");
+        $response->assertStatus(200);
+        $hasAfterDateOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => strtotime($application->date) > strtotime($date));
+        $this->assertTrue($hasAfterDateOnly);
+    }
+
+    public function test_get_after_date_200(): void {
+        Application::factory()
+            ->withRandomApplicable()
+            ->withRandomDate(365)
+            ->count(50)
+            ->create();
+        $date = "2024-06-30";
+        $response = $this->getJson($this->route . "?max-date={$date}");
+        $response->assertStatus(200);
+        $hasBeforeDateOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => strtotime($application->date) < strtotime($date));
+        $this->assertTrue($hasBeforeDateOnly);
+    }
+
+    public function test_get_no_photos_200(): void {
+        Application::factory()
+            ->withRandomApplicable()
+            ->count(20)
+            ->has(Photo::factory(3))
+            ->create();
+        $response = $this->getJson($this->route . "?no-photos=true");
+        $response->assertStatus(200);
+        $hasNoPhotosOnly = collect(json_decode($response->getContent())->data)
+            ->every(fn ($application) => $application->preview === null);
+        $this->assertTrue($hasNoPhotosOnly);
     }
 }
