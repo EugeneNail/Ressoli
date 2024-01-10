@@ -55,16 +55,15 @@ class IndexApplicationsValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["owned", "2"]));
     }
 
-    public function test_valid_statuses_success(): void {
-        $this->assertTrue($this->validate(["statuses", null]));
-        $this->assertTrue($this->validate(["statuses", ["active"]]));
-        $this->assertTrue($this->validate(["statuses", ["archived"]]));
-        $this->assertTrue($this->validate(["statuses", ["active", "archived"]]));
+    public function test_valid_status_success(): void {
+        $this->assertTrue($this->validate(["status", null]));
+        $this->assertTrue($this->validate(["status", "Active"]));
+        $this->assertTrue($this->validate(["status", "Archived"]));
     }
 
-    public function test_invalid_statuses_failure(): void {
-        $this->assertFalse($this->validate(["statuses", "active"]));
-        $this->assertFalse($this->validate(["statuses", ["archive"]]));
+    public function test_invalid_status_failure(): void {
+        $this->assertFalse($this->validate(["status", ["active"]]));
+        $this->assertFalse($this->validate(["status", ["archive"]]));
     }
 
     public function test_valid_min_price(): void {
@@ -119,16 +118,15 @@ class IndexApplicationsValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["max-area", 10001]));
     }
 
-    public function test_valid_contracts_success(): void {
-        $this->assertTrue($this->validate(["contracts", null]));
-        $this->assertTrue($this->validate(["contracts", ["Sale"]]));
-        $this->assertTrue($this->validate(["contracts", ["Rent"]]));
-        $this->assertTrue($this->validate(["contracts", ["Sale", "Rent"]]));
+    public function test_valid_contract_success(): void {
+        $this->assertTrue($this->validate(["contract", null]));
+        $this->assertTrue($this->validate(["contract", "Sale"]));
+        $this->assertTrue($this->validate(["contract", "Rent"]));
     }
 
-    public function test_invalid_contracts_failure(): void {
-        $this->assertFalse($this->validate(["contracts", "Sale"]));
-        $this->assertFalse($this->validate(["contracts", ["Saled"]]));
+    public function test_invalid_contract_failure(): void {
+        $this->assertFalse($this->validate(["contract", ["Sale"]]));
+        $this->assertFalse($this->validate(["contract", ["Rent"]]));
     }
 
     public function test_valid_min_date(): void {

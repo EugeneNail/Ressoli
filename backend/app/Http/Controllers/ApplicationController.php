@@ -133,12 +133,12 @@ class ApplicationController extends Controller {
     public function index(IndexApplicationsRequest $request) {
         $types = $request->input("types");
         $owned = $request->boolean("owned");
-        $statuses = $request->input("statuses");
+        $status = $request->input("status");
         $minPrice = $request->has("min-price");
         $maxPrice = $request->has("max-price");
         $minArea = $request->has("min-area");
         $maxArea = $request->has("max-area");
-        $contracts = $request->input("contracts");
+        $contract = $request->input("contract");
         $minDate = $request->input("min-date");
         $maxDate = $request->input("max-date");
         $noPhotos = $request->boolean("no-photos");
@@ -147,12 +147,12 @@ class ApplicationController extends Controller {
             ->with(["client", "address", "applicable", "photos"])
             ->when($types,     fn ($query) => $this->applyTypeFilters($query, $types))
             ->when($owned,     fn ($query) => $query->where("user_id", $request->user()->id))
-            ->when($statuses,  fn ($query) => $this->applyStatusFilters($query, $statuses))
+            ->when($status,    fn ($query) => $query->where("is_active", ["Active" => true, "Archived" => false][$status]))
             ->when($minPrice,  fn ($query) => $query->where("price", ">=", $request->input("min-price")))
             ->when($maxPrice,  fn ($query) => $query->where("price", "<=", $request->input("max-price")))
             ->when($minArea,   fn ($query) => $query->whereRelation("applicable", "area", ">=", $request->input("min-area")))
             ->when($maxArea,   fn ($query) => $query->whereRelation("applicable", "area", "<=", $request->input("max-area")))
-            ->when($contracts, fn ($query) => $query->whereIn("contract", $contracts))
+            ->when($contract,  fn ($query) => $query->where("contract", $contract))
             ->when($minDate,   fn ($query) => $query->where("created_at", ">=", $minDate . " 00:00:00"))
             ->when($maxDate,   fn ($query) => $query->where("created_at", "<=", $maxDate . " 00:00:00"))
             ->when($noPhotos,  fn ($query) => $query->doesntHave("photos"))
@@ -172,13 +172,12 @@ class ApplicationController extends Controller {
         return $query->whereIn("applicable_type", $modelClasses);
     }
 
-    private function applyStatusFilters(Builder $query, array $statuses): Builder {
+    private function applyStatusFilters(Builder $query, string $status): Builder {
         $map = [
             "active" => true,
             "archived" => false
         ];
 
-        $booleanStatuses = collect($statuses)->map(fn ($status) => $map[$status]);
-        return $query->whereIn("is_active", $booleanStatuses);
+        return $query->where("is_active", $map[$status]);
     }
 }

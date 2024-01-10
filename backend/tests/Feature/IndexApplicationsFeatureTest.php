@@ -144,7 +144,7 @@ class IndexApplicationsFeatureTest extends AuthorizedTestCase {
     }
 
     public function test_active_200(): void {
-        $response = $this->getJson($this->route . "?statuses[]=active");
+        $response = $this->getJson($this->route . "?status=Active");
         $response->assertStatus(200);
         $hasActiveOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->isActive === true);
@@ -152,7 +152,7 @@ class IndexApplicationsFeatureTest extends AuthorizedTestCase {
     }
 
     public function test_archived_200(): void {
-        $response = $this->getJson($this->route . "?statuses[]=archived");
+        $response = $this->getJson($this->route . "?status=Archived");
         $response->assertStatus(200);
         $hasArchivedOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->isActive == false);
@@ -196,7 +196,7 @@ class IndexApplicationsFeatureTest extends AuthorizedTestCase {
     }
 
     public function test_sales_200(): void {
-        $response = $this->getJson($this->route . "?contracts[]=Sale");
+        $response = $this->getJson($this->route . "?contract=Sale");
         $response->assertStatus(200);
         $hasSaleOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->contract === "Sale");
@@ -204,7 +204,7 @@ class IndexApplicationsFeatureTest extends AuthorizedTestCase {
     }
 
     public function test_rents_200(): void {
-        $response = $this->getJson($this->route . "?contracts[]=Rent");
+        $response = $this->getJson($this->route . "?contract=Rent");
         $response->assertStatus(200);
         $hasRentOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->contract === "Rent");
