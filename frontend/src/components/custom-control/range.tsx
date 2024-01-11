@@ -6,28 +6,28 @@ type RangeProps = {
   min: number;
   max: number;
   step: number;
-  leftValue: number;
-  onChangeLeft: (value: number) => void;
-  rightValue: number;
-  onChangeRight: (value: number) => void;
+  startValue: number;
+  updateStart: (value: number) => void;
+  endValue: number;
+  updateEnd: (value: number) => void;
   className?: string;
 };
 
-export function Range({ min, max, step, leftValue, rightValue, className, onChangeLeft, onChangeRight }: RangeProps) {
-  function handleChangeLeft(event: ChangeEvent<HTMLInputElement>) {
+export function Range({ min, max, step, startValue, endValue, className, updateStart, updateEnd }: RangeProps) {
+  function handleStartChange(event: ChangeEvent<HTMLInputElement>) {
     const value = +event.target.value;
-    if (value > rightValue) {
-      onChangeRight(value);
+    if (value > endValue) {
+      updateEnd(value);
     }
-    onChangeLeft(value);
+    updateStart(value);
   }
 
-  function handleChangeRight(event: ChangeEvent<HTMLInputElement>) {
+  function handleEndChange(event: ChangeEvent<HTMLInputElement>) {
     const value = +event.target.value;
-    if (value < leftValue) {
-      onChangeLeft(value);
+    if (value < startValue) {
+      updateStart(value);
     }
-    onChangeRight(value);
+    updateEnd(value);
   }
 
   return (
@@ -35,27 +35,27 @@ export function Range({ min, max, step, leftValue, rightValue, className, onChan
       <div
         className="range__progress"
         style={{
-          width: `${(((rightValue - leftValue) / max) * 100).toFixed(2)}%`,
-          left: ((leftValue / max) * 100).toFixed(2) + "%",
+          width: `${(((endValue - startValue) / max) * 100).toFixed(2)}%`,
+          left: ((startValue / max) * 100).toFixed(2) + "%",
         }}
       />
       <input
         type="range"
-        value={leftValue}
+        value={startValue}
         min={min}
         max={max}
         step={step}
-        className="range__slider left"
-        onChange={handleChangeLeft}
+        className="range__slider start"
+        onChange={handleStartChange}
       />
       <input
         type="range"
-        value={rightValue}
+        value={endValue}
         min={min}
         max={max}
         step={step}
-        className="range__slider right"
-        onChange={handleChangeRight}
+        className="range__slider end"
+        onChange={handleEndChange}
       />
     </div>
   );

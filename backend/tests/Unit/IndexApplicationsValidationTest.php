@@ -66,56 +66,56 @@ class IndexApplicationsValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["status", ["archive"]]));
     }
 
-    public function test_valid_min_price(): void {
-        $this->assertTrue($this->validate(["min-price", 0]));
-        $this->assertTrue($this->validate(["min-price", 1]));
-        $this->assertTrue($this->validate(["min-price", 10000000]));
-        $this->assertTrue($this->validate(["min-price", 1234567]));
+    public function test_valid_start_price(): void {
+        $this->assertTrue($this->validate(["start-price", 0]));
+        $this->assertTrue($this->validate(["start-price", 1]));
+        $this->assertTrue($this->validate(["start-price", 10000000]));
+        $this->assertTrue($this->validate(["start-price", 1234567]));
     }
 
-    public function test_invalid_min_price(): void {
-        $this->assertFalse($this->validate(["min-price", -1]));
-        $this->assertFalse($this->validate(["min-price", 0.1]));
-        $this->assertFalse($this->validate(["min-price", 10000001]));
+    public function test_invalid_start_price(): void {
+        $this->assertFalse($this->validate(["start-price", -1]));
+        $this->assertFalse($this->validate(["start-price", 0.1]));
+        $this->assertFalse($this->validate(["start-price", 10000001]));
     }
 
-    public function test_valid_max_price(): void {
-        $this->assertTrue($this->validate(["max-price", 0]));
-        $this->assertTrue($this->validate(["max-price", 1]));
-        $this->assertTrue($this->validate(["max-price", 10000000]));
-        $this->assertTrue($this->validate(["max-price", 1234567]));
+    public function test_valid_end_price(): void {
+        $this->assertTrue($this->validate(["end-price", 0]));
+        $this->assertTrue($this->validate(["end-price", 1]));
+        $this->assertTrue($this->validate(["end-price", 10000000]));
+        $this->assertTrue($this->validate(["end-price", 1234567]));
     }
 
-    public function test_invalid_max_price(): void {
-        $this->assertFalse($this->validate(["max-price", -1]));
-        $this->assertFalse($this->validate(["max-price", 0.1]));
-        $this->assertFalse($this->validate(["max-price", 10000001]));
+    public function test_invalid_end_price(): void {
+        $this->assertFalse($this->validate(["end-price", -1]));
+        $this->assertFalse($this->validate(["end-price", 0.1]));
+        $this->assertFalse($this->validate(["end-price", 10000001]));
     }
 
-    public function test_valid_min_area(): void {
-        $this->assertTrue($this->validate(["min-area", 0]));
-        $this->assertTrue($this->validate(["min-area", 1]));
-        $this->assertTrue($this->validate(["min-area", 10000]));
-        $this->assertTrue($this->validate(["min-area", 1234]));
+    public function test_valid_start_area(): void {
+        $this->assertTrue($this->validate(["start-area", 0]));
+        $this->assertTrue($this->validate(["start-area", 1]));
+        $this->assertTrue($this->validate(["start-area", 10000]));
+        $this->assertTrue($this->validate(["start-area", 1234]));
     }
 
-    public function test_invalid_min_area(): void {
-        $this->assertFalse($this->validate(["min-area", -1]));
-        $this->assertFalse($this->validate(["min-area", 0.1]));
-        $this->assertFalse($this->validate(["min-area", 10001]));
+    public function test_invalid_start_area(): void {
+        $this->assertFalse($this->validate(["start-area", -1]));
+        $this->assertFalse($this->validate(["start-area", 0.1]));
+        $this->assertFalse($this->validate(["start-area", 10001]));
     }
 
-    public function test_valid_max_area(): void {
-        $this->assertTrue($this->validate(["max-area", 0]));
-        $this->assertTrue($this->validate(["max-area", 1]));
-        $this->assertTrue($this->validate(["max-area", 10000]));
-        $this->assertTrue($this->validate(["max-area", 1234]));
+    public function test_valid_end_area(): void {
+        $this->assertTrue($this->validate(["end-area", 0]));
+        $this->assertTrue($this->validate(["end-area", 1]));
+        $this->assertTrue($this->validate(["end-area", 10000]));
+        $this->assertTrue($this->validate(["end-area", 1234]));
     }
 
-    public function test_invalid_max_area(): void {
-        $this->assertFalse($this->validate(["max-area", -1]));
-        $this->assertFalse($this->validate(["max-area", 0.1]));
-        $this->assertFalse($this->validate(["max-area", 10001]));
+    public function test_invalid_end_area(): void {
+        $this->assertFalse($this->validate(["end-area", -1]));
+        $this->assertFalse($this->validate(["end-area", 0.1]));
+        $this->assertFalse($this->validate(["end-area", 10001]));
     }
 
     public function test_valid_contract_success(): void {
@@ -129,31 +129,31 @@ class IndexApplicationsValidationTest extends ValidationTestCase {
         $this->assertFalse($this->validate(["contract", ["Rent"]]));
     }
 
-    public function test_valid_min_date(): void {
-        $this->assertFalse($this->validate(["min-date", "1999-06-15"]));
-        $this->assertFalse($this->validate(["min-date", "2024-13-15"]));
-        $this->assertFalse($this->validate(["min-date", "2024-06-32"]));
-        $this->assertFalse($this->validate(["min-date", "1999-13-32"]));
+    public function test_valid_start_date(): void {
+        $this->assertFalse($this->validate(["start-date", "1999-06-15"]));
+        $this->assertFalse($this->validate(["start-date", "2024-13-15"]));
+        $this->assertFalse($this->validate(["start-date", "2024-06-32"]));
+        $this->assertFalse($this->validate(["start-date", "1999-13-32"]));
     }
 
-    public function test_invalid_min_date(): void {
-        $this->assertFalse($this->validate(["min-date", "1999-06-15"]));
-        $this->assertFalse($this->validate(["min-date", "2024-13-15"]));
-        $this->assertFalse($this->validate(["min-date", "2024-06-32"]));
-        $this->assertFalse($this->validate(["min-date", "1999-13-32"]));
+    public function test_invalid_start_date(): void {
+        $this->assertFalse($this->validate(["start-date", "1999-06-15"]));
+        $this->assertFalse($this->validate(["start-date", "2024-13-15"]));
+        $this->assertFalse($this->validate(["start-date", "2024-06-32"]));
+        $this->assertFalse($this->validate(["start-date", "1999-13-32"]));
     }
-    public function test_valid_max_date(): void {
-        $this->assertFalse($this->validate(["max-date", "1999-06-15"]));
-        $this->assertFalse($this->validate(["max-date", "2024-13-15"]));
-        $this->assertFalse($this->validate(["max-date", "2024-06-32"]));
-        $this->assertFalse($this->validate(["max-date", "1999-13-32"]));
+    public function test_valid_end_date(): void {
+        $this->assertFalse($this->validate(["end-date", "1999-06-15"]));
+        $this->assertFalse($this->validate(["end-date", "2024-13-15"]));
+        $this->assertFalse($this->validate(["end-date", "2024-06-32"]));
+        $this->assertFalse($this->validate(["end-date", "1999-13-32"]));
     }
 
-    public function test_invalid_max_date(): void {
-        $this->assertFalse($this->validate(["max-date", "1999-06-15"]));
-        $this->assertFalse($this->validate(["max-date", "2024-13-15"]));
-        $this->assertFalse($this->validate(["max-date", "2024-06-32"]));
-        $this->assertFalse($this->validate(["max-date", "1999-13-32"]));
+    public function test_invalid_end_date(): void {
+        $this->assertFalse($this->validate(["end-date", "1999-06-15"]));
+        $this->assertFalse($this->validate(["end-date", "2024-13-15"]));
+        $this->assertFalse($this->validate(["end-date", "2024-06-32"]));
+        $this->assertFalse($this->validate(["end-date", "1999-13-32"]));
     }
 
     public function test_valid_no_photos_success(): void {

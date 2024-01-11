@@ -159,40 +159,40 @@ class IndexApplicationsFeatureTest extends AuthorizedTestCase {
         $this->assertTrue($hasArchivedOnly);
     }
 
-    public function test_min_price_200(): void {
+    public function test_start_price_200(): void {
         $price = 1000000;
-        $response = $this->getJson($this->route . "?min-price={$price}");
+        $response = $this->getJson($this->route . "?start-price={$price}");
         $response->assertStatus(200);
-        $hasAboveMinPriceOnly = collect(json_decode($response->getContent())->data)
+        $hasAboveStartPriceOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->price >= $price);
-        $this->assertTrue($hasAboveMinPriceOnly);
+        $this->assertTrue($hasAboveStartPriceOnly);
     }
 
-    public function test_max_price_200(): void {
+    public function test_end_price_200(): void {
         $price = 1000000;
-        $response = $this->getJson($this->route . "?max-price={$price}");
+        $response = $this->getJson($this->route . "?end-price={$price}");
         $response->assertStatus(200);
-        $hasBelowMaxPriceOnly = collect(json_decode($response->getContent())->data)
+        $hasBelowendPriceOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->price <= $price);
-        $this->assertTrue($hasBelowMaxPriceOnly);
+        $this->assertTrue($hasBelowendPriceOnly);
     }
 
-    public function test_min_area_200(): void {
+    public function test_start_area_200(): void {
         $area = 1000;
-        $response = $this->getJson($this->route . "?min-area={$area}");
+        $response = $this->getJson($this->route . "?start-area={$area}");
         $response->assertStatus(200);
-        $hasAboveMinAreaOnly = collect(json_decode($response->getContent())->data)
+        $hasAboveStartAreaOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->applicable->area >= $area);
-        $this->assertTrue($hasAboveMinAreaOnly);
+        $this->assertTrue($hasAboveStartAreaOnly);
     }
 
-    public function test_max_area_200(): void {
+    public function test_end_area_200(): void {
         $area = 5000;
-        $response = $this->getJson($this->route . "?max-area={$area}");
+        $response = $this->getJson($this->route . "?end-area={$area}");
         $response->assertStatus(200);
-        $hasBelowMaxAreaOnly = collect(json_decode($response->getContent())->data)
+        $hasBelowEndAreaOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => $application->applicable->area <= $area);
-        $this->assertTrue($hasBelowMaxAreaOnly);
+        $this->assertTrue($hasBelowEndAreaOnly);
     }
 
     public function test_sales_200(): void {
@@ -219,32 +219,32 @@ class IndexApplicationsFeatureTest extends AuthorizedTestCase {
         $this->assertTrue($hasAllContracts);
     }
 
-    public function test_after_date_200(): void {
+    public function test_start_date_200(): void {
         Application::factory()
             ->withRandomApplicable()
             ->withRandomDate(365)
             ->count(100)
             ->create();
         $date = "2024-06-30";
-        $response = $this->getJson($this->route . "?min-date={$date}");
+        $response = $this->getJson($this->route . "?start-date={$date}");
         $response->assertStatus(200);
-        $hasAfterDateOnly = collect(json_decode($response->getContent())->data)
+        $hasStartDateOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => strtotime($application->date) > strtotime($date));
-        $this->assertTrue($hasAfterDateOnly);
+        $this->assertTrue($hasStartDateOnly);
     }
 
-    public function test_before_date_200(): void {
+    public function test_end_date_200(): void {
         Application::factory()
             ->withRandomApplicable()
             ->withRandomDate(365)
             ->count(100)
             ->create();
         $date = "2024-06-30";
-        $response = $this->getJson($this->route . "?max-date={$date}");
+        $response = $this->getJson($this->route . "?end-date={$date}");
         $response->assertStatus(200);
-        $hasBeforeDateOnly = collect(json_decode($response->getContent())->data)
+        $hasEndDateOnly = collect(json_decode($response->getContent())->data)
             ->every(fn ($application) => strtotime($application->date) < strtotime($date));
-        $this->assertTrue($hasBeforeDateOnly);
+        $this->assertTrue($hasEndDateOnly);
     }
 
     public function test_no_photos_200(): void {

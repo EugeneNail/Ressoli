@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Format } from "../../services/format";
 import Button from "../button/button";
 import "../custom-control/custom-control.sass";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Icon } from "../icon/icon";
 
 type FiltersProps = {
@@ -20,15 +20,18 @@ export function Filters({ className }: FiltersProps) {
   const [params, setParams] = useSearchParams(new URLSearchParams(document.location.search));
   const [contract, setContract] = useState(params.get("contract") ?? "All");
   const [status, setStatus] = useState(params.get("status") ?? "All");
-  const [minPrice, setMinPrice] = useState(+(params.get("min-price") ?? 1));
-  const [minArea, setMinArea] = useState(+(params.get("min-area") ?? 1));
-  const [maxPrice, setMaxPrice] = useState(+(params.get("max-price") ?? 10000000));
-  const [maxArea, setMaxArea] = useState(+(params.get("max-area") ?? 10000));
-  const [minDate, setMinDate] = useState(new Date(params.get("min-date") ?? new Date("2000-01-01")));
-  const [maxDate, setMaxDate] = useState(new Date(params.get("max-date") ?? new Date()));
   const [owned] = useState(params.get("owned") === "true");
   const [noPhotos] = useState(params.get("no-photos") === "true");
   const [isOpen, setOpen] = useState(false);
+
+  const [startPrice, setStartPrice] = useState(+(params.get("start-price") ?? 1));
+  const [endPrice, setEndPrice] = useState(+(params.get("end-price") ?? 10000000));
+
+  const [startArea, setStartArea] = useState(+(params.get("start-area") ?? 1));
+  const [endArea, setEndArea] = useState(+(params.get("end-area") ?? 10000));
+
+  const [startDate, setStartDate] = useState(new Date(params.get("start-date") ?? new Date("2000-01-01")));
+  const [endDate, setEndDate] = useState(new Date(params.get("end-date") ?? new Date()));
 
   function applyFilters(event: FormEvent) {
     event.preventDefault();
@@ -39,12 +42,14 @@ export function Filters({ className }: FiltersProps) {
     setParams((prev) => {
       contract === "All" ? prev.delete("contract") : prev.set("contract", contract);
       status === "All" ? prev.delete("status") : prev.set("status", status);
-      minPrice <= 1 ? prev.delete("min-price") : prev.set("min-price", minPrice.toString());
-      maxPrice >= 5000000 ? prev.delete("max-price") : prev.set("max-price", maxPrice.toString());
-      minArea <= 1 ? prev.delete("min-area") : prev.set("min-area", minArea.toString());
-      maxArea >= 1000 ? prev.delete("max-area") : prev.set("max-area", maxArea.toString());
-      minDate === new Date("2000-01-01") ? prev.delete("min-date") : prev.set("min-date", Format.toShortDate(minDate));
-      maxDate === new Date("2099-12-31") ? prev.delete("max-date") : prev.set("max-date", Format.toShortDate(maxDate));
+      startPrice <= 1 ? prev.delete("start-price") : prev.set("start-price", startPrice.toString());
+      endPrice >= 5000000 ? prev.delete("end-price") : prev.set("end-price", endPrice.toString());
+      startArea <= 1 ? prev.delete("start-area") : prev.set("start-area", startArea.toString());
+      endArea >= 1000 ? prev.delete("end-area") : prev.set("end-area", endArea.toString());
+      startDate === new Date("2000-01-01")
+        ? prev.delete("start-date")
+        : prev.set("start-date", Format.toShortDate(startDate));
+      endDate === new Date("2099-12-31") ? prev.delete("end-date") : prev.set("end-date", Format.toShortDate(endDate));
       owned ? prev.set("owned", "true") : prev.delete("owned");
       noPhotos ? prev.set("no-photos", "true") : prev.delete("no-photos");
       prev.set("page", "1");
@@ -53,7 +58,7 @@ export function Filters({ className }: FiltersProps) {
     window.location.replace(`${window.location.pathname}?${params}`);
   }
 
-  function setMinRange(
+  function setStartRange(
     value: number,
     set: Dispatch<SetStateAction<number>>,
     opposite: number,
@@ -75,7 +80,7 @@ export function Filters({ className }: FiltersProps) {
     set(value);
   }
 
-  function setMaxRange(
+  function setEndRange(
     value: number,
     set: Dispatch<SetStateAction<number>>,
     opposite: number,
@@ -116,38 +121,38 @@ export function Filters({ className }: FiltersProps) {
               <p className="filter__subtext">from</p>
               <DatePicker
                 dateFormat="yyyy-MM-dd"
-                selected={minDate}
+                selected={startDate}
                 selectsStart
                 showMonthDropdown
                 showYearDropdown
                 onChange={(date: Date) => {
-                  if (date > maxDate) {
-                    setMaxDate(date);
+                  if (date > endDate) {
+                    setEndDate(date);
                   }
-                  setMinDate(date);
+                  setStartDate(date);
                 }}
                 minDate={new Date("2000-01-01")}
                 maxDate={new Date("2099-12-31")}
-                startDate={minDate}
-                endDate={maxDate}
+                startDate={startDate}
+                endDate={endDate}
               />
               <p className="filter__subtext">to</p>
               <DatePicker
                 dateFormat="yyyy-MM-dd"
-                selected={maxDate}
+                selected={endDate}
                 selectsEnd
                 showMonthDropdown
                 showYearDropdown
                 onChange={(date: Date) => {
-                  if (date < minDate) {
-                    setMinDate(date);
+                  if (date < startDate) {
+                    setStartDate(date);
                   }
-                  setMaxDate(date);
+                  setEndDate(date);
                 }}
                 minDate={new Date("2000-01-01")}
                 maxDate={new Date("2099-12-31")}
-                startDate={minDate}
-                endDate={maxDate}
+                startDate={startDate}
+                endDate={endDate}
               />
             </div>
           </div>
@@ -157,16 +162,16 @@ export function Filters({ className }: FiltersProps) {
               <p className="filter__subtext">from</p>
               <input
                 className="filters__value"
-                value={minPrice === 0 ? "" : minPrice}
+                value={startPrice === 0 ? "" : startPrice}
                 type="number"
-                onChange={(e) => setMinRange(+e.target.value, setMinPrice, maxPrice, setMaxPrice, 10000000)}
+                onChange={(e) => setStartRange(+e.target.value, setStartPrice, endPrice, setEndPrice, 10000000)}
               />
               <p className="filter__subtext">to</p>
               <input
                 className="filters__value"
-                value={maxPrice === 0 ? "" : maxPrice}
+                value={endPrice === 0 ? "" : endPrice}
                 type="number"
-                onChange={(e) => setMaxRange(+e.target.value, setMaxPrice, minPrice, setMinPrice, 10000000)}
+                onChange={(e) => setEndRange(+e.target.value, setEndPrice, startPrice, setStartPrice, 10000000)}
               />
             </div>
             <Range
@@ -174,10 +179,10 @@ export function Filters({ className }: FiltersProps) {
               min={1}
               max={5000000}
               step={1}
-              leftValue={minPrice}
-              rightValue={maxPrice}
-              onChangeLeft={setMinPrice}
-              onChangeRight={setMaxPrice}
+              startValue={startPrice}
+              endValue={endPrice}
+              updateStart={setStartPrice}
+              updateEnd={setEndPrice}
             />
           </div>
           <div className="filters__group">
@@ -186,16 +191,16 @@ export function Filters({ className }: FiltersProps) {
               <p className="filter__subtext">from</p>
               <input
                 className="filters__value"
-                value={minArea === 0 ? "" : minArea}
+                value={startArea === 0 ? "" : startArea}
                 type="number"
-                onChange={(e) => setMinRange(+e.target.value, setMinArea, maxArea, setMaxArea, 10000)}
+                onChange={(e) => setStartRange(+e.target.value, setStartArea, endArea, setEndArea, 10000)}
               />
               <p className="filter__subtext">to</p>
               <input
                 className="filters__value"
-                value={maxArea === 0 ? "" : maxArea}
+                value={endArea === 0 ? "" : endArea}
                 type="number"
-                onChange={(e) => setMaxRange(+e.target.value, setMaxArea, minArea, setMinArea, 10000)}
+                onChange={(e) => setEndRange(+e.target.value, setEndArea, startArea, setStartArea, 10000)}
               />
             </div>
             <Range
@@ -203,10 +208,10 @@ export function Filters({ className }: FiltersProps) {
               min={1}
               max={1000}
               step={1}
-              leftValue={minArea}
-              rightValue={maxArea}
-              onChangeLeft={setMinArea}
-              onChangeRight={setMaxArea}
+              startValue={startArea}
+              endValue={endArea}
+              updateStart={setStartArea}
+              updateEnd={setEndArea}
             />
           </div>
           <div className="filters__group">
