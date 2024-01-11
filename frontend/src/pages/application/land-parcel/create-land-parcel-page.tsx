@@ -9,12 +9,13 @@ import { usePageErrors } from "../../../services/use-page-errors";
 import { usePageOptions } from "../../../services/use-page-options";
 import { useCreatePageActions } from "../../../services/use-create-page-actions";
 import { PhotoForm } from "../../../components/forms/photo-form";
+import { useEditablePageState } from "../../../services/use-editable-page-state";
 
 export function CreateLandParcelPage() {
-  const applicableRoute = "land-parcels";
+  const state = useEditablePageState("land-parcels");
   const errors = usePageErrors(new LandParcelFormErrors());
-  const options = usePageOptions(new LandParcelOptions(), applicableRoute);
-  const actions = useCreatePageActions(errors, applicableRoute);
+  const options = usePageOptions(new LandParcelOptions(), state.applicableRoute);
+  const actions = useCreatePageActions(errors, state);
 
   useEffect(() => {
     options.load();
@@ -30,6 +31,8 @@ export function CreateLandParcelPage() {
         submit={actions.createNewApplication}
         options={options.application}
         errors={errors.application}
+        actionName="Create application"
+        isSubmitting={state.isSubmitting}
       />
     </div>
   );

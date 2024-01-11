@@ -5,10 +5,11 @@ import { HouseFormErrors } from "../components/forms/house-form";
 import { LandParcelFormErrors } from "../components/forms/land-parcel-form";
 import { useNavigate } from "react-router";
 import { ApartmentFormErrors } from "../components/forms/apartment-form";
+import { EditablePageState } from "./use-editable-page-state";
 
 export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormErrors | ApartmentFormErrors>(
   errors: PageErrors<A>,
-  applicableRoute: string
+  state: EditablePageState
 ) {
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
 
   async function createApplicable() {
     const payload = new FormData(document.getElementById("applicableForm") as HTMLFormElement);
-    const { data, status } = await api.post(`${env.API_URL}/${applicableRoute}`, payload);
+    const { data, status } = await api.post(`${env.API_URL}/${state.applicableRoute}`, payload);
 
     if (status === 422 || status === 409) {
       errors.applicable.set(data.errors);
@@ -67,20 +68,22 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
   }
 
   async function createNewApplication() {
+    state.setSubmitting(true);
     const payload = new FormData(document.getElementById("applicationForm") as HTMLFormElement);
     payload.set("clientId", await createClient());
     payload.set("addressId", await createAddress());
     addPhotos(payload);
     payload.set("applicableId", await createApplicable());
-    const { data, status } = await api.post(`${env.API_URL}/applications/${applicableRoute}`, payload);
+    const { data, status } = await api.post(`${env.API_URL}/applications/${state.applicableRoute}`, payload);
 
     if (status === 201) {
-      navigate(`/${applicableRoute}/${data}`);
+      navigate(`/${state.applicableRoute}/${data}`);
     }
 
     if (status === 422) {
       errors.application.set(data.errors);
     }
+    state.setSubmitting(false);
   }
 
   return { createClient, createAddress, createApplicable, createNewApplication };

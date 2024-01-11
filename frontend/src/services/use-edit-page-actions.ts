@@ -3,12 +3,13 @@ import { HouseFormErrors } from "../components/forms/house-form";
 import { LandParcelFormErrors } from "../components/forms/land-parcel-form";
 import { env } from "../env";
 import api from "./api";
+import { EditablePageState } from "./use-editable-page-state";
 import { PageErrors } from "./use-page-errors";
 import { useNavigate } from "react-router";
 
 export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErrors | ApartmentFormErrors>(
   errors: PageErrors<A>,
-  applicableRoute: string,
+  state: EditablePageState,
   applicationId: string,
   applicableId: number
 ) {
@@ -46,7 +47,7 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
   async function updateApplicable() {
     const payload = new FormData(document.getElementById("applicableForm") as HTMLFormElement);
-    const { data, status } = await api.put(`${env.API_URL}/${applicableRoute}/${applicableId}`, payload);
+    const { data, status } = await api.put(`${env.API_URL}/${state.applicableRoute}/${applicableId}`, payload);
 
     if (status === 422) {
       errors.applicable.set(data.errors);
@@ -69,20 +70,26 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
   }
 
   async function updateApplication() {
+    state.setSubmitting(true);
     const payload = new FormData(document.getElementById("applicationForm") as HTMLFormElement);
     payload.set("clientId", await updateClient());
     payload.set("addressId", await updateAddress());
     addPhotos(payload);
     payload.set("applicableId", await updateApplicable());
-    const { data, status } = await api.put(`${env.API_URL}/applications/${applicableRoute}/${applicationId}`, payload);
+    const { data, status } = await api.put(
+      `${env.API_URL}/applications/${state.applicableRoute}/${applicationId}`,
+      payload
+    );
 
     if (status === 204) {
-      navigate(`/${applicableRoute}/${applicationId}`);
+      navigate(`/${state.applicableRoute}/${applicationId}`);
     }
 
     if (status === 422) {
       errors.application.set(data.errors);
     }
+
+    state.setSubmitting(false);
   }
 
   return { updateClient, updateAddress, updateApplicable, updateApplication };

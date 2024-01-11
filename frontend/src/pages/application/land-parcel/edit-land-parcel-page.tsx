@@ -15,20 +15,21 @@ import { usePageOptions } from "../../../services/use-page-options";
 import { useEditPageActions } from "../../../services/use-edit-page-actions";
 import { Spinner } from "../../../components/spinner/spinner";
 import { PhotoForm } from "../../../components/forms/photo-form";
+import { useEditablePageState } from "../../../services/use-editable-page-state";
 
 export function EditLandParcelPage() {
   const { id } = useParams<{ id: string }>();
-  const applicableRoute = "land-parcels";
   const errors = usePageErrors(new LandParcelFormErrors());
-  const options = usePageOptions(new LandParcelOptions(), applicableRoute);
-  const [initialState, setInitialState] = useState<Application<LandParcel>>();
-  const actions = useEditPageActions(errors, applicableRoute, id as string, initialState?.applicable.id as number);
+  const state = useEditablePageState("land-parcels");
+  const options = usePageOptions(new LandParcelOptions(), state.applicableRoute);
+  const [initialApplication, setInitialApplication] = useState<Application<LandParcel>>();
+  const actions = useEditPageActions(errors, state, id as string, initialApplication?.applicable.id as number);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     options.load();
     api.get<Application<LandParcel>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
-      setInitialState(data);
+      setInitialApplication(data);
       setLoading(false);
     });
   }, []);
@@ -38,24 +39,26 @@ export function EditLandParcelPage() {
       {isLoading && <Spinner className="editable-application-page__spinner" />}
       {!isLoading && (
         <>
-          <ClientForm initialState={initialState?.client} errors={errors.client} />
+          <ClientForm initialState={initialApplication?.client} errors={errors.client} />
           <AddressForm
-            initialState={initialState?.address}
+            initialState={initialApplication?.address}
             forApartment={false}
             options={options.address}
             errors={errors.address}
           />
           <LandParcelForm
-            initialState={initialState?.applicable}
+            initialState={initialApplication?.applicable}
             options={options.applicable}
             errors={errors.applicable}
           />
-          <PhotoForm initialState={initialState?.photos.map((photo) => photo.id)} />
+          <PhotoForm initialState={initialApplication?.photos.map((photo) => photo.id)} />
           <ApplicationForm
-            initialState={initialState}
+            initialState={initialApplication}
             submit={actions.updateApplication}
             options={options.application}
             errors={errors.application}
+            actionName="Save"
+            isSubmitting={state.isSubmitting}
           />
         </>
       )}

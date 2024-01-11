@@ -9,12 +9,13 @@ import { useCreatePageActions } from "../../../services/use-create-page-actions"
 import { ApartmentForm, ApartmentFormErrors } from "../../../components/forms/apartment-form";
 import { ApartmentOptions } from "../../../models/apartment-options";
 import { PhotoForm } from "../../../components/forms/photo-form";
+import { useEditablePageState } from "../../../services/use-editable-page-state";
 
 export function CreateApartmentPage() {
-  const applicableRoute = "apartments";
   const errors = usePageErrors(new ApartmentFormErrors());
-  const options = usePageOptions(new ApartmentOptions(), applicableRoute);
-  const actions = useCreatePageActions(errors, applicableRoute);
+  const state = useEditablePageState("apartments");
+  const options = usePageOptions(new ApartmentOptions(), state.applicableRoute);
+  const actions = useCreatePageActions(errors, state);
 
   useEffect(() => {
     options.load();
@@ -30,6 +31,8 @@ export function CreateApartmentPage() {
         submit={actions.createNewApplication}
         options={options.application}
         errors={errors.application}
+        actionName="Create application"
+        isSubmitting={state.isSubmitting}
       />
     </div>
   );

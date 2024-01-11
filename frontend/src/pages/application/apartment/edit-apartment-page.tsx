@@ -15,14 +15,15 @@ import { ApartmentOptions } from "../../../models/apartment-options";
 import { Apartment } from "../../../models/apartment";
 import { Spinner } from "../../../components/spinner/spinner";
 import { PhotoForm } from "../../../components/forms/photo-form";
+import { useEditablePageState } from "../../../services/use-editable-page-state";
 
 export function EditApartmentPage() {
   const { id } = useParams<{ id: string }>();
-  const applicableRoute = "apartments";
   const errors = usePageErrors(new ApartmentFormErrors());
-  const options = usePageOptions(new ApartmentOptions(), applicableRoute);
+  const state = useEditablePageState("apartments");
+  const options = usePageOptions(new ApartmentOptions(), state.applicableRoute);
   const [initialState, setInitialState] = useState<Application<Apartment>>();
-  const actions = useEditPageActions(errors, applicableRoute, id as string, initialState?.applicable.id as number);
+  const actions = useEditPageActions(errors, state, id as string, initialState?.applicable.id as number);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,6 +52,8 @@ export function EditApartmentPage() {
             submit={actions.updateApplication}
             options={options.application}
             errors={errors.application}
+            actionName="Save"
+            isSubmitting={state.isSubmitting}
           />
         </>
       )}

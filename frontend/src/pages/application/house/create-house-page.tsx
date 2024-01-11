@@ -9,12 +9,13 @@ import { usePageErrors } from "../../../services/use-page-errors";
 import { usePageOptions } from "../../../services/use-page-options";
 import { useCreatePageActions } from "../../../services/use-create-page-actions";
 import { PhotoForm } from "../../../components/forms/photo-form";
+import { useEditablePageState } from "../../../services/use-editable-page-state";
 
 export function CreateHousePage() {
-  const applicableRoute = "houses";
   const errors = usePageErrors(new HouseFormErrors());
-  const options = usePageOptions(new HouseOptions(), applicableRoute);
-  const actions = useCreatePageActions(errors, applicableRoute);
+  const state = useEditablePageState("houses");
+  const options = usePageOptions(new HouseOptions(), state.applicableRoute);
+  const actions = useCreatePageActions(errors, state);
 
   useEffect(() => {
     options.load();
@@ -30,6 +31,8 @@ export function CreateHousePage() {
         submit={actions.createNewApplication}
         options={options.application}
         errors={errors.application}
+        actionName="Create application"
+        isSubmitting={state.isSubmitting}
       />
     </div>
   );

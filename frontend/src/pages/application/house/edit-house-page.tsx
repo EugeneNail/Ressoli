@@ -15,20 +15,21 @@ import { HouseOptions } from "../../../models/house-options";
 import { House } from "../../../models/House";
 import { Spinner } from "../../../components/spinner/spinner";
 import { PhotoForm } from "../../../components/forms/photo-form";
+import { useEditablePageState } from "../../../services/use-editable-page-state";
 
 export function EditHousePage() {
   const { id } = useParams<{ id: string }>();
-  const applicableRoute = "houses";
   const errors = usePageErrors(new HouseFormErrors());
-  const options = usePageOptions(new HouseOptions(), applicableRoute);
-  const [initialState, setInitialState] = useState<Application<House>>();
-  const actions = useEditPageActions(errors, applicableRoute, id as string, initialState?.applicable.id as number);
+  const state = useEditablePageState("houses");
+  const options = usePageOptions(new HouseOptions(), state.applicableRoute);
+  const [initialApplication, setInitialApplication] = useState<Application<House>>();
+  const actions = useEditPageActions(errors, state, id as string, initialApplication?.applicable.id as number);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     options.load();
     api.get<Application<House>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
-      setInitialState(data);
+      setInitialApplication(data);
       setLoading(false);
     });
   }, []);
@@ -38,20 +39,26 @@ export function EditHousePage() {
       {isLoading && <Spinner className="editable-application-page__spinner" />}
       {!isLoading && (
         <>
-          <ClientForm initialState={initialState?.client} errors={errors.client} />
+          <ClientForm initialState={initialApplication?.client} errors={errors.client} />
           <AddressForm
-            initialState={initialState?.address}
+            initialState={initialApplication?.address}
             forApartment={false}
             options={options.address}
             errors={errors.address}
           />
-          <HouseForm initialState={initialState?.applicable} options={options.applicable} errors={errors.applicable} />
-          <PhotoForm initialState={initialState?.photos.map((photo) => photo.id)} />
+          <HouseForm
+            initialState={initialApplication?.applicable}
+            options={options.applicable}
+            errors={errors.applicable}
+          />
+          <PhotoForm initialState={initialApplication?.photos.map((photo) => photo.id)} />
           <ApplicationForm
-            initialState={initialState}
+            initialState={initialApplication}
             submit={actions.updateApplication}
             options={options.application}
             errors={errors.application}
+            actionName="Save"
+            isSubmitting={state.isSubmitting}
           />
         </>
       )}

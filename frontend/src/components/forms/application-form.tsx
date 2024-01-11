@@ -7,6 +7,7 @@ import { Checkbox } from "../custom-control/checkbox";
 import { Dropdown } from "../custom-control/dropdown";
 import { Numeric } from "../custom-control/numeric";
 import { FormProps } from "./form-props";
+import { Spinner } from "../spinner/spinner";
 
 export class ApplicationFormErrors {
   clientId: string[] = [];
@@ -17,17 +18,23 @@ export class ApplicationFormErrors {
   hasMortgage: string[] = [];
 }
 
-type ApplicationFormProps = FormProps<ApplicationFormErrors, Application<any>> & FormWithOptions<ApplicationOptions>;
+type ApplicationFormProps = FormProps<ApplicationFormErrors, Application<any>> &
+  FormWithOptions<ApplicationOptions> & {
+    actionName: string;
+    isSubmitting: boolean;
+  };
 
 export function ApplicationForm({
   errors,
   submit = () => {},
   options,
   initialState = new Application<any>(),
+  actionName,
+  isSubmitting,
 }: ApplicationFormProps) {
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    submit();
+    submit(event);
   }
 
   return (
@@ -57,7 +64,8 @@ export function ApplicationForm({
         <Checkbox label="Mortgage" name="hasMortgage" checked={initialState.hasMortgage} />
       </div>
       <div className="form__button-group">
-        <Button text="Create application" />
+        {isSubmitting && <Spinner className="form__spinner" />}
+        {!isSubmitting && <Button text={actionName} />}
       </div>
     </form>
   );
