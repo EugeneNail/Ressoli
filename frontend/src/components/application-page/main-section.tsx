@@ -9,6 +9,7 @@ import { env } from "../../env";
 import classNames from "classnames";
 import { House } from "../../models/House";
 import { Apartment } from "../../models/apartment";
+import { Link } from "react-router-dom";
 
 type MainSectionProps = {
   application: Application<LandParcel | House | Apartment>;
@@ -53,7 +54,9 @@ export function MainSection({ application }: MainSectionProps) {
         <a href="#location">
           <Button className="main_section__button" text="Show on map" />
         </a>
-        <Button className="main_section__button" style={ButtonStyle.secondary} text="Edit" to={"edit"} />
+        <Link className="main_section__button button secondary" to="edit">
+          Edit
+        </Link>
         {isActive && (
           <Button
             className="main_section__button"

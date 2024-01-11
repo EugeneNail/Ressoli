@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ApplicationCard } from "../../../components/application-card/application-card";
-import Button from "../../../components/button/button";
 import { Icon } from "../../../components/icon/icon";
 import { Spinner } from "../../../components/spinner/spinner";
 import { env } from "../../../env";
@@ -10,8 +9,9 @@ import { CardHouse } from "../../../models/card-house";
 import "../applications-page.sass";
 import { Paginator } from "../../../components/paginator/paginator";
 import { PaginatedApplicationCollection } from "../../../models/paginated-applications-collection";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Filters } from "../../../components/filters/filters";
+import "../../../components/button/button.sass";
 
 export function HousesPage() {
   const [isLoading, setLoading] = useState(true);
@@ -42,7 +42,9 @@ export function HousesPage() {
     <div className="applications-page">
       <div className="applications-page__header">
         <h1 className="applications-page__title">Showing {applications.length} applications</h1>
-        <Button className="applications-page__header-button" to="new" text="Add application" />
+        <Link className="applications-page__header-button button primary" to="new">
+          Add application
+        </Link>
       </div>
       <Filters params={params} setParams={setParams} className="applications-page__filters" />
       {!isLoading && applications.length !== 0 && (
