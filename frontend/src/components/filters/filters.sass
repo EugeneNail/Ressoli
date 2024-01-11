@@ -1,0 +1,64 @@
+@import ../../_variables
+
+.filters
+    background: $background-main
+    width: 100%
+    border-radius: .8rem
+    overflow: hidden
+    display: flex
+    flex-direction: column
+    gap: rem
+    position: relative
+
+    &__spoiler
+        padding: 2rem
+        user-select: none
+        background: $background-main
+        cursor: pointer
+        display: flex
+        align-content: center
+
+        &:hover
+            background: darken($background-main, 5%)
+
+        &-icon
+            margin-left: auto
+
+    &__header
+        font-size: 2rem
+        color: $font-strong
+
+    &__group
+        padding: 2rem
+        display: flex
+        flex-wrap: wrap
+        gap: 1rem 4rem
+        align-items: center
+
+    &__info
+        width: fit-content
+        display: flex
+        align-items: center
+        gap: 1rem
+        flex-wrap: wrap
+
+    &__label
+        font-weight: bold
+        font-size: 1.6rem
+
+    &__subtext
+
+    &__value
+        font-size: 1.6rem
+        width: fit-content
+        color: $font-strong
+        padding: 1rem
+        border-radius: .8rem
+        border: 1px solid $border
+
+    &__range
+        width: 100%
+
+    &__button
+        margin: 2rem
+        margin-top: 4rem

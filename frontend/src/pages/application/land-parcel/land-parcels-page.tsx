@@ -11,16 +11,24 @@ import { Icon } from "../../../components/icon/icon";
 import { PaginatedApplicationCollection } from "../../../models/paginated-applications-collection";
 import { useSearchParams } from "react-router-dom";
 import { Paginator } from "../../../components/paginator/paginator";
+import { Filters } from "../../../components/filters/filters";
 
 export function LandParcelsPage() {
   const [isLoading, setLoading] = useState(true);
   const [applications, setApplications] = useState<CardApplication<CardLandParcel>[]>([]);
   const [lastPage, setLastPage] = useState(1);
 
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const page = params.get("page") ?? 1;
 
   useEffect(() => {
+    if (!params.has("types[]", "land-parcels")) {
+      setParams((prev) => {
+        prev.delete("types[]");
+        prev.set("types[]", "land-parcels");
+        return prev;
+      });
+    }
     setLoading(true);
     const route = `${env.API_URL}/applications${document.location.search}`;
     api.get<PaginatedApplicationCollection<CardLandParcel>>(route).then(({ data }) => {
@@ -33,9 +41,10 @@ export function LandParcelsPage() {
   return (
     <div className="applications-page">
       <div className="applications-page__header">
-        <h1 className="applications-page__title">Found {applications.length} applications</h1>
+        <h1 className="applications-page__title">Showing {applications.length} applications</h1>
         <Button className="applications-page__header-button" to="new" text="Add application" />
       </div>
+      <Filters className="applications-page__filters" />
       {!isLoading && applications.length !== 0 && (
         <>
           <div className="applications-page__applications">

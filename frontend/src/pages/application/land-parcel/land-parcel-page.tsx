@@ -30,7 +30,7 @@ export function LandParcelPage() {
         <>
           <MainSection application={application} />
           <LandParcelSection landParcel={application.applicable} />
-          {application.photos && <PhotoSection photos={application.photos} />}
+          {application.photos.length > 0 && <PhotoSection photos={application.photos} />}
           <LocationSection address={application.address} />
         </>
       )}

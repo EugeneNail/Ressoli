@@ -212,7 +212,6 @@ input[type=number]
 .range
     overflow: hidden
     height: 3rem
-    width: 100%
     display: flex
     position: relative
     align-items: center
@@ -256,3 +255,54 @@ input[type=number]
 
         &.right::-webkit-slider-thumb
             left: 2px
+
+.react-datepicker
+    font-size: 2rem !important
+
+    &__month-read-view--selected-month
+        font-weight: bold
+        color: $font-strong
+
+    &__year-read-view--selected-year
+        font-weight: bold
+        color: $font-strong
+
+    &__current-month
+        display: none
+
+    &-popper
+        z-index: 3 !important
+
+    &__input-container
+        width: min-content
+
+        & input
+            border: 1px solid $border
+            border-radius: .8rem
+            padding: 1rem
+            font-size: 1.6rem
+            color: $font-strong
+            width: 105px !important
+
+    &__header
+        padding-top: 0.8em !important
+
+    &__month
+        margin: 0.4em 1em
+
+    &__day-name, &__day
+        color: $font-medium !important
+        width: 1.9em !important
+        line-height: 1.9em !important
+        margin: 0.166em !important
+
+    &__day--in-range, &__day--in-selecting-range
+        color: white !important
+        background: lighten($accent, 15%) !important
+
+    &__day--selected
+        background: $accent !important
+        color: white !important
+
+    &__current-month
+        font-size: 1em !important
