@@ -41,7 +41,7 @@ export function Filters({ className, params, setParams }: FiltersProps) {
     setEndPrice(+(params.get("end-price") ?? 10000000));
     setStartArea(+(params.get("start-area") ?? 1));
     setEndArea(+(params.get("end-area") ?? 10000));
-    setStartDate(new Date(params.get("start-date") ?? new Date("2000-01-01")));
+    setStartDate(new Date(params.get("start-date") ?? new Date(`${new Date().getFullYear()}-01-01`)));
     setEndDate(new Date(params.get("end-date") ?? new Date()));
   }, [params]);
 
