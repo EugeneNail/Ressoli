@@ -36,7 +36,7 @@ export function ApartmentsPage() {
       setLastPage(data.meta.lastPage);
       setLoading(false);
     });
-  }, [page]);
+  }, [params]);
 
   return (
     <div className="applications-page">
@@ -44,7 +44,7 @@ export function ApartmentsPage() {
         <h1 className="applications-page__title">Showing {applications.length} applications</h1>
         <Button className="applications-page__header-button" to="new" text="Add application" />
       </div>
-      <Filters className="applications-page__filters" />
+      <Filters params={params} setParams={setParams} className="applications-page__filters" />
       {!isLoading && applications.length !== 0 && (
         <>
           <div className="applications-page__applications">

@@ -2,36 +2,47 @@ import classNames from "classnames";
 import "./filters.sass";
 import { Radio } from "../custom-control/radio";
 import { Range } from "../custom-control/range";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react";
 import { Checkbox } from "../custom-control/checkbox";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Format } from "../../services/format";
 import Button from "../button/button";
 import "../custom-control/custom-control.sass";
-import { useSearchParams } from "react-router-dom";
 import { Icon } from "../icon/icon";
 
 type FiltersProps = {
   className?: string;
+  params: URLSearchParams;
+  setParams: Dispatch<SetStateAction<URLSearchParams>>;
 };
 
-export function Filters({ className }: FiltersProps) {
-  const [params, setParams] = useSearchParams(new URLSearchParams(document.location.search));
-  const [contract, setContract] = useState(params.get("contract") ?? "All");
-  const [status, setStatus] = useState(params.get("status") ?? "All");
-  const [owned] = useState(params.get("owned") === "true");
-  const [noPhotos] = useState(params.get("no-photos") === "true");
+export function Filters({ className, params, setParams }: FiltersProps) {
+  const [contract, setContract] = useState("");
+  const [status, setStatus] = useState("");
+  const [owned] = useState(false);
+  const [noPhotos] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
-  const [startPrice, setStartPrice] = useState(+(params.get("start-price") ?? 1));
-  const [endPrice, setEndPrice] = useState(+(params.get("end-price") ?? 10000000));
+  const [startPrice, setStartPrice] = useState(0);
+  const [endPrice, setEndPrice] = useState(0);
 
-  const [startArea, setStartArea] = useState(+(params.get("start-area") ?? 1));
-  const [endArea, setEndArea] = useState(+(params.get("end-area") ?? 10000));
+  const [startArea, setStartArea] = useState(0);
+  const [endArea, setEndArea] = useState(0);
 
-  const [startDate, setStartDate] = useState(new Date(params.get("start-date") ?? new Date("2000-01-01")));
-  const [endDate, setEndDate] = useState(new Date(params.get("end-date") ?? new Date()));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  useEffect(() => {
+    setContract(params.get("contract") ?? "All");
+    setStatus(params.get("status") ?? "All");
+    setStartPrice(+(params.get("start-price") ?? 1));
+    setEndPrice(+(params.get("end-price") ?? 10000000));
+    setStartArea(+(params.get("start-area") ?? 1));
+    setEndArea(+(params.get("end-area") ?? 10000));
+    setStartDate(new Date(params.get("start-date") ?? new Date("2000-01-01")));
+    setEndDate(new Date(params.get("end-date") ?? new Date()));
+  }, [params]);
 
   function applyFilters(event: FormEvent) {
     event.preventDefault();
@@ -55,7 +66,7 @@ export function Filters({ className }: FiltersProps) {
       prev.set("page", "1");
       return prev;
     });
-    window.location.replace(`${window.location.pathname}?${params}`);
+    setOpen(false);
   }
 
   function setStartRange(
@@ -102,7 +113,11 @@ export function Filters({ className }: FiltersProps) {
   }
 
   return (
-    <form className={classNames("filters", className)} onSubmit={(e) => applyFilters(e)}>
+    <form
+      className={classNames("filters", className)}
+      onSubmit={(e) => applyFilters(e)}
+      style={{ height: isOpen ? "fit-content" : "6.4rem" }}
+    >
       <div className="filters__spoiler" onClick={() => setOpen(!isOpen)}>
         <h2 className="filters__header">Filters</h2>
         <Icon
@@ -111,116 +126,113 @@ export function Filters({ className }: FiltersProps) {
           onClick={() => setOpen(!isOpen)}
         />
       </div>
-      {isOpen && (
-        <>
-          <div className="filters__group">
-            <Radio options={["All", "Sale", "Rent"]} onChange={setContract} selected={contract} />
-            <Radio options={["All", "Active", "Archived"]} onChange={setStatus} selected={status} />
-            <div className="filters__info">
-              <h5 className="filters__label">Date</h5>
-              <p className="filter__subtext">from</p>
-              <DatePicker
-                dateFormat="yyyy-MM-dd"
-                selected={startDate}
-                selectsStart
-                showMonthDropdown
-                showYearDropdown
-                onChange={(date: Date) => {
-                  if (date > endDate) {
-                    setEndDate(date);
-                  }
-                  setStartDate(date);
-                }}
-                minDate={new Date("2000-01-01")}
-                maxDate={new Date("2099-12-31")}
-                startDate={startDate}
-                endDate={endDate}
-              />
-              <p className="filter__subtext">to</p>
-              <DatePicker
-                dateFormat="yyyy-MM-dd"
-                selected={endDate}
-                selectsEnd
-                showMonthDropdown
-                showYearDropdown
-                onChange={(date: Date) => {
-                  if (date < startDate) {
-                    setStartDate(date);
-                  }
-                  setEndDate(date);
-                }}
-                minDate={new Date("2000-01-01")}
-                maxDate={new Date("2099-12-31")}
-                startDate={startDate}
-                endDate={endDate}
-              />
-            </div>
-          </div>
-          <div className="filters__group">
-            <div className="filters__info">
-              <h5 className="filters__label">Price</h5>
-              <p className="filter__subtext">from</p>
-              <input
-                className="filters__value"
-                value={startPrice === 0 ? "" : startPrice}
-                type="number"
-                onChange={(e) => setStartRange(+e.target.value, setStartPrice, endPrice, setEndPrice, 10000000)}
-              />
-              <p className="filter__subtext">to</p>
-              <input
-                className="filters__value"
-                value={endPrice === 0 ? "" : endPrice}
-                type="number"
-                onChange={(e) => setEndRange(+e.target.value, setEndPrice, startPrice, setStartPrice, 10000000)}
-              />
-            </div>
-            <Range
-              className="filters__range"
-              min={1}
-              max={5000000}
-              step={1}
-              startValue={startPrice}
-              endValue={endPrice}
-              updateStart={setStartPrice}
-              updateEnd={setEndPrice}
-            />
-          </div>
-          <div className="filters__group">
-            <div className="filters__info">
-              <h5 className="filters__label">Area</h5>
-              <p className="filter__subtext">from</p>
-              <input
-                className="filters__value"
-                value={startArea === 0 ? "" : startArea}
-                type="number"
-                onChange={(e) => setStartRange(+e.target.value, setStartArea, endArea, setEndArea, 10000)}
-              />
-              <p className="filter__subtext">to</p>
-              <input
-                className="filters__value"
-                value={endArea === 0 ? "" : endArea}
-                type="number"
-                onChange={(e) => setEndRange(+e.target.value, setEndArea, startArea, setStartArea, 10000)}
-              />
-            </div>
-            <Range
-              className="filters__range"
-              min={1}
-              max={1000}
-              step={1}
-              startValue={startArea}
-              endValue={endArea}
-              updateStart={setStartArea}
-              updateEnd={setEndArea}
-            />
-          </div>
-          <div className="filters__group">
-            <Checkbox label="My applications" name="owned" checked={owned} />
-            <Checkbox label="Without photos" name="noPhotos" checked={noPhotos} />
-          </div>
-          <Button className="filters__button" text="Apply" />
-        </>
-      )}
+
+      <div className="filters__group">
+        <Radio options={["All", "Sale", "Rent"]} onChange={setContract} selected={contract} />
+        <Radio options={["All", "Active", "Archived"]} onChange={setStatus} selected={status} />
+        <div className="filters__info">
+          <h5 className="filters__label">Date</h5>
+          <p className="filter__subtext">from</p>
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            selected={startDate}
+            selectsStart
+            showMonthDropdown
+            showYearDropdown
+            onChange={(date: Date) => {
+              if (date > endDate) {
+                setEndDate(date);
+              }
+              setStartDate(date);
+            }}
+            minDate={new Date("2000-01-01")}
+            maxDate={new Date("2099-12-31")}
+            startDate={startDate}
+            endDate={endDate}
+          />
+          <p className="filter__subtext">to</p>
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            selected={endDate}
+            selectsEnd
+            showMonthDropdown
+            showYearDropdown
+            onChange={(date: Date) => {
+              if (date < startDate) {
+                setStartDate(date);
+              }
+              setEndDate(date);
+            }}
+            minDate={new Date("2000-01-01")}
+            maxDate={new Date("2099-12-31")}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </div>
+      </div>
+      <div className="filters__group">
+        <div className="filters__info">
+          <h5 className="filters__label">Price</h5>
+          <p className="filter__subtext">from</p>
+          <input
+            className="filters__value"
+            value={startPrice === 0 ? "" : startPrice}
+            type="number"
+            onChange={(e) => setStartRange(+e.target.value, setStartPrice, endPrice, setEndPrice, 10000000)}
+          />
+          <p className="filter__subtext">to</p>
+          <input
+            className="filters__value"
+            value={endPrice === 0 ? "" : endPrice}
+            type="number"
+            onChange={(e) => setEndRange(+e.target.value, setEndPrice, startPrice, setStartPrice, 10000000)}
+          />
+        </div>
+        <Range
+          className="filters__range"
+          min={1}
+          max={5000000}
+          step={1}
+          startValue={startPrice}
+          endValue={endPrice}
+          updateStart={setStartPrice}
+          updateEnd={setEndPrice}
+        />
+      </div>
+      <div className="filters__group">
+        <div className="filters__info">
+          <h5 className="filters__label">Area</h5>
+          <p className="filter__subtext">from</p>
+          <input
+            className="filters__value"
+            value={startArea === 0 ? "" : startArea}
+            type="number"
+            onChange={(e) => setStartRange(+e.target.value, setStartArea, endArea, setEndArea, 10000)}
+          />
+          <p className="filter__subtext">to</p>
+          <input
+            className="filters__value"
+            value={endArea === 0 ? "" : endArea}
+            type="number"
+            onChange={(e) => setEndRange(+e.target.value, setEndArea, startArea, setStartArea, 10000)}
+          />
+        </div>
+        <Range
+          className="filters__range"
+          min={1}
+          max={500}
+          step={1}
+          startValue={startArea}
+          endValue={endArea}
+          updateStart={setStartArea}
+          updateEnd={setEndArea}
+        />
+      </div>
+      <div className="filters__group">
+        <Checkbox label="My applications" name="owned" checked={owned} />
+        <Checkbox label="Without photos" name="noPhotos" checked={noPhotos} />
+      </div>
+      <Button className="filters__button" text="Apply" />
     </form>
   );
 }
