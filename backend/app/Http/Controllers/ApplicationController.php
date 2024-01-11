@@ -154,7 +154,7 @@ class ApplicationController extends Controller {
             ->when($endArea,    fn ($query) => $query->whereRelation("applicable", "area", "<=", $request->input("end-area")))
             ->when($contract,   fn ($query) => $query->where("contract", $contract))
             ->when($startDate,  fn ($query) => $query->where("created_at", ">=", $startDate . " 00:00:00"))
-            ->when($endDate,    fn ($query) => $query->where("created_at", "<=", $endDate . " 00:00:00"))
+            ->when($endDate,    fn ($query) => $query->where("created_at", "<=", $endDate . " 23:59:59"))
             ->when($noPhotos,   fn ($query) => $query->doesntHave("photos"))
             ->paginate(25);
 
