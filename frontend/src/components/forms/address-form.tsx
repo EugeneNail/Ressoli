@@ -38,14 +38,16 @@ export function AddressForm({
           errors={errors.values.number}
           resetError={errors.reset}
         />
-        <Field
-          initialValue={initialState?.number}
-          label={"Unit" + (forApartment ? "" : " (optional)")}
-          name="unit"
-          icon="apartment"
-          errors={errors.values.number}
-          resetError={errors.reset}
-        />
+        {forApartment && (
+          <Field
+            initialValue={initialState?.number}
+            label="Unit (optional)"
+            name="unit"
+            icon="apartment"
+            errors={errors.values.number}
+            resetError={errors.reset}
+          />
+        )}
         <Dropdown
           initialValue={initialState?.typeOfStreet}
           label="Type of street"

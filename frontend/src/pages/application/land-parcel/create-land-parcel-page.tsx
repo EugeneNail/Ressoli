@@ -23,7 +23,7 @@ export function CreateLandParcelPage() {
   return (
     <div className="editable-application-page">
       <ClientForm errors={errors.client} />
-      <AddressForm options={options.address} errors={errors.address} />
+      <AddressForm forApartment={false} options={options.address} errors={errors.address} />
       <LandParcelForm options={options.applicable} errors={errors.applicable} />
       <PhotoForm />
       <ApplicationForm

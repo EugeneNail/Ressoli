@@ -23,7 +23,7 @@ export function CreateHousePage() {
   return (
     <div className="editable-application-page">
       <ClientForm errors={errors.client} />
-      <AddressForm options={options.address} errors={errors.address} />
+      <AddressForm options={options.address} errors={errors.address} forApartment={false} />
       <HouseForm options={options.applicable} errors={errors.applicable} />
       <PhotoForm />
       <ApplicationForm

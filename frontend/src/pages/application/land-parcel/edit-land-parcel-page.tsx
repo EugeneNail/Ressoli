@@ -39,7 +39,12 @@ export function EditLandParcelPage() {
       {!isLoading && (
         <>
           <ClientForm initialState={initialState?.client} errors={errors.client} />
-          <AddressForm initialState={initialState?.address} options={options.address} errors={errors.address} />
+          <AddressForm
+            initialState={initialState?.address}
+            forApartment={false}
+            options={options.address}
+            errors={errors.address}
+          />
           <LandParcelForm
             initialState={initialState?.applicable}
             options={options.applicable}

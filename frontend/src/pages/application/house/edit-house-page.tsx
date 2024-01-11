@@ -39,7 +39,12 @@ export function EditHousePage() {
       {!isLoading && (
         <>
           <ClientForm initialState={initialState?.client} errors={errors.client} />
-          <AddressForm initialState={initialState?.address} options={options.address} errors={errors.address} />
+          <AddressForm
+            initialState={initialState?.address}
+            forApartment={false}
+            options={options.address}
+            errors={errors.address}
+          />
           <HouseForm initialState={initialState?.applicable} options={options.applicable} errors={errors.applicable} />
           <PhotoForm initialState={initialState?.photos.map((photo) => photo.id)} />
           <ApplicationForm
