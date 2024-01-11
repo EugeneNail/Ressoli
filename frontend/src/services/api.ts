@@ -10,14 +10,14 @@ const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem("user_access_token")}`;
-  return config;
-});
-
 api.interceptors.response.use(
   (response) => response,
-  (error) => error.response
+  (error) => {
+    if (error.response.status === 401 && window.location.href != "/login") {
+      window.location.href = "/login";
+    }
+    return error.response;
+  }
 );
 
 export default api;

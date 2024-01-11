@@ -47,7 +47,7 @@ export function Field({
         <p className="control__label">{label}</p>
         <input
           ref={ref}
-          autoComplete="on"
+          autoComplete="off"
           type={password && !isVisible ? "password" : "text"}
           className={"control__input"}
           name={name}
