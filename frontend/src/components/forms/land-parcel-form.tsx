@@ -73,7 +73,6 @@ export function LandParcelForm({
           initialValue={initialState?.area?.toString()}
         />
       </div>
-      <div className="form__button-group"></div>
     </form>
   );
 }

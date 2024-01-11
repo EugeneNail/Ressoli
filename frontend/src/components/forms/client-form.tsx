@@ -42,7 +42,6 @@ export function ClientForm({ errors, submit = () => {}, initialState = new Clien
           resetError={errors.reset}
         />
       </div>
-      <div className="form__button-group"></div>
     </form>
   );
 }

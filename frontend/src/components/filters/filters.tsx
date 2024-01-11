@@ -18,11 +18,12 @@ type FiltersProps = {
 };
 
 export function Filters({ className, params, setParams }: FiltersProps) {
+  const [isOpen, setOpen] = useState(false);
+
   const [contract, setContract] = useState("");
   const [status, setStatus] = useState("");
   const [owned] = useState(false);
   const [noPhotos] = useState(false);
-  const [isOpen, setOpen] = useState(false);
 
   const [startPrice, setStartPrice] = useState(0);
   const [endPrice, setEndPrice] = useState(0);
@@ -175,14 +176,14 @@ export function Filters({ className, params, setParams }: FiltersProps) {
           <h5 className="filters__label">Price</h5>
           <p className="filter__subtext">from</p>
           <input
-            className="filters__value"
+            className="filters__value price"
             value={startPrice === 0 ? "" : startPrice}
             type="number"
             onChange={(e) => setStartRange(+e.target.value, setStartPrice, endPrice, setEndPrice, 10000000)}
           />
           <p className="filter__subtext">to</p>
           <input
-            className="filters__value"
+            className="filters__value price"
             value={endPrice === 0 ? "" : endPrice}
             type="number"
             onChange={(e) => setEndRange(+e.target.value, setEndPrice, startPrice, setStartPrice, 10000000)}
@@ -204,18 +205,20 @@ export function Filters({ className, params, setParams }: FiltersProps) {
           <h5 className="filters__label">Area</h5>
           <p className="filter__subtext">from</p>
           <input
-            className="filters__value"
+            className="filters__value area"
             value={startArea === 0 ? "" : startArea}
             type="number"
             onChange={(e) => setStartRange(+e.target.value, setStartArea, endArea, setEndArea, 10000)}
           />
           <p className="filter__subtext">to</p>
-          <input
-            className="filters__value"
-            value={endArea === 0 ? "" : endArea}
-            type="number"
-            onChange={(e) => setEndRange(+e.target.value, setEndArea, startArea, setStartArea, 10000)}
-          />
+          <div className="filters__test">
+            <input
+              className="filters__value area"
+              value={endArea === 0 ? "" : endArea}
+              type="number"
+              onChange={(e) => setEndRange(+e.target.value, setEndArea, startArea, setStartArea, 10000)}
+            />
+          </div>
         </div>
         <Range
           className="filters__range"

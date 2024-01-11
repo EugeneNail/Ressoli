@@ -21,7 +21,7 @@
             background: darken($background-main, 5%)
 
         &-icon
-            margin-left: auto
+            margin-left: 1rem
 
     &__header
         font-size: 2rem
@@ -48,12 +48,19 @@
     &__subtext
 
     &__value
+        background: $background-main
+        text-align: center
         font-size: 1.6rem
-        width: fit-content
         color: $font-strong
         padding: 1rem
         border-radius: .8rem
         border: 1px solid $border
+
+        &.price
+            width: 100px
+
+        &.area
+            width: 80px
 
     &__range
         width: 100%

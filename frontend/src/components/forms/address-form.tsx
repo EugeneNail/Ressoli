@@ -82,7 +82,6 @@ export function AddressForm({
           resetError={errors.reset}
         />
       </div>
-      <div className="form__button-group"></div>
     </form>
   );
 }

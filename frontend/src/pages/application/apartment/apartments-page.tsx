@@ -42,7 +42,7 @@ export function ApartmentsPage() {
     <div className="applications-page">
       <div className="applications-page__header">
         <h1 className="applications-page__title">Showing {applications.length} applications</h1>
-        <Link className="applications-page__header-button button primary" to="new">
+        <Link className="applications-page__header-button button primary" target="_blank" to="new">
           Add application
         </Link>
       </div>

@@ -144,7 +144,6 @@ export function ApartmentForm({
         <Checkbox label="Elevator" name="hasElevator" checked={initialState.hasElevator} />
         <Checkbox label="Corner" name="isCorner" checked={initialState.isCorner} />
       </div>
-      <div className="form__button-group"></div>
     </form>
   );
 }

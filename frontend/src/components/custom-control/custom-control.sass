@@ -157,7 +157,7 @@ input[type=number]
     &__square
         transition: 0.3s
         border: 1px solid $border
-        background: white
+        background: $background-main
         aspect-ratio: 1 / 1
         border-radius: .5rem
         width: 2.5rem
@@ -172,6 +172,9 @@ input[type=number]
 
     &__icon
         font-size: 2.3rem
+        color: $background-main
+
+    &:has(input:checked) &__icon
         color: white
 
     &__input
@@ -258,6 +261,7 @@ input[type=number]
 
 .react-datepicker
     font-size: 2rem !important
+    background: $background-main !important
 
     &__month-read-view--selected-month
         font-weight: bold
@@ -266,6 +270,12 @@ input[type=number]
     &__year-read-view--selected-year
         font-weight: bold
         color: $font-strong
+
+    &__year-dropdown, &__month-dropdown
+        background: $background-main !important
+
+    &__year-option:hover, &__month-option:hover
+        background: $background-secondary !important
 
     &__current-month
         display: none
@@ -277,6 +287,7 @@ input[type=number]
         width: min-content
 
         & input
+            background: $background-main
             border: 1px solid $border
             border-radius: .8rem
             padding: 1rem
@@ -286,6 +297,7 @@ input[type=number]
 
     &__header
         padding-top: 0.8em !important
+        background: $background-main !important
 
     &__month
         margin: 0.4em 1em
@@ -305,4 +317,5 @@ input[type=number]
         color: white !important
 
     &__current-month
+
         font-size: 1em !important

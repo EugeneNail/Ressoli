@@ -29,8 +29,8 @@ export function ApartmentPage() {
       {!isLoading && (
         <>
           <MainSection application={application} />
-          <ApartmentSection apartment={application.applicable} />
           {application.photos.length > 0 && <PhotoSection photos={application.photos} />}
+          <ApartmentSection apartment={application.applicable} />
           <LocationSection address={application.address} />
         </>
       )}

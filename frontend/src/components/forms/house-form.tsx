@@ -206,7 +206,6 @@ export function HouseForm({ errors, submit = () => {}, initialState = new House(
           initialValue={initialState?.bathroom}
         />
       </div>
-      <div className="form__button-group"></div>
     </form>
   );
 }

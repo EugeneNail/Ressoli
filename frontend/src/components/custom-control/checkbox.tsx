@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Icon } from "../icon/icon";
+import "./custom-control.sass";
 
 type CheckboxProps = {
   label: string;
