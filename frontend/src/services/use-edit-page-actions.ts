@@ -1,6 +1,7 @@
 import { ApartmentFormErrors } from "../components/forms/apartment-form";
 import { HouseFormErrors } from "../components/forms/house-form";
 import { LandParcelFormErrors } from "../components/forms/land-parcel-form";
+import { useNotificationContext } from "../components/notifications/notifications";
 import { env } from "../env";
 import api from "./api";
 import { EditablePageState } from "./use-editable-page-state";
@@ -14,6 +15,11 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
   applicableId: number
 ) {
   const navigate = useNavigate();
+  const context = useNotificationContext();
+
+  function throwNotification() {
+    context.addNotification("The data entered is invalid. Make sure the data is valid and try again.", false);
+  }
 
   async function updateClient() {
     const payload = new FormData(document.getElementById("clientForm") as HTMLFormElement);
@@ -21,7 +27,8 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
     if (status === 422 || status === 409) {
       errors.client.set(data.errors);
-      alert("The client is not valid");
+      throwNotification();
+
       return 0;
     }
 
@@ -36,7 +43,8 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
     if (status === 422 || status === 409) {
       errors.address.set(data.errors);
-      alert("The address is not valid");
+      throwNotification();
+
       return 0;
     }
 
@@ -51,7 +59,8 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
     if (status === 422) {
       errors.applicable.set(data.errors);
-      alert("The real estate is not valid");
+      throwNotification();
+
       return 0;
     }
 
@@ -87,6 +96,7 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
     if (status === 422) {
       errors.application.set(data.errors);
+      throwNotification();
     }
 
     state.setSubmitting(false);

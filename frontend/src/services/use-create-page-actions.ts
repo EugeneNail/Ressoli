@@ -6,12 +6,18 @@ import { LandParcelFormErrors } from "../components/forms/land-parcel-form";
 import { useNavigate } from "react-router";
 import { ApartmentFormErrors } from "../components/forms/apartment-form";
 import { EditablePageState } from "./use-editable-page-state";
+import { useNotificationContext } from "../components/notifications/notifications";
 
 export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormErrors | ApartmentFormErrors>(
   errors: PageErrors<A>,
   state: EditablePageState
 ) {
   const navigate = useNavigate();
+  const context = useNotificationContext();
+
+  function throwNotification() {
+    context.addNotification("The data entered is invalid. Make sure the data is valid and try again.", false);
+  }
 
   async function createClient() {
     const payload = new FormData(document.getElementById("clientForm") as HTMLFormElement);
@@ -19,7 +25,7 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
 
     if (status === 422 || status === 409) {
       errors.client.set(data.errors);
-      alert("The client is not valid");
+      throwNotification();
       return 0;
     }
 
@@ -34,7 +40,8 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
 
     if (status === 422 || status === 409) {
       errors.address.set(data.errors);
-      alert("The address is not valid");
+      throwNotification();
+
       return 0;
     }
 
@@ -58,7 +65,8 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
 
     if (status === 422 || status === 409) {
       errors.applicable.set(data.errors);
-      alert("The real estate is not valid");
+      throwNotification();
+
       return 0;
     }
 
@@ -82,6 +90,7 @@ export function useCreatePageActions<A extends LandParcelFormErrors | HouseFormE
 
     if (status === 422) {
       errors.application.set(data.errors);
+      throwNotification();
     }
     state.setSubmitting(false);
   }
