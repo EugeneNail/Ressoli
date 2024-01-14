@@ -2,13 +2,14 @@ import { useNavigate } from "react-router";
 import { Icon } from "../icon/icon";
 import { MenuLink } from "./menu-link";
 import "./menu.sass";
-import api from "../../services/api";
+import { useHttp } from "../../services/useHttp";
 
 export function Menu() {
   const navigate = useNavigate();
+  const http = useHttp();
 
   async function logout() {
-    const { status } = await api.post("/logout");
+    const { status } = await http.post("/logout");
 
     if (status === 204) {
       navigate("/login");

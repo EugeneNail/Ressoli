@@ -4,12 +4,12 @@ import { LandParcel } from "../../models/land-parcel";
 import { Format } from "../../services/format";
 import Button, { ButtonStyle } from "../button/button";
 import { MainSectionAttribute } from "./main-section-attribute";
-import api from "../../services/api";
 import { env } from "../../env";
 import classNames from "classnames";
 import { House } from "../../models/House";
 import { Apartment } from "../../models/apartment";
 import { Link } from "react-router-dom";
+import { useHttp } from "../../services/useHttp";
 
 type MainSectionProps = {
   application: Application<LandParcel | House | Apartment>;
@@ -18,9 +18,10 @@ type MainSectionProps = {
 export function MainSection({ application }: MainSectionProps) {
   const [isActive, setActive] = useState(application.isActive);
   const userId: number = +(localStorage.getItem("userId") as string);
+  const http = useHttp();
 
   async function removeFromArchive() {
-    const { status } = await api.patch(`${env.API_URL}/applications/${application.id}/activate`);
+    const { status } = await http.patch(`${env.API_URL}/applications/${application.id}/activate`);
 
     if (status === 204) {
       setActive(true);
@@ -28,7 +29,7 @@ export function MainSection({ application }: MainSectionProps) {
   }
 
   async function moveToArchive() {
-    const { status } = await api.patch(`${env.API_URL}/applications/${application.id}/archive`);
+    const { status } = await http.patch(`${env.API_URL}/applications/${application.id}/archive`);
 
     if (status === 204) {
       setActive(false);

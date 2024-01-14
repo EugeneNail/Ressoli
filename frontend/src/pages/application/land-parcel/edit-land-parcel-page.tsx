@@ -7,7 +7,6 @@ import { ClientForm } from "../../../components/forms/client-form";
 import { LandParcelForm, LandParcelFormErrors } from "../../../components/forms/land-parcel-form";
 import { env } from "../../../env";
 import { LandParcelOptions } from "../../../models/land-parcel-options";
-import api from "../../../services/api";
 import { Application } from "../../../models/application";
 import { LandParcel } from "../../../models/land-parcel";
 import { usePageErrors } from "../../../services/use-page-errors";
@@ -16,6 +15,7 @@ import { useEditPageActions } from "../../../services/use-edit-page-actions";
 import { Spinner } from "../../../components/spinner/spinner";
 import { PhotoForm } from "../../../components/forms/photo-form";
 import { useEditablePageState } from "../../../services/use-editable-page-state";
+import { useHttp } from "../../../services/useHttp";
 
 export function EditLandParcelPage() {
   const { id } = useParams<{ id: string }>();
@@ -25,10 +25,11 @@ export function EditLandParcelPage() {
   const [initialApplication, setInitialApplication] = useState<Application<LandParcel>>();
   const actions = useEditPageActions(errors, state, id as string, initialApplication?.applicable.id as number);
   const [isLoading, setLoading] = useState(true);
+  const http = useHttp();
 
   useEffect(() => {
     options.load();
-    api.get<Application<LandParcel>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
+    http.get<Application<LandParcel>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
       setInitialApplication(data);
       setLoading(false);
     });

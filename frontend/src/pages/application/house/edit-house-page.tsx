@@ -5,7 +5,6 @@ import { AddressForm } from "../../../components/forms/address-form";
 import { ApplicationForm } from "../../../components/forms/application-form";
 import { ClientForm } from "../../../components/forms/client-form";
 import { env } from "../../../env";
-import api from "../../../services/api";
 import { Application } from "../../../models/application";
 import { usePageErrors } from "../../../services/use-page-errors";
 import { usePageOptions } from "../../../services/use-page-options";
@@ -16,6 +15,7 @@ import { House } from "../../../models/House";
 import { Spinner } from "../../../components/spinner/spinner";
 import { PhotoForm } from "../../../components/forms/photo-form";
 import { useEditablePageState } from "../../../services/use-editable-page-state";
+import { useHttp } from "../../../services/useHttp";
 
 export function EditHousePage() {
   const { id } = useParams<{ id: string }>();
@@ -25,10 +25,11 @@ export function EditHousePage() {
   const [initialApplication, setInitialApplication] = useState<Application<House>>();
   const actions = useEditPageActions(errors, state, id as string, initialApplication?.applicable.id as number);
   const [isLoading, setLoading] = useState(true);
+  const http = useHttp();
 
   useEffect(() => {
     options.load();
-    api.get<Application<House>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
+    http.get<Application<House>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
       setInitialApplication(data);
       setLoading(false);
     });

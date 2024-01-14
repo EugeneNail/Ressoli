@@ -9,11 +9,8 @@ import { Link } from "react-router-dom";
 import { Filters } from "../../../components/filters/filters";
 import "../../../components/button/button.sass";
 import { useApplicationsPageState } from "../../../services/use-applications-page-state";
-import Button from "../../../components/button/button";
-import { useNotificationContext } from "../../../components/notifications/notifications";
 
 export function HousesPage() {
-  const context = useNotificationContext();
   const { isLoading, lastPage, adjustParams, applications, loadApplications, params, setParams } =
     useApplicationsPageState<CardHouse>();
 

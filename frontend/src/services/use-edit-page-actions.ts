@@ -3,10 +3,10 @@ import { HouseFormErrors } from "../components/forms/house-form";
 import { LandParcelFormErrors } from "../components/forms/land-parcel-form";
 import { useNotificationContext } from "../components/notifications/notifications";
 import { env } from "../env";
-import api from "./api";
 import { EditablePageState } from "./use-editable-page-state";
 import { PageErrors } from "./use-page-errors";
 import { useNavigate } from "react-router";
+import { useHttp } from "./useHttp";
 
 export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErrors | ApartmentFormErrors>(
   errors: PageErrors<A>,
@@ -14,6 +14,7 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
   applicationId: string,
   applicableId: number
 ) {
+  const http = useHttp();
   const navigate = useNavigate();
   const context = useNotificationContext();
 
@@ -23,7 +24,7 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
   async function updateClient() {
     const payload = new FormData(document.getElementById("clientForm") as HTMLFormElement);
-    const { data, status } = await api.post(`${env.API_URL}/clients`, payload);
+    const { data, status } = await http.post(`${env.API_URL}/clients`, payload);
 
     if (status === 422 || status === 409) {
       errors.client.set(data.errors);
@@ -39,7 +40,7 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
   async function updateAddress() {
     const payload = new FormData(document.getElementById("addressForm") as HTMLFormElement);
-    const { data, status } = await api.post(`${env.API_URL}/addresses`, payload);
+    const { data, status } = await http.post(`${env.API_URL}/addresses`, payload);
 
     if (status === 422 || status === 409) {
       errors.address.set(data.errors);
@@ -55,7 +56,7 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
 
   async function updateApplicable() {
     const payload = new FormData(document.getElementById("applicableForm") as HTMLFormElement);
-    const { data, status } = await api.put(`${env.API_URL}/${state.applicableRoute}/${applicableId}`, payload);
+    const { data, status } = await http.put(`${env.API_URL}/${state.applicableRoute}/${applicableId}`, payload);
 
     if (status === 422) {
       errors.applicable.set(data.errors);
@@ -85,7 +86,7 @@ export function useEditPageActions<A extends LandParcelFormErrors | HouseFormErr
     payload.set("addressId", await updateAddress());
     addPhotos(payload);
     payload.set("applicableId", await updateApplicable());
-    const { data, status } = await api.put(
+    const { data, status } = await http.put(
       `${env.API_URL}/applications/${state.applicableRoute}/${applicationId}`,
       payload
     );

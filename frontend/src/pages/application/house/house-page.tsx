@@ -2,7 +2,6 @@ import { useParams } from "react-router";
 import "../application-page.sass";
 import { useEffect, useState } from "react";
 import { Application } from "../../../models/application";
-import api from "../../../services/api";
 import { env } from "../../../env";
 import { MainSection } from "../../../components/application-page/main-section";
 import { LocationSection } from "../../../components/application-page/location-section";
@@ -10,14 +9,16 @@ import { House } from "../../../models/House";
 import { HouseSection } from "../../../components/application-page/house-section";
 import { Spinner } from "../../../components/spinner/spinner";
 import { PhotoSection } from "../../../components/application-page/photo-section";
+import { useHttp } from "../../../services/useHttp";
 
 export function HousePage() {
   const { id } = useParams<{ id: string }>();
   const [application, setApplication] = useState(new Application<House>());
   const [isLoading, setLoading] = useState(true);
+  const http = useHttp();
 
   useEffect(() => {
-    api.get<Application<House>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
+    http.get<Application<House>>(`${env.API_URL}/applications/${id}`).then(({ data }) => {
       setApplication(data);
       setLoading(false);
     });

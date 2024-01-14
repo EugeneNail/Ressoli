@@ -6,12 +6,13 @@ import { CardApplication } from "../models/card-application";
 import { CardHouse } from "../models/card-house";
 import { CardLandParcel } from "../models/card-land-parcel";
 import { PaginatedApplicationCollection } from "../models/paginated-applications-collection";
-import api from "./api";
+import { useHttp } from "./useHttp";
 
 export function useApplicationsPageState<A extends CardLandParcel | CardApartment | CardHouse>() {
   const [isLoading, setLoading] = useState(true);
   const [applications, setApplications] = useState<CardApplication<A>[]>([]);
   const [lastPage, setLastPage] = useState(1);
+  const http = useHttp();
 
   const [params, setParams] = useSearchParams();
 
@@ -32,7 +33,7 @@ export function useApplicationsPageState<A extends CardLandParcel | CardApartmen
   function loadApplications() {
     setLoading(true);
     const route = `${env.API_URL}/applications${document.location.search}`;
-    api.get<PaginatedApplicationCollection<A>>(route).then(({ data }) => {
+    http.get<PaginatedApplicationCollection<A>>(route).then(({ data }) => {
       setApplications(data.data);
       setLastPage(data.meta.lastPage);
       setLoading(false);
