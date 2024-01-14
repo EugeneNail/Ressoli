@@ -18,7 +18,8 @@ export function SignupPage() {
       return;
     }
 
-    if (status === 204) {
+    if (status === 200) {
+      localStorage.setItem("userId", data);
       navigate("/dashboard");
     }
   }

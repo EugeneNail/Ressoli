@@ -23,10 +23,11 @@ class AuthController extends Controller {
             return response()->json(["errors" => $messages], Response::HTTP_CONFLICT);
         }
 
-        $token = User::create($data)->createToken($request->ip())->plainTextToken;
+        $user = User::create($data);
+        $token = $user->createToken($request->ip())->plainTextToken;
         $cookie = cookie("access_token", $token, 60 * 24 * 7);
 
-        return response()->noContent()->withCookie($cookie);
+        return response()->json($user->id, Response::HTTP_OK)->withCookie($cookie);
     }
 
     public function login(LoginRequest $request, MessageBag $messages) {
@@ -44,7 +45,7 @@ class AuthController extends Controller {
         $token = $user->createToken($request->ip())->plainTextToken;
 
         $cookie = cookie('access_token', $token, 60 * 24 * 7);
-        return response()->noContent()->withCookie($cookie);
+        return response()->json($user->id, Response::HTTP_OK)->withCookie($cookie);
     }
 
     public function logout(Request $request) {

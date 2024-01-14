@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Application;
+use App\Models\User;
 use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +18,11 @@ class ActivateApplicationFeatureTest extends AuthorizedTestCase {
         parent::setUp();
         $this->seed(GlobalOptionsSeeder::class);
         $this->route = "/api/applications/1/activate";
-        $this->application = Application::factory()->withHouse()->inactive()->create();
+        $this->application = Application::factory()
+            ->withHouse()
+            ->inactive()
+            ->withUser(User::first())
+            ->create();
     }
 
     public function test_activate_invalid_id_404(): void {
@@ -35,5 +40,13 @@ class ActivateApplicationFeatureTest extends AuthorizedTestCase {
         $this->assertDatabaseCount(Application::class, 1);
         $this->assertDatabaseHas(Application::class, ["id" => $this->application->id, "is_active" => true]);
         $this->assertNull(json_decode($response->getContent()));
+    }
+
+    public function test_activate_others_user_application_403(): void {
+        $response = $this->actingAs(User::factory()->create())->patchJson($this->route);
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing(Application::class, ["id" => 1, "is_active" => true]);
+        $this->assertDatabaseCount(Application::class, 1);
     }
 }

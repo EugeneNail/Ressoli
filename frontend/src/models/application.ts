@@ -7,6 +7,7 @@ import { Photo } from "./photo";
 
 export class Application<A extends LandParcel | House | Apartment> {
   id: number = 0;
+  userId: number = 0;
   isActive: boolean = false;
   photos: Photo[] = [];
   contract: string = "";

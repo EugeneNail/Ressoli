@@ -17,6 +17,7 @@ type MainSectionProps = {
 
 export function MainSection({ application }: MainSectionProps) {
   const [isActive, setActive] = useState(application.isActive);
+  const userId: number = +(localStorage.getItem("userId") as string);
 
   async function removeFromArchive() {
     const { status } = await api.patch(`${env.API_URL}/applications/${application.id}/activate`);
@@ -54,25 +55,29 @@ export function MainSection({ application }: MainSectionProps) {
         <a href="#location">
           <Button className="main_section__button" text="Show on map" />
         </a>
-        <Link className="main_section__button button secondary" to="edit">
-          Edit
-        </Link>
-        {isActive && (
-          <Button
-            className="main_section__button"
-            style={ButtonStyle.secondary}
-            text="Move to archive"
-            action={moveToArchive}
-          />
-        )}
+        {userId === application.userId && (
+          <>
+            <Link className="main_section__button button secondary" to="edit">
+              Edit
+            </Link>
+            {isActive && (
+              <Button
+                className="main_section__button"
+                style={ButtonStyle.secondary}
+                text="Move to archive"
+                action={moveToArchive}
+              />
+            )}
 
-        {!isActive && (
-          <Button
-            className="main_section__button"
-            style={ButtonStyle.secondary}
-            text="Remove from archive"
-            action={removeFromArchive}
-          />
+            {!isActive && (
+              <Button
+                className="main_section__button"
+                style={ButtonStyle.secondary}
+                text="Remove from archive"
+                action={removeFromArchive}
+              />
+            )}
+          </>
         )}
       </div>
     </section>

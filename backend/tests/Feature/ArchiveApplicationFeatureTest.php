@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Application;
+use App\Models\User;
 use Database\Seeders\GlobalOptionsSeeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +17,12 @@ class ArchiveApplicationFeatureTest extends AuthorizedTestCase {
     public function setUp(): void {
         parent::setUp();
         $this->seed(GlobalOptionsSeeder::class);
-        $this->route = "/api/applications/1/archive";
-        $this->application = Application::factory()->withHouse()->active()->create();
+        $this->application = Application::factory()
+            ->withHouse()
+            ->withUser(User::first())
+            ->active()
+            ->create();
+        $this->route = "/api/applications/{$this->application->id}/archive";
     }
 
     public function test_archive_invalid_id_404(): void {
@@ -35,5 +40,13 @@ class ArchiveApplicationFeatureTest extends AuthorizedTestCase {
         $this->assertDatabaseCount(Application::class, 1);
         $this->assertDatabaseHas(Application::class, ["id" => $this->application->id, "is_active" => false]);
         $this->assertNull(json_decode($response->getContent()));
+    }
+
+    public function test_archive_others_user_application_403(): void {
+        $response = $this->actingAs(User::factory()->create())->patchJson($this->route);
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing(Application::class, ["id" => 1, "is_active" => false]);
+        $this->assertDatabaseCount(Application::class, 1);
     }
 }

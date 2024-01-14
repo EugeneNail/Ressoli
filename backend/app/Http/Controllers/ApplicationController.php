@@ -49,9 +49,12 @@ class ApplicationController extends Controller {
 
 
     public function update(UpdateApplicationRequest $request, string $applicables, Application $application) {
+
         if ($application === null) {
             abort(Response::HTTP_NOT_FOUND);
         }
+
+        $this->authorizeUser($request, $application);
 
         $data = $request->safe();
         $client = Client::find($data->client_id);
@@ -101,7 +104,12 @@ class ApplicationController extends Controller {
     }
 
 
-    public function activate(Application $application) {
+    public function activate(Application $application, Request $request) {
+        $this->authorizeUser($request, $application);
+
+        if ($application->user_id !== $request->user()->id) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
         $application->is_active = true;
         $application->save();
 
@@ -109,13 +117,23 @@ class ApplicationController extends Controller {
     }
 
 
-    public function archive(Application $application) {
+    public function archive(Application $application, Request $request) {
+        $this->authorizeUser($request, $application);
+
+        if ($application->user_id !== $request->user()->id) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
         $application->is_active = false;
         $application->save();
 
         return response()->noContent();
     }
 
+    private function authorizeUser(Request $request, Application $application) {
+        if ($request->user()->id !== $application->user_id) {
+            abort(403);
+        }
+    }
 
     public function show(int $id) {
         $application = Application::with([
