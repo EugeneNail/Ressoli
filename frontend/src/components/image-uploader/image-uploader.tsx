@@ -2,9 +2,9 @@ import { useState, DragEvent, ChangeEvent } from "react";
 import { Spinner } from "../spinner/spinner";
 import "./image-uploader.sass";
 import Resizer from "react-image-file-resizer";
-import api from "../../services/api";
 import { Photo } from "../../models/photo";
 import "../button/button.sass";
+import { useHttp } from "../../services/useHttp";
 
 type ImageUploaderProps = {
   addIndices: (newIndices: number[]) => void;
@@ -12,6 +12,7 @@ type ImageUploaderProps = {
 };
 
 export function ImageUploader({ addIndices, maxPhotos }: ImageUploaderProps) {
+  const http = useHttp();
   const [fileCount, setFileCount] = useState(0);
   const [isDragged, setDragged] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -55,7 +56,7 @@ export function ImageUploader({ addIndices, maxPhotos }: ImageUploaderProps) {
       payload.append("photos[]", file);
     }
     // Looks like axios can't properly send files with the Content-Type header set to "application/json"
-    const { data, status } = await api.post<Photo[]>("/photos", payload, {
+    const { data, status } = await http.post<Photo[]>("/photos", payload, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
@@ -93,7 +94,14 @@ export function ImageUploader({ addIndices, maxPhotos }: ImageUploaderProps) {
       )}
       {!isDragged && !isLoading && (
         <label htmlFor="imageUploader" className="image-uploader__button button primary">
-          <input type="file" id="imageUploader" multiple className="image-uploader__input" onChange={handleChange} />
+          <input
+            type="file"
+            id="imageUploader"
+            multiple
+            className="image-uploader__input"
+            onChange={handleChange}
+            accept="image/png, image/jpeg, image/jpg"
+          />
           Browse
         </label>
       )}
