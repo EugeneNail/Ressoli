@@ -28,44 +28,30 @@ class ApplicationController extends Controller {
 
     private int $maxPhotos = 15;
 
-    public function store(StoreApplicationRequest $request, string $applicables) {
-        $data = $request->safe();
-        $client = Client::find($data->client_id);
-        $address = Address::find($data->address_id);
-        $applicable = $this->getApplicable($applicables, $data->applicable_id);
-
-        $application = new Application($data->toArray());
+    public function store(StoreApplicationRequest $request, ApplicationManagement $management) {
+        $data = $request->validated();
+        $application = new Application($data);
         $application->user()->associate($request->user());
-        $application->client()->associate($client);
-        $application->address()->associate($address);
-        $application->applicable()->associate($applicable);
+        $management->setRelations($application, $request);
         $application->save();
 
         if ($request->has("photos")) {
-            $this->associatePhotos($data->photos, $application, $this->maxPhotos);
+            $management->associatePhotos($data["photos"], $application, $this->maxPhotos);
         }
-
 
         return response()->json($application->id, Response::HTTP_CREATED);
     }
 
 
-    public function update(UpdateApplicationRequest $request, string $applicables, Application $application) {
-
+    public function update(UpdateApplicationRequest $request, ApplicationManagement $management, string $applicables, Application $application) {
         if ($application === null) {
             abort(Response::HTTP_NOT_FOUND);
         }
 
-        $this->authorizeUser($request, $application);
+        $management->authorizeUserOrFail($request, $application);
 
         $data = $request->safe();
-        $client = Client::find($data->client_id);
-        $address = Address::find($data->address_id);
-        $applicable = $this->getApplicable($applicables, $data->applicable_id);
-
-        $application->client()->associate($client);
-        $application->address()->associate($address);
-        $application->applicable()->associate($applicable);
+        $management->setRelations($application, $request);
         $application->update($data->toArray());
         $application->save();
 
@@ -73,45 +59,16 @@ class ApplicationController extends Controller {
             $application->photos()
                 ->whereNotIn("id", $request->input("photos"))
                 ->delete();
-            $this->associatePhotos($data->photos, $application, $this->maxPhotos);
+            $management->associatePhotos($data->photos, $application, $this->maxPhotos);
         }
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
 
-    private function associatePhotos(array $photoIds, Application $application, int $maxPhotos) {
-        Photo::findMany($photoIds)
-            ->take($maxPhotos)
-            ->each(function ($photo) use ($application) {
-                $oldPath = $photo->path;
-                $newPath = str_replace("/temp", "", $photo->path);
-                $photo->setAttribute("path", $newPath)
-                    ->application()
-                    ->associate($application)
-                    ->save();
-                Storage::disk("local")->move($oldPath, $newPath);
-            });
-    }
+    public function activate(Application $application, Request $request, ApplicationManagement $management) {
+        $management->authorizeUserOrFail($request, $application);
 
-
-    private function getApplicable(string $applicables, int | string $applicableId): Model {
-        $modelClasses = [
-            "land-parcels" => LandParcel::class,
-            "houses" => House::class,
-            "apartments" => Apartment::class
-        ];
-
-        return $modelClasses[$applicables]::find($applicableId);
-    }
-
-
-    public function activate(Application $application, Request $request) {
-        $this->authorizeUser($request, $application);
-
-        if ($application->user_id !== $request->user()->id) {
-            abort(Response::HTTP_FORBIDDEN);
-        }
         $application->is_active = true;
         $application->save();
 
@@ -119,23 +76,15 @@ class ApplicationController extends Controller {
     }
 
 
-    public function archive(Application $application, Request $request) {
-        $this->authorizeUser($request, $application);
+    public function archive(Application $application, Request $request, ApplicationManagement $management) {
+        $management->authorizeUserOrFail($request, $application);
 
-        if ($application->user_id !== $request->user()->id) {
-            abort(Response::HTTP_FORBIDDEN);
-        }
         $application->is_active = false;
         $application->save();
 
         return response()->noContent();
     }
 
-    private function authorizeUser(Request $request, Application $application) {
-        if ($request->user()->id !== $application->user_id) {
-            abort(403);
-        }
-    }
 
     public function show(int $id) {
         $application = Application::with([
