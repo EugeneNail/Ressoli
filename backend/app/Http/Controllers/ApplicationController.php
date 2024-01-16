@@ -14,6 +14,8 @@ use App\Models\House;
 use App\Models\LandParcel;
 use App\Models\Photo;
 use App\Models\User;
+use App\Services\ApplicationFilter;
+use App\Services\ApplicationManagement;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -149,53 +151,17 @@ class ApplicationController extends Controller {
 
 
     public function index(IndexApplicationsRequest $request) {
-        $types = $request->input("types");
-        $owned = $request->boolean("owned");
-        $status = $request->input("status");
-        $startPrice = $request->has("start-price");
-        $endPrice = $request->has("end-price");
-        $startArea = $request->has("start-area");
-        $endArea = $request->has("end-area");
-        $contract = $request->input("contract");
-        $startDate = $request->input("start-date");
-        $endDate = $request->input("end-date");
-        $noPhotos = $request->boolean("no-photos");
-
-        $applications = Application::query()
-            ->with(["client", "address", "applicable", "photos"])
-            ->when($types,      fn ($query) => $this->applyTypeFilters($query, $types))
-            ->when($owned,      fn ($query) => $query->where("user_id", $request->user()->id))
-            ->when($status,     fn ($query) => $query->where("is_active", ["Active" => true, "Archived" => false][$status]))
-            ->when($startPrice, fn ($query) => $query->where("price", ">=", $request->input("start-price")))
-            ->when($endPrice,   fn ($query) => $query->where("price", "<=", $request->input("end-price")))
-            ->when($startArea,  fn ($query) => $query->whereRelation("applicable", "area", ">=", $request->input("start-area")))
-            ->when($endArea,    fn ($query) => $query->whereRelation("applicable", "area", "<=", $request->input("end-area")))
-            ->when($contract,   fn ($query) => $query->where("contract", $contract))
-            ->when($startDate,  fn ($query) => $query->where("created_at", ">=", $startDate . " 00:00:00"))
-            ->when($endDate,    fn ($query) => $query->where("created_at", "<=", $endDate . " 23:59:59"))
-            ->when($noPhotos,   fn ($query) => $query->doesntHave("photos"))
+        $applications = (new ApplicationFilter($request))
+            ->byTypes()
+            ->byStatus()
+            ->byAreaRange()
+            ->byDateRange()
+            ->byPriceRange()
+            ->byContract()
+            ->byOwned()
+            ->query()
             ->paginate(25);
 
         return CardApplicationResource::collection($applications);
-    }
-
-    private function applyTypeFilters(Builder $query, array $types): Builder {
-        $map = [
-            "land-parcels" => LandParcel::class,
-            "houses" => House::class,
-            "apartments" => Apartment::class
-        ];
-        $modelClasses = collect($types)->map(fn ($type) => $map[$type]);
-
-        return $query->whereIn("applicable_type", $modelClasses);
-    }
-
-    private function applyStatusFilters(Builder $query, string $status): Builder {
-        $map = [
-            "active" => true,
-            "archived" => false
-        ];
-
-        return $query->where("is_active", $map[$status]);
     }
 }

@@ -29,7 +29,7 @@ class StoreUserFeatureTest extends TestCase {
 
     public function test_valid_data_201(): void {
         $response = $this->postJson($this->route, $this->data);
-        $response->assertStatus(204);
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas(User::class, [
             "name" => "John",

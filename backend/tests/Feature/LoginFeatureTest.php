@@ -27,9 +27,9 @@ class LoginFeatureTest extends TestCase {
     }
 
 
-    public function test_success_204(): void {
+    public function test_success_200(): void {
         $response = $this->postJson($this->route, $this->data);
-        $response->assertStatus(204);
+        $response->assertStatus(200);
         $response->assertCookie("access_token");
     }
 
