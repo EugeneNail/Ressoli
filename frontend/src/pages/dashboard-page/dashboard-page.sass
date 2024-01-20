@@ -1,0 +1,45 @@
+@import ../../_variables
+
+.dashboard-page
+
+    &__header
+        font-size: 2.6rem
+        color: $font-strong
+
+    &__label
+        margin-top: 6rem
+        margin-bottom: 2rem
+        font-size: 2.2rem
+        color: $font-strong
+
+    &__grid
+        display: grid
+        grid-template-columns: 1fr 1fr
+        gap: 2rem
+
+    @media screen and (orientation:portrait)
+        &__grid
+            display: flex
+            flex-direction: column
+
+    &__chart
+        width: 100% !important
+        height: 50vh !important
+
+    &__chart-score-wrapper
+        background: $background-main !important
+
+    &__spinner-container
+        display: grid
+        height: 80vh
+        width: 100%
+
+    &__spinner
+        place-self: center
+        font-size: 8rem
+
+.recharts-text
+    fill: $font-medium
+
+.recharts-label
+    fill: $font-strong

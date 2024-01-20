@@ -15,6 +15,7 @@ import { ApartmentsPage } from "./pages/application/apartment/apartments-page";
 import { ApartmentPage } from "./pages/application/apartment/apartment-page";
 import { CreateApartmentPage } from "./pages/application/apartment/create-apartment-page";
 import { EditApartmentPage } from "./pages/application/apartment/edit-apartment-page";
+import { DashboardPage } from "./pages/dashboard-page/dashboard-page";
 
 export function RootRouter() {
   return (
@@ -25,7 +26,7 @@ export function RootRouter() {
           <Route path="/signup" element={<SignupPage />} />
         </Route>
         <Route element={<DefaultLayout />}>
-          <Route path="/dashboard" />
+          <Route path="/dashboard" element={<DashboardPage />} />
 
           <Route path="/land-parcels">
             <Route path="/land-parcels" element={<LandParcelsPage />} />

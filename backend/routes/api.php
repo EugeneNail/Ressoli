@@ -9,6 +9,7 @@ use App\Http\Controllers\HouseController;
 use App\Http\Controllers\LandParcelController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\StatisticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/photos", [PhotoController::class, "store"]);
 
-
     Route::get("/options/{type}", OptionController::class);
+
+    Route::get("/statistics", StatisticsController::class);
 })->middleware("web");
