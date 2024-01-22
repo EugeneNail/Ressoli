@@ -17,10 +17,6 @@ class LandParcelController extends Controller {
     }
 
     public function update(UpdateLandParcelRequest $request, LandParcel $landParcel) {
-        if ($landParcel === null) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
-
         $landParcel->update($request->validated());
 
         return response()->noContent();

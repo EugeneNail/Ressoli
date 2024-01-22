@@ -44,10 +44,6 @@ class ApplicationController extends Controller {
 
 
     public function update(UpdateApplicationRequest $request, ApplicationManagement $management, string $applicables, Application $application) {
-        if ($application === null) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
-
         $management->authorizeUserOrFail($request, $application);
 
         $data = $request->safe();

@@ -17,10 +17,6 @@ class HouseController extends Controller {
     }
 
     public function update(UpdateHouseRequest $request, House $house) {
-        if ($house === null) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
-
         $house->update($request->validated());
 
         return response()->noContent();

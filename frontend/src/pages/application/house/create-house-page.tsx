@@ -10,8 +10,6 @@ import { usePageOptions } from "../../../services/use-page-options";
 import { useCreatePageActions } from "../../../services/use-create-page-actions";
 import { PhotoForm } from "../../../components/forms/photo-form";
 import { useEditablePageState } from "../../../services/use-editable-page-state";
-import { useNotificationContext } from "../../../components/notifications/notifications";
-import Button from "../../../components/button/button";
 
 export function CreateHousePage() {
   const errors = usePageErrors(new HouseFormErrors());
@@ -23,11 +21,8 @@ export function CreateHousePage() {
     options.load();
   }, []);
 
-  const context = useNotificationContext();
-
   return (
     <div className="editable-application-page">
-      <Button action={() => context.addNotification("lol")} />
       <ClientForm errors={errors.client} />
       <AddressForm options={options.address} errors={errors.address} forApartment={false} />
       <HouseForm options={options.applicable} errors={errors.applicable} />

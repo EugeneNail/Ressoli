@@ -22,10 +22,6 @@ class PhotoController extends Controller {
     }
 
     public function show(Photo $photo) {
-        if ($photo === null) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
-
         return response()->file($photo->path);
     }
 }

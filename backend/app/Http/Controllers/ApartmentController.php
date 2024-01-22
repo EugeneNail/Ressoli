@@ -17,9 +17,6 @@ class ApartmentController extends Controller {
     }
 
     public function update(UpdateApartmentRequest $request, Apartment $apartment) {
-        if ($apartment === null) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
         $apartment->update($request->validated());
 
         return response()->noContent();
